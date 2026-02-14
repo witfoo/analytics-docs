@@ -12,3 +12,6 @@ MD024:
 
 # Code block style — allow both fenced and indented
 MD046: false
+
+# Table column style — too strict for auto-generated docs with varying column widths
+MD060: false
