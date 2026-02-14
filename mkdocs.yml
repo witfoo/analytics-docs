@@ -1,0 +1,203 @@
+site_name: WitFoo Analytics Documentation
+site_url: https://witfoo.github.io/analytics-docs/
+site_description: Documentation for WitFoo Analytics — Security Operations Platform
+repo_url: https://github.com/witfoo/analytics-docs
+repo_name: witfoo/analytics-docs
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  favicon: assets/images/favicon.ico
+  palette:
+    - scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+    - scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+  font:
+    text: IBM Plex Sans
+    code: IBM Plex Mono
+  features:
+    - navigation.instant
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.top
+    - navigation.indexes
+    - navigation.path
+    - navigation.prune
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - toc.follow
+
+plugins:
+  - search
+  - mike:
+      alias_type: symlink
+      canonical_version: latest
+  - privacy
+  - tags
+  - minify:
+      minify_html: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+  - def_list
+  - footnotes
+  - abbr
+
+extra:
+  version:
+    provider: mike
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/witfoo
+      name: WitFoo on GitHub
+
+extra_css:
+  - assets/stylesheets/extra.css
+
+nav:
+  - Home: index.md
+  - Getting Started:
+      - getting-started/index.md
+      - Installation: getting-started/installation.md
+      - First Login: getting-started/first-login.md
+      - Architecture: getting-started/architecture.md
+      - Deployment Roles: getting-started/deployment-roles.md
+  - User Guide:
+      - user-guide/index.md
+      - Signals:
+          - user-guide/signals/index.md
+          - Search: user-guide/signals/search.md
+          - Lead Rules: user-guide/signals/lead-rules.md
+          - Classification Rules: user-guide/signals/classification-rules.md
+          - Enrichment Settings: user-guide/signals/enrichment-settings.md
+      - Graph:
+          - user-guide/graph/index.md
+          - Nodes: user-guide/graph/nodes.md
+          - Edges: user-guide/graph/edges.md
+      - Observer:
+          - user-guide/observer/index.md
+          - Work Units: user-guide/observer/work-units.md
+          - Work Collections: user-guide/observer/work-collections.md
+          - MO Definitions: user-guide/observer/mo-definitions.md
+          - Observations: user-guide/observer/observations.md
+      - Reporter:
+          - user-guide/reporter/index.md
+          - Executive Summary: user-guide/reporter/executive.md
+          - Compliance Readiness: user-guide/reporter/compliance.md
+          - Tool Effectiveness: user-guide/reporter/tool-effectiveness.md
+          - Cost & Savings: user-guide/reporter/cost-savings.md
+      - CyberGrid:
+          - user-guide/cybergrid/index.md
+          - Subscriptions: user-guide/cybergrid/subscriptions.md
+          - Publications: user-guide/cybergrid/publications.md
+          - Jobs: user-guide/cybergrid/jobs.md
+          - Library: user-guide/cybergrid/library.md
+      - Health:
+          - user-guide/health/index.md
+          - Containers: user-guide/health/containers.md
+          - Alerts: user-guide/health/alerts.md
+  - Admin Guide:
+      - admin-guide/index.md
+      - Users: admin-guide/users.md
+      - Roles: admin-guide/roles.md
+      - Permissions: admin-guide/permissions.md
+      - Settings:
+          - admin-guide/settings/index.md
+          - Business Metrics: admin-guide/settings/business-metrics.md
+          - Frameworks: admin-guide/settings/frameworks.md
+          - Authentication: admin-guide/settings/authentication.md
+          - Notifications: admin-guide/settings/notifications.md
+          - Certificates: admin-guide/settings/certificates.md
+      - Conductor: admin-guide/conductor.md
+  - API Reference:
+      - api/index.md
+      - Authentication: api/authentication.md
+      - Standards: api/standards.md
+      - Errors: api/errors.md
+      - Endpoints:
+          - api/endpoints/artifacts.md
+          - api/endpoints/incidents.md
+          - api/endpoints/nodes.md
+          - api/endpoints/edges.md
+          - api/endpoints/observations.md
+          - api/endpoints/lead-rules.md
+          - api/endpoints/classification-rules.md
+          - api/endpoints/enrichment-settings.md
+          - api/endpoints/saved-searches.md
+          - api/endpoints/frameworks.md
+          - api/endpoints/reports.md
+          - api/endpoints/settings.md
+          - api/endpoints/admin-users.md
+          - api/endpoints/admin-roles.md
+          - api/endpoints/health-dashboard.md
+          - api/endpoints/cybergrid.md
+          - api/endpoints/notifications.md
+          - api/endpoints/auth-settings.md
+          - api/endpoints/tls.md
+          - api/endpoints/ai.md
+          - api/endpoints/wfa.md
+          - api/endpoints/monitoring.md
+          - api/endpoints/conductor.md
+  - AI & MCP:
+      - ai/index.md
+      - Configuration: ai/configuration.md
+      - Chat Interface: ai/chat.md
+      - MCP Server:
+          - ai/mcp/index.md
+          - Architecture: ai/mcp/architecture.md
+          - Configuration: ai/mcp/configuration.md
+          - Tools: ai/mcp/tools.md
+          - Authentication: ai/mcp/authentication.md
+          - Errors: ai/mcp/errors.md
+  - Deployment:
+      - deployment/index.md
+      - Docker Compose: deployment/docker-compose.md
+      - Configuration: deployment/configuration.md
+      - WFA: deployment/wfa.md
+      - Monitoring: deployment/monitoring.md
+      - TLS: deployment/tls.md
+      - Conductor: deployment/conductor.md
+  - Reference:
+      - reference/index.md
+      - Permissions: reference/permissions.md
+      - Roles: reference/roles.md
+      - Environment Variables: reference/environment-variables.md
+      - Cassandra Schema: reference/cassandra-schema.md
+      - Changelog: reference/changelog.md

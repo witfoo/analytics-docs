@@ -1,0 +1,14 @@
+default: true
+
+# Line length — docs have long URLs, tables, and code references
+MD013: false
+
+# Inline HTML — needed for MkDocs Material admonitions, attr_list, md_in_html
+MD033: false
+
+# Allow duplicate headings in different sections (tabbed content, repeated patterns)
+MD024:
+  siblings_only: true
+
+# Code block style — allow both fenced and indented
+MD046: false
