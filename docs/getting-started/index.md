@@ -1,32 +1,41 @@
 # Getting Started
 
-WitFoo Analytics is a security operations platform that transforms raw security data into actionable intelligence. It ingests artifacts from your infrastructure, correlates them into incidents, and provides comprehensive reporting, compliance tracking, and threat intelligence capabilities.
+Welcome to WitFoo Analytics v1.0.0 — an enterprise security operations platform that ingests security artifacts, builds knowledge graphs, detects incidents, and generates compliance reports for your organization.
 
-## Key Capabilities
-
-- **Artifact Ingestion** — Receive security events from firewalls, IDS/IPS, endpoint agents, and SIEM tools
-- **Incident Correlation** — Automatically group related artifacts into incidents using graph-based analysis
-- **Compliance Readiness** — Track compliance against CIS CSC, NIST CSF, and other frameworks
-- **Threat Intelligence** — Subscribe to and publish threat intelligence feeds via CyberGrid
-- **Executive Reporting** — Generate reports on tool effectiveness, cost/savings, and security posture
+This guide walks you through deploying WitFoo Analytics for the first time using a WitFoo Appliance.
 
 ## Quick Start
 
-1. **[Install](installation.md)** — Deploy WitFoo Analytics using Docker Compose
-2. **[First Login](first-login.md)** — Access the web UI and create your first user
-3. **[Architecture](architecture.md)** — Understand the service architecture and data flow
-4. **[Deployment Roles](deployment-roles.md)** — Choose the right deployment topology for your environment
+Follow these three steps to get up and running:
 
-## System Requirements
+1. **[Install a WitFoo Appliance](installation.md)** — Deploy a VM image, launch from a cloud marketplace, or run the bare metal installer.
+2. **[First Login](first-login.md)** — Access the web UI, change default credentials, and complete the setup wizard.
+3. **[Understand the Architecture](architecture.md)** — Learn how services communicate and how data flows through the platform.
 
-| Component | Minimum | Recommended |
-| --- | --- | --- |
-| CPU | 4 cores | 8+ cores |
-| RAM | 8 GB | 16+ GB |
-| Disk | 50 GB SSD | 200+ GB SSD |
-| Docker | 24.0+ | Latest stable |
-| Docker Compose | v2.20+ | Latest stable |
-| OS | Ubuntu 22.04 LTS | Ubuntu 24.04 LTS |
+## Planning Your Deployment
 
-!!! tip "All-in-One Deployment"
-    For evaluation and small deployments, the AIO (All-in-One) role runs all services on a single machine. See [Deployment Roles](deployment-roles.md) for production topologies.
+Before you begin, review the **[Deployment Roles](deployment-roles.md)** page to understand the available appliance roles and choose the right topology for your environment.
+
+| Deployment Size | Recommended Topology |
+|----------------|----------------------|
+| Small / Evaluation | Precinct All-In-One (single node) |
+| Medium | Conductor + Reporter + Console |
+| Large / Enterprise | Precinct with dedicated Data Nodes and Streamer Nodes |
+
+## Hardware at a Glance
+
+| Tier | CPU Cores | RAM | Disk |
+|------|-----------|-----|------|
+| Minimum | 8 | 12 GB | 220 GB |
+| Recommended | 16 | 32 GB | 1 TB |
+
+Per-role requirements are detailed on the [Deployment Roles](deployment-roles.md) page.
+
+## Prerequisites
+
+- A supported hypervisor (VMware, Hyper-V, QEMU), cloud account (AWS, Azure, Google Cloud), or a bare metal server running Ubuntu 24 or RHEL 10
+- Network access to the appliance on HTTPS port **443**
+- An SSH client for initial configuration
+
+!!! tip "Need help?"
+    Visit the [WitFoo Community](https://community.witfoo.com) or contact WitFoo Support for assistance with your deployment.

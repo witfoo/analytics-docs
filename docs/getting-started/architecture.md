@@ -1,90 +1,187 @@
 # Architecture
 
-WitFoo Analytics is a microservices platform built on Go, SvelteKit, Apache Cassandra, and NATS messaging.
+WitFoo Analytics is built on a microservices architecture where each service handles a specific function in the security data pipeline. Services communicate via NATS messaging and HTTP APIs, with Apache Cassandra providing persistent storage.
 
 ## Service Architecture
 
+The following diagram shows the core services and their relationships:
+
 ```mermaid
-graph LR
-    Browser["Browser"] --> RP["Reverse Proxy<br/>:8080"]
-    RP --> API["API Service<br/>:8090"]
-    RP --> UI["UI Service<br/>:5173"]
-    RP --> CUI["Conductor UI<br/>:3000"]
-    API --> IE["Incident Engine<br/>:8082"]
-    IE --> Cassandra["Cassandra<br/>:9042"]
-    IE --> NATS["NATS<br/>:4222"]
-    AI["Artifact Ingestion<br/>:8003"] --> NATS
-    NATS --> GP["Graph Processor"]
-    NATS --> Dispatcher["Dispatcher"]
-    GP --> Cassandra
-    Dispatcher --> Cassandra
+graph TB
+    subgraph External["External"]
+        Browser["Web Browser"]
+        LogSources["Log Sources<br/>(Syslog, API, Files)"]
+    end
+
+    subgraph ReverseProxy["Reverse Proxy :443"]
+        RP["reverse-proxy"]
+    end
+
+    subgraph Frontend["Frontend"]
+        UI["ui :3000"]
+    end
+
+    subgraph API_Layer["API Layer"]
+        API["api :8080"]
+        IE["incident-engine :8082"]
+    end
+
+    subgraph Processing["Processing Pipeline"]
+        AI["artifact-ingestion :8081"]
+        GP["graph-processor"]
+        DISP["dispatcher :8083"]
+    end
+
+    subgraph Messaging["Messaging"]
+        NATS["NATS :4222"]
+    end
+
+    subgraph Storage["Storage"]
+        CASS["Cassandra :9042"]
+    end
+
+    subgraph Observability["Observability"]
+        PROM["Prometheus :9090"]
+        GRAF["Grafana :3001"]
+    end
+
+    subgraph Conductor["Conductor Services"]
+        BE["broker-edge"]
+        SS["signal-server"]
+        SP["signal-parser"]
+        AE["artifact-exporter"]
+    end
+
+    Browser -->|HTTPS| RP
+    LogSources -->|Syslog/API| AI
+    LogSources -->|Signals| BE
+
+    RP --> UI
+    RP --> API
+    RP --> IE
+
+    API --> CASS
+    API --> NATS
+    IE --> CASS
+    IE --> NATS
+
+    AI --> NATS
+    NATS --> GP
+    GP --> CASS
+    NATS --> IE
+    NATS --> DISP
+
+    BE --> SS
+    SS --> SP
+    SP --> AE
+    AE --> AI
+
+    PROM --> API
+    PROM --> IE
+    PROM --> GP
+    GRAF --> PROM
 ```
 
-## Services
+## Core Services
 
-| Service | Port | Technology | Description |
-| --- | --- | --- | --- |
-| Reverse Proxy | 8080 | Go / Gin | Routes browser requests to API, UI, and Conductor UI |
-| API | 8090 | Go / Gin | REST API gateway — proxies requests to Incident Engine |
-| Incident Engine | 8082 | Go / Gin | Core business logic, domain operations, Cassandra access |
-| UI | 5173 | SvelteKit 5 | Frontend with Carbon Components for IBM design system |
-| Artifact Ingestion | 8003 | Go | Receives security artifacts via HTTP, publishes to NATS |
-| Graph Processor | — | Go | Consumes NATS events, builds node/edge graph in Cassandra |
-| Dispatcher | — | Go | Processes NATS events for incident correlation and analysis |
-| Cassandra | 9042 | Apache Cassandra | Primary data store for all persistent data |
-| NATS | 4222 | NATS Server | Message broker for event-driven processing |
+| Service | Port | Description |
+|---------|------|-------------|
+| **reverse-proxy** | 443 | TLS termination, routes requests to UI and API services |
+| **ui** | 3000 | Svelte 5 web application served to the browser |
+| **api** | 8080 | REST API for authentication, graph queries, and configuration |
+| **incident-engine** | 8082 | Incident detection, analysis, reporting, and compliance scoring |
+| **artifact-ingestion** | 8081 | Receives and normalizes security artifacts from log sources |
+| **graph-processor** | — | Builds knowledge graphs from ingested artifacts via NATS |
+| **dispatcher** | 8083 | WebSocket service for real-time UI updates |
+| **NATS** | 4222 | Message broker for inter-service communication |
+| **Cassandra** | 9042 | Distributed database for artifacts, graphs, incidents, and reports |
+| **Prometheus** | 9090 | Metrics collection and alerting |
+| **Grafana** | 3001 | Metrics visualization dashboards |
+
+### Conductor Services
+
+These services are present when the appliance role includes Conductor functionality:
+
+| Service | Description |
+|---------|-------------|
+| **broker-edge** | Receives signals from network sensors and endpoints |
+| **signal-server** | Manages signal routing and deduplication |
+| **signal-parser** | Parses raw signals into structured artifacts |
+| **artifact-exporter** | Forwards parsed artifacts to the ingestion pipeline |
 
 ## Data Flow
 
-Security artifacts flow through the system in a pipeline:
+The following diagram illustrates how security data moves through the platform from ingestion to incident response:
 
 ```mermaid
-sequenceDiagram
-    participant Source as Security Source
-    participant AI as Artifact Ingestion
-    participant NATS as NATS Broker
-    participant GP as Graph Processor
-    participant D as Dispatcher
-    participant IE as Incident Engine
-    participant C as Cassandra
+flowchart LR
+    subgraph Ingestion
+        A1["Log Sources"] -->|syslog / API| A2["artifact-ingestion"]
+        S1["Network Signals"] -->|Conductor pipeline| A2
+    end
 
-    Source->>AI: POST /v1/artifacts
-    AI->>NATS: Publish artifact event
-    NATS->>GP: Consume → build graph
-    GP->>C: Write nodes & edges
-    NATS->>D: Consume → correlate
-    D->>IE: Create/update incidents
-    IE->>C: Write incidents
+    subgraph Processing
+        A2 -->|"publish artifact"| N1["NATS"]
+        N1 -->|"subscribe"| G1["graph-processor"]
+        G1 -->|"write nodes & edges"| C1["Cassandra"]
+        G1 -->|"publish graph events"| N1
+    end
+
+    subgraph Analysis
+        N1 -->|"subscribe"| I1["incident-engine"]
+        I1 -->|"read graph data"| C1
+        I1 -->|"write incidents & reports"| C1
+        I1 -->|"publish notifications"| N1
+    end
+
+    subgraph Presentation
+        N1 -->|"subscribe"| D1["dispatcher"]
+        D1 -->|"WebSocket push"| U1["Browser UI"]
+        U1 -->|"REST API"| API1["api"]
+        API1 -->|"query"| C1
+        U1 -->|"REST API"| I1
+    end
 ```
 
-### Processing Steps
+### Data Flow Summary
 
-1. **Ingestion** — External sources send artifacts (logs, alerts, events) to the Artifact Ingestion service via HTTP POST
-2. **Publishing** — Artifacts are published to NATS topics for parallel processing
-3. **Graph Building** — The Graph Processor creates nodes (IPs, domains, users) and edges (relationships) in Cassandra
-4. **Correlation** — The Dispatcher groups related artifacts into incidents based on shared nodes and timing
-5. **Analysis** — The Incident Engine evaluates incidents against lead rules and classification rules
-6. **Storage** — All processed data is persisted in Cassandra for querying via the API
+1. **Ingestion** — Security artifacts arrive from log sources (syslog, REST API, file upload) or through the Conductor signal pipeline. The artifact-ingestion service normalizes incoming data and publishes it to NATS.
 
-## API Flow
+2. **Graph Processing** — The graph-processor subscribes to artifact events, extracts entities (IP addresses, domains, users, hashes), and builds a knowledge graph in Cassandra with nodes, edges, and relationships.
 
-Browser requests follow this path:
+3. **Incident Analysis** — The incident-engine subscribes to graph events, applies detection rules and observation logic, correlates related artifacts into incidents, and generates compliance reports.
 
-```text
-Browser → Reverse Proxy (:8080) → API (:8090) → Incident Engine (:8082) → Cassandra
-```
+4. **Presentation** — The dispatcher pushes real-time updates to the browser via WebSocket. The UI queries the API and incident-engine for dashboards, search results, and reports.
 
-The API service acts as a gateway, adding authentication (JWT), authorization (permission checks), and request routing. The Incident Engine contains all business logic and direct database access.
+## Network Ports
 
-## Technology Stack
+| Port | Protocol | Service | Direction |
+|------|----------|---------|-----------|
+| 443 | HTTPS | reverse-proxy | Inbound — browser access |
+| 22 | SSH | OS | Inbound — administration |
+| 514 | TCP/UDP | artifact-ingestion | Inbound — syslog sources |
+| 8080 | HTTP | api | Internal |
+| 8081 | HTTP | artifact-ingestion | Internal |
+| 8082 | HTTP | incident-engine | Internal |
+| 8083 | HTTP/WS | dispatcher | Internal |
+| 4222 | TCP | NATS | Internal |
+| 9042 | TCP | Cassandra | Internal (or clustered) |
+| 9090 | HTTP | Prometheus | Internal |
+| 3001 | HTTP | Grafana | Internal |
 
-| Layer | Technology |
-| --- | --- |
-| Frontend | SvelteKit 5, Carbon Components Svelte, TypeScript |
-| API Gateway | Go, Gin framework |
-| Business Logic | Go, Gin framework |
-| Database | Apache Cassandra 4.x |
-| Messaging | NATS 2.x |
-| Containerization | Docker, Docker Compose |
-| Authentication | JWT (HS256) |
-| Fonts | IBM Plex Sans, IBM Plex Mono |
+!!! tip "Firewall Configuration"
+    For a single-node deployment, only ports **443** (HTTPS) and **22** (SSH) need to be open to external traffic. All other ports are used for internal service-to-service communication. For clustered deployments, Cassandra port **9042** must be open between data nodes.
+
+## Storage Architecture
+
+WitFoo Analytics uses Apache Cassandra as its primary data store. Data is organized into the following categories:
+
+| Data Category | Description | Default Retention |
+|--------------|-------------|-------------------|
+| Artifacts | Raw and normalized security events | 7 days |
+| Graph Nodes & Edges | Knowledge graph entities and relationships | 7 days |
+| Work Units | Individual investigation tasks | 365 days |
+| Work Collections | Grouped investigations (incidents) | 365 days |
+| Reports | Compliance and operational reports | 1,825 days (5 years) |
+
+Retention periods are configurable during the setup wizard or via `sudo wfa configure`.
