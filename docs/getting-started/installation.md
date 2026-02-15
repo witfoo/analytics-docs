@@ -1,151 +1,168 @@
 # Installation
 
-WitFoo Analytics is deployed as a **WitFoo Appliance (WFA)** — a purpose-built system image that includes the operating system, container runtime, and all required services. The installation process has three steps:
-
-1. Deploy a WitFoo Appliance
-2. Run the configuration wizard
-3. Access the web UI
+This guide covers deploying a WitFoo Appliance (WFA) — the production deployment method for WitFoo Analytics. The WFA daemon manages containers, configuration, and lifecycle for all node roles.
 
 ## Prerequisites
 
-- Network connectivity and a static IP address (recommended)
-- DNS record pointing to the appliance IP (optional but recommended for TLS)
-- SSH client for initial access
+- Network access to the target host via SSH (port 22) and HTTPS (port 443)
+- A WitFoo license key, or plan to request a 15-day trial during configuration
+- Hardware meeting the minimum requirements for your chosen [deployment role](deployment-roles.md)
 
-## Hardware Requirements
+### Hardware Requirements
 
 | Tier | CPU Cores | RAM | Disk |
 |------|-----------|-----|------|
-| Minimum | 8 | 12 GB | 220 GB |
-| Recommended | 16 | 32 GB | 1 TB |
+| **Minimum** | 8 | 12 GB | 220 GB |
+| **Recommended** | 16 | 32 GB | 1 TB |
 
-See [Deployment Roles](deployment-roles.md) for per-role hardware specifications.
+#### Per-Role Minimums
 
----
+| Role | CPU (min) | RAM (min) | Disk (min) |
+|------|-----------|-----------|------------|
+| Conductor | 4 | 8 GB | 220 GB |
+| Console | 4 | 8 GB | 220 GB |
+| Analytics | 8 | 12 GB | 220 GB |
+
+## Installation Overview
+
+Deploying WitFoo Analytics follows three steps regardless of your infrastructure:
+
+1. **Deploy** a WitFoo Appliance image or run an install script
+2. **Configure** the appliance role with `sudo wfa configure`
+3. **Access** the web UI via HTTPS (port 443) and complete the onboarding wizard
 
 ## Step 1: Deploy a WitFoo Appliance
 
-Choose one of the three deployment methods below. All appliance images and scripts are available from the [witfoo-appliances](https://github.com/witfoo/witfoo-appliances) repository.
+Choose the deployment method that matches your infrastructure. All appliance images and scripts are available from the [witfoo-appliances](https://github.com/witfoo/witfoo-appliances) repository.
 
-### Option A: On-Premises VM Image
+### Option A: On-Premises VM
 
 Pre-built Ubuntu 24 virtual machine images are available for the following hypervisors:
 
-| Hypervisor | Image Format |
-|-----------|--------------|
-| VMware vSphere / ESXi | OVA |
-| Microsoft Hyper-V | VHDX |
-| QEMU / KVM | QCOW2 |
+1. Download the appropriate image from [github.com/witfoo/witfoo-appliances](https://github.com/witfoo/witfoo-appliances):
+    - **VMware** — OVA format
+    - **Hyper-V** — VHDX format
+    - **QEMU/KVM** — QCOW2 format
 
-1. Download the appropriate image from the [witfoo-appliances releases](https://github.com/witfoo/witfoo-appliances/releases).
-2. Import the image into your hypervisor.
-3. Allocate CPU, RAM, and disk according to the [hardware requirements](#hardware-requirements).
-4. Boot the virtual machine.
-5. Connect via SSH using the default credentials (see below).
+2. Import the image into your hypervisor and allocate resources according to the [hardware requirements](#hardware-requirements) for your intended role.
+
+3. Boot the virtual machine. The appliance will start with a default network configuration using DHCP.
+
+4. Connect via SSH to the appliance:
+
+    ```bash
+    ssh witfooadmin@<appliance-ip>
+    ```
+
+!!! danger "Change Default Credentials Immediately"
+    The default SSH credentials are `witfooadmin` / `F00theN0ise!`. Change these immediately after first login. See [First Login](first-login.md) for details.
 
 ### Option B: Cloud Marketplace
 
-WitFoo Appliance images are available on the following cloud marketplaces:
+WitFoo Appliances are available on major cloud marketplaces:
 
-| Cloud Provider | Marketplace Listing |
-|---------------|-------------------|
-| AWS | AWS Marketplace — search "WitFoo" |
-| Microsoft Azure | Azure Marketplace — search "WitFoo" |
-| Google Cloud | Google Cloud Marketplace — search "WitFoo" |
+1. Launch a WitFoo Appliance instance from your cloud provider's marketplace:
+    - **AWS Marketplace** — Search for "WitFoo Appliance"
+    - **Azure Marketplace** — Search for "WitFoo Appliance"
+    - **Google Cloud Marketplace** — Search for "WitFoo Appliance"
 
-1. Navigate to your cloud provider's marketplace and search for **WitFoo**.
-2. Launch the appliance image, selecting an instance size that meets the [hardware requirements](#hardware-requirements).
-3. Ensure the security group or firewall allows inbound traffic on **port 443** (HTTPS) and **port 22** (SSH).
-4. Connect via SSH using the default credentials.
+2. Select an instance size that meets the [hardware requirements](#hardware-requirements) for your intended role.
 
-### Option C: Bare Metal Installation
+3. Configure your security group or firewall rules to allow:
+    - **Port 22** — SSH (administration)
+    - **Port 443** — HTTPS (web UI)
 
-For bare metal servers, use the provided installation scripts:
+4. Connect via SSH using your cloud provider's key pair or the default credentials.
 
-| Operating System | Script |
-|-----------------|--------|
-| Ubuntu 24 | `ubuntu-install.sh` |
-| RHEL 10 | `rhel-install.sh` |
+!!! tip "Cloud Instance Sizing"
+    For an Analytics node, start with at least 8 vCPUs and 12 GB RAM. For production workloads, 16 vCPUs and 32 GB RAM with 1 TB disk is recommended.
 
-1. Start with a fresh installation of Ubuntu 24 or RHEL 10.
-2. Clone the appliance repository:
+### Option C: Bare Metal
 
-    ```bash
-    git clone https://github.com/witfoo/witfoo-appliances.git
-    cd witfoo-appliances
-    ```
+Install the WitFoo Appliance directly on a physical or virtual server using the provided install scripts:
 
-3. Run the appropriate installation script:
+**Ubuntu 24:**
+
+1. Start with a fresh Ubuntu 24 server installation.
+
+2. Download and run the install script:
 
     ```bash
-    # Ubuntu 24
-    sudo bash ubuntu-install.sh
-
-    # RHEL 10
-    sudo bash rhel-install.sh
+    curl -fsSL https://raw.githubusercontent.com/witfoo/witfoo-appliances/main/ubuntu-install.sh -o ubuntu-install.sh
+    chmod +x ubuntu-install.sh
+    sudo ./ubuntu-install.sh
     ```
 
-4. The script installs all dependencies, the container runtime, and the WFA management daemon.
+3. The script installs all dependencies, creates the `witfooadmin` user, and installs the WFA daemon.
 
-!!! danger "Default SSH Credentials"
-    All WitFoo Appliances ship with the following default SSH credentials:
+**RHEL 10:**
 
-    - **Username:** `witfooadmin`
-    - **Password:** `F00theN0ise!`
+1. Start with a fresh RHEL 10 server installation.
 
-    **Change this password immediately** after your first SSH connection:
+2. Download and run the install script:
 
     ```bash
-    passwd witfooadmin
+    curl -fsSL https://raw.githubusercontent.com/witfoo/witfoo-appliances/main/rhel-install.sh -o rhel-install.sh
+    chmod +x rhel-install.sh
+    sudo ./rhel-install.sh
     ```
 
----
+3. The script installs all dependencies, creates the `witfooadmin` user, and installs the WFA daemon.
 
 ## Step 2: Configure the Appliance
 
-Once the appliance is running, SSH into the system and launch the interactive configuration wizard:
+Once the appliance is deployed, run the interactive configuration wizard to select a role and configure services:
 
 ```bash
 sudo wfa configure
 ```
 
-The wizard prompts you to:
+The wizard walks you through organization setup, role selection, licensing, networking, and optional features. It generates the configuration file at `/witfoo/configs/node.json`.
 
-1. **Select the appliance role** — Choose the deployment role for this node (e.g., Precinct All-In-One, Conductor, Reporter). See [Deployment Roles](deployment-roles.md) for guidance.
-2. **Configure networking** — Set the node IP address and hostname.
-3. **Set data retention** — Define how long artifacts, work units, and reports are retained.
-4. **Configure clustering** — If deploying Data Nodes or Streamer Nodes, provide seed node addresses.
-
-The wizard generates configuration files at `/witfoo/configs/node.json` and `/witfoo/configs/analytics.json`, then pulls container images and starts all services for the selected role.
-
-!!! tip "Validate the installation"
-    After configuration completes, check the status of all services:
-
-    ```bash
-    sudo wfa analytics status
-    ```
-
-    All services should report a **running** state.
-
----
+For a detailed walkthrough of every prompt and option, see [WFA Configure Wizard](wfa-configure.md).
 
 ## Step 3: Access the Web UI
+
+After configuration completes, the WFA daemon starts all services for your selected role. For Analytics nodes:
 
 1. Open a web browser and navigate to:
 
     ```
-    https://<appliance-ip-or-hostname>
+    https://<appliance-ip>
     ```
 
-    The web UI is served over **HTTPS on port 443**.
+2. Log in with the default web UI credentials:
+    - **Email:** `admin@witfoo.com`
+    - **Password:** `F00theN0ise!`
 
-2. Log in with the default web UI credentials and complete the setup wizard. See [First Login](first-login.md) for details.
+3. Complete the 12-step onboarding wizard to configure your organization, users, and integrations.
 
-!!! danger "TLS Certificate"
-    The appliance ships with a self-signed TLS certificate. Your browser will display a security warning on first access. For production deployments, replace the self-signed certificate with a certificate from your organization's certificate authority.
+See [First Login](first-login.md) for detailed instructions on the onboarding process.
+
+!!! danger "Change Default Passwords"
+    Both the SSH and web UI default passwords must be changed immediately after first login. See [First Login](first-login.md) for instructions.
+
+## Verifying the Installation
+
+After completing configuration, verify that services are running:
+
+```bash
+sudo wfa analytics status
+```
+
+This command lists all expected services and their current state. All services should report as running within a few minutes of configuration completing.
+
+!!! tip "Cassandra Startup Time"
+    The Cassandra database may take 2–5 minutes to fully initialize on first boot. Other services will wait for Cassandra before becoming available.
+
+## Next Steps
+
+- [Choose a deployment role](deployment-roles.md) if you haven't already
+- [Walk through the configure wizard](wfa-configure.md) in detail
+- [Complete first login and onboarding](first-login.md)
+- [Understand the architecture](architecture.md)
 
 ---
 
-## For Developers
-
-The installation steps above are for **production deployments** using the WitFoo Appliance. If you are a developer working on WitFoo Analytics, Docker Compose templates are available for local development environments. See the [Deployment](../deployment/index.md) section for Docker Compose setup instructions.
+!!! note "For Developers"
+    This guide covers production deployment via WitFoo Appliances. If you are a developer working on WitFoo Analytics itself, see the **Deployment** section of the documentation for Docker Compose development workflows.

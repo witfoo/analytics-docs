@@ -96,6 +96,7 @@ nav:
   - Getting Started:
       - getting-started/index.md
       - Installation: getting-started/installation.md
+      - Appliance Configuration: getting-started/wfa-configure.md
       - First Login: getting-started/first-login.md
       - Architecture: getting-started/architecture.md
       - Deployment Roles: getting-started/deployment-roles.md

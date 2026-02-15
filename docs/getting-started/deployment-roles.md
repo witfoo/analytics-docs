@@ -1,211 +1,181 @@
 # Deployment Roles
 
-WitFoo Analytics supports multiple deployment roles, allowing you to scale from a single all-in-one appliance to a distributed multi-node architecture. Each role runs a specific subset of services tailored to its function.
+WitFoo Appliances support three node roles, each designed for a specific function within your security operations infrastructure. This page helps you understand each role and choose the right deployment topology.
 
 ## Role Overview
 
-| Role | Description |
-|------|-------------|
-| **Conductor** | Signal collection and forwarding — receives data from network sensors and endpoints |
-| **Reporter** | Analytics processing — incident detection, reporting, and compliance scoring |
-| **Console** | Web UI and API gateway — serves the user interface and proxies API requests |
-| **Precinct All-In-One** | All services on a single node — Conductor, Reporter, and Console combined |
-| **Precinct Data Node** | Dedicated Cassandra storage node for clustered deployments |
-| **Precinct Streamer Node** | Dedicated artifact ingestion and graph processing node |
-| **Precinct Mgmt Node** | Management and orchestration node for multi-node Precinct deployments |
+| Role | Purpose | Typical Deployment |
+|------|---------|-------------------|
+| **Conductor** | Data ingestion and signal processing | Remote offices, network segments, cloud VPCs |
+| **Console** | Centralized management and monitoring | Headquarters or management network |
+| **Analytics** | Security analytics, investigation, and reporting | SOC or data center |
 
-## Hardware Requirements by Role
+## Analytics
 
-| Role | CPU Cores | RAM | Recommended Disk |
-|------|-----------|-----|-----------------|
-| Conductor | 4 | 8 GB | 220 GB |
-| Reporter | 8 | 32 GB | 1 TB |
-| Console | 4 | 8 GB | 220 GB |
-| Precinct All-In-One | 8 | 32 GB | 1 TB |
-| Precinct Data Node | 4 | 12 GB | 1 TB+ |
-| Precinct Streamer Node | 4 | 12 GB | 500 GB |
-| Precinct Mgmt Node | 4 | 8 GB | 220 GB |
+The Analytics node is the primary WitFoo platform. It performs security investigation, incident correlation, compliance reporting, and provides the main user interface for security analysts.
 
-!!! tip "Disk Sizing"
-    Disk requirements depend heavily on log volume and retention periods. The values above are starting points. For environments ingesting more than 10,000 events per second, increase disk allocation on Data Nodes and Streamer Nodes accordingly.
+### Purpose and Use Case
 
-## Role Details
+- Core security operations platform for your SOC
+- Receives processed artifacts from Conductor nodes (or ingests directly)
+- Correlates events into incidents using the knowledge graph and incident engine
+- Generates compliance reports, executive summaries, and operational metrics
+- Provides the web UI for analysts, investigators, and management
 
-### Conductor
+### Hardware Requirements
 
-The Conductor collects signals from network sensors, endpoints, and external feeds, then forwards parsed artifacts to the Analytics pipeline.
+| Resource | Minimum | Recommended |
+|----------|---------|-------------|
+| CPU | 8 cores | 16 cores |
+| RAM | 12 GB | 32 GB |
+| Disk | 220 GB | 1 TB |
 
-**Services included:**
+### Services
 
-- broker-edge
-- signal-server
-- signal-parser
-- artifact-exporter
+The Analytics node runs the full service stack:
 
-**When to use:** Deploy a dedicated Conductor when you need to separate signal collection from analytics processing, or when collecting from multiple network segments.
+| Service | Description |
+|---------|-------------|
+| Cassandra | Primary data store and knowledge graph |
+| NATS | Internal message bus |
+| Artifact Ingestion | Receives and normalizes artifacts |
+| Graph Processor | Builds the security knowledge graph |
+| Incident Engine | Correlates events into scored incidents |
+| API Service | REST API with authentication and RBAC |
+| Dispatcher | Real-time WebSocket notifications |
+| Reverse Proxy | TLS termination and request routing |
+| Web UI | Analyst-facing user interface |
+| Prometheus | Metrics collection |
+| Grafana | Metrics visualization |
 
----
+### When to Choose Analytics
 
-### Reporter
+- **Always** — Every WitFoo deployment requires at least one Analytics node
+- You need a single-node deployment for evaluation or small environments
+- You are building a SOC and need investigation, correlation, and reporting capabilities
 
-The Reporter handles the core analytics workload — incident detection, correlation, compliance scoring, and report generation.
+!!! tip "Start Here"
+    If you're deploying WitFoo for the first time, start with a single Analytics node. You can add Conductor and Console nodes later as your deployment grows.
 
-**Services included:**
+## Conductor
 
-- Cassandra
-- NATS
-- incident-engine
-- graph-processor
-- artifact-ingestion
-- Prometheus
-- Grafana
+The Conductor node handles data ingestion and signal processing. It collects signals from data sources, parses them into structured artifacts, and forwards them to the Analytics node for analysis.
 
-**When to use:** Deploy a dedicated Reporter when you want to isolate compute-intensive analytics processing from the user-facing Console.
+### Purpose and Use Case
 
----
+- Deployed at the network edge or in remote locations where data sources reside
+- Collects syslog, API feeds, and agent data from firewalls, IDS/IPS, endpoints, and cloud services
+- Parses and normalizes raw signals before forwarding to Analytics
+- Reduces bandwidth by processing data locally and sending only structured artifacts
 
-### Console
+### Hardware Requirements
 
-The Console serves the web UI and API gateway. It proxies requests to the Reporter and provides the user interface for security analysts.
+| Resource | Minimum | Recommended |
+|----------|---------|-------------|
+| CPU | 4 cores | 8 cores |
+| RAM | 8 GB | 16 GB |
+| Disk | 220 GB | 500 GB |
 
-**Services included:**
+### Services
 
-- reverse-proxy
-- ui
-- api
-- dispatcher
+| Service | Description |
+|---------|-------------|
+| NATS Broker | Message broker for signal ingestion (ports 4223, 4443) |
+| Signal Server | Receives raw signals from data sources |
+| Signal Parser | Parses and normalizes signals into artifacts |
+| Artifact Exporter | Forwards processed artifacts to Analytics via NATS leaf |
+| Broker Edge | Manages broker cluster connectivity |
 
-**When to use:** Deploy a dedicated Console when you want to separate the user-facing web tier from backend processing, or when multiple analysts need a responsive UI independent of analytics load.
+### When to Choose Conductor
 
----
+- You have data sources in remote offices, branch locations, or separate network segments
+- You want to process and filter data locally before sending it to Analytics
+- You need to collect data from cloud VPCs (AWS, Azure, Google Cloud)
+- You want to reduce WAN bandwidth usage between sites
 
-### Precinct All-In-One
+!!! tip "Multiple Conductors"
+    Deploy one Conductor per network segment or remote location. All Conductors forward their processed artifacts to a central Analytics node.
 
-The Precinct All-In-One (AIO) combines all services — Conductor, Reporter, and Console — on a single node. This is the simplest deployment topology.
+## Console
 
-**Services included:**
+The Console node provides a centralized management and monitoring interface for your entire WitFoo deployment. It is a lightweight, single-container deployment.
 
-- All Conductor services (broker-edge, signal-server, signal-parser, artifact-exporter)
-- All Reporter services (Cassandra, NATS, incident-engine, graph-processor, artifact-ingestion)
-- All Console services (reverse-proxy, ui, api, dispatcher)
-- Prometheus, Grafana
+### Purpose and Use Case
 
-**When to use:** Small environments, proof-of-concept deployments, or evaluation installations where simplicity is preferred over scalability.
+- Centralized dashboard for monitoring the health and status of all Conductor and Analytics nodes
+- Remote configuration and management of appliances
+- Deployment oversight for multi-site environments
 
----
+### Hardware Requirements
 
-### Precinct Data Node
+| Resource | Minimum | Recommended |
+|----------|---------|-------------|
+| CPU | 4 cores | 4 cores |
+| RAM | 8 GB | 8 GB |
+| Disk | 220 GB | 220 GB |
 
-A dedicated Cassandra storage node for horizontally scaling database capacity in clustered deployments.
+### Services
 
-**Services included:**
+| Service | Description |
+|---------|-------------|
+| Console | Single container providing management UI and API (port 443) |
 
-- Cassandra (clustered mode)
+### When to Choose Console
 
-**When to use:** Deploy one or more Data Nodes when your data volume exceeds what a single node can store, or when you need storage redundancy and high availability.
+- You manage multiple Conductor and/or Analytics nodes across different sites
+- You need centralized visibility into appliance health and configuration
+- You want a single pane of glass for deployment management
 
-**Clustering configuration:**
-
-During `wfa configure`, you will be prompted for:
-
-- **Seed nodes** — IP addresses of other Data Nodes in the cluster
-- **Listen address** — This node's IP address for inter-node communication
-- **Data center name** — Logical data center identifier (default: `dc1`)
-
----
-
-### Precinct Streamer Node
-
-A dedicated node for artifact ingestion and graph processing. Streamer Nodes handle the high-throughput data pipeline, offloading this work from the Reporter.
-
-**Services included:**
-
-- artifact-ingestion
-- graph-processor
-- NATS
-
-**When to use:** Deploy Streamer Nodes when ingestion volume is high and you want to scale the processing pipeline independently of incident analysis and reporting.
-
----
-
-### Precinct Mgmt Node
-
-The management node provides orchestration and monitoring for multi-node Precinct deployments.
-
-**Services included:**
-
-- Prometheus
-- Grafana
-- Management API
-
-**When to use:** Deploy a Mgmt Node in large distributed environments to centralize monitoring and management of all Precinct nodes.
-
----
+!!! tip "Console Is Optional"
+    The Console node is not required for single-site deployments. A single Analytics node (or Analytics + Conductor) works without a Console. Add a Console when you manage three or more appliances.
 
 ## Deployment Topologies
 
-### Single Node (Evaluation)
+### Single Node (Evaluation / Small)
 
-The simplest deployment — a single Precinct All-In-One node:
-
-```
-┌─────────────────────────┐
-│   Precinct All-In-One   │
-│  (All services on one   │
-│        node)            │
-└─────────────────────────┘
-```
-
-**Best for:** Evaluation, small teams, low log volume.
-
-### Three-Node (Small Production)
-
-Separate Conductor, Reporter, and Console for better resource isolation:
+Deploy a single **Analytics** node for evaluation, lab environments, or small organizations.
 
 ```
-┌────────────┐   ┌────────────┐   ┌────────────┐
-│  Conductor  │──▶│  Reporter   │◀──│   Console   │
-│  (Signals)  │   │ (Analytics) │   │   (Web UI)  │
-└────────────┘   └────────────┘   └────────────┘
+[Data Sources] → [Analytics]
 ```
 
-**Best for:** Medium environments, 1,000–10,000 EPS.
+- Simplest deployment
+- All ingestion and analysis on one node
+- Recommended hardware: 16 CPU, 32 GB RAM, 1 TB disk
 
-### Clustered (Enterprise)
+### Two Nodes (Small / Medium)
 
-A fully distributed deployment with dedicated storage, processing, and management nodes:
+Deploy a **Conductor** for data collection and an **Analytics** node for analysis.
 
 ```
-┌────────────┐   ┌────────────┐   ┌────────────┐
-│  Conductor  │   │  Conductor  │   │   Console   │
-│   Node 1    │   │   Node 2    │   │             │
-└──────┬─────┘   └──────┬─────┘   └──────┬─────┘
-       │                │                 │
-       ▼                ▼                 ▼
-┌────────────┐   ┌────────────┐   ┌────────────┐
-│  Streamer   │   │  Streamer   │   │  Mgmt Node  │
-│   Node 1    │   │   Node 2    │   │ (Monitoring) │
-└──────┬─────┘   └──────┬─────┘   └─────────────┘
-       │                │
-       ▼                ▼
-┌────────────┐   ┌────────────┐   ┌────────────┐
-│  Data Node  │   │  Data Node  │   │  Data Node  │
-│     1       │   │     2       │   │     3       │
-└────────────┘   └────────────┘   └────────────┘
+[Data Sources] → [Conductor] → [Analytics]
 ```
 
-**Best for:** Large enterprises, 10,000+ EPS, high availability requirements.
+- Separates ingestion from analysis
+- Conductor can be placed in a DMZ or remote network
+- Analytics node is dedicated to processing and UI
 
-## Selecting a Role
+### Multi-Site (Enterprise)
 
-When you run `sudo wfa configure`, the wizard presents the available roles. Use the following decision guide:
+Deploy **Conductors** at each site, a central **Analytics** node, and a **Console** for management.
 
-1. **Starting out or evaluating?** → **Precinct All-In-One**
-2. **Need to separate signal collection?** → Add a dedicated **Conductor**
-3. **Heavy analytics workload?** → Dedicated **Reporter** + **Console**
-4. **High data volume?** → Add **Data Nodes** for storage scaling
-5. **High ingestion rate?** → Add **Streamer Nodes** for pipeline scaling
-6. **Multi-node monitoring?** → Add a **Mgmt Node**
+```
+[Site A Sources] → [Conductor A] ──┐
+[Site B Sources] → [Conductor B] ──┤→ [Analytics] ← [Console]
+[Cloud Sources]  → [Conductor C] ──┘
+```
 
-!!! tip "Start Simple, Scale Later"
-    Begin with a Precinct All-In-One deployment. You can migrate to a distributed topology later by adding dedicated nodes and reconfiguring roles with `sudo wfa configure`.
+- Conductors at each remote site or cloud VPC
+- Central Analytics node for correlation and reporting
+- Console for centralized management of all nodes
+
+## Hardware Summary
+
+| Role | CPU (min) | RAM (min) | Disk (min) |
+|------|-----------|-----------|------------|
+| Conductor | 4 | 8 GB | 220 GB |
+| Console | 4 | 8 GB | 220 GB |
+| Analytics | 8 | 12 GB | 220 GB |
+
+!!! tip "Right-Sizing Your Deployment"
+    Start with the minimum requirements and scale up based on data volume. Monitor resource usage from the **Admin > Health** dashboard (Analytics) or Grafana (if local metrics are enabled on Conductor). The recommended specs for Analytics (16 CPU, 32 GB RAM, 1 TB disk) support most production workloads.

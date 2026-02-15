@@ -1,41 +1,71 @@
 # Getting Started
 
-Welcome to WitFoo Analytics v1.0.0 — an enterprise security operations platform that ingests security artifacts, builds knowledge graphs, detects incidents, and generates compliance reports for your organization.
+Welcome to WitFoo Analytics v1.0.0 — an enterprise security operations platform for investigation, correlation, and reporting. This guide walks you through deploying your first WitFoo Appliance and completing initial configuration.
 
-This guide walks you through deploying WitFoo Analytics for the first time using a WitFoo Appliance.
+## Quick Start Path
 
-## Quick Start
+Follow these steps to go from zero to a running WitFoo Analytics instance:
 
-Follow these three steps to get up and running:
+<div class="grid cards" markdown>
 
-1. **[Install a WitFoo Appliance](installation.md)** — Deploy a VM image, launch from a cloud marketplace, or run the bare metal installer.
-2. **[First Login](first-login.md)** — Access the web UI, change default credentials, and complete the setup wizard.
-3. **[Understand the Architecture](architecture.md)** — Learn how services communicate and how data flows through the platform.
+-   :material-download:{ .lg .middle } **1. Install a WitFoo Appliance**
 
-## Planning Your Deployment
+    ---
 
-Before you begin, review the **[Deployment Roles](deployment-roles.md)** page to understand the available appliance roles and choose the right topology for your environment.
+    Deploy a WitFoo Appliance via VM image, cloud marketplace, or bare metal script.
 
-| Deployment Size | Recommended Topology |
-|----------------|----------------------|
-| Small / Evaluation | Precinct All-In-One (single node) |
-| Medium | Conductor + Reporter + Console |
-| Large / Enterprise | Precinct with dedicated Data Nodes and Streamer Nodes |
+    [:octicons-arrow-right-24: Installation](installation.md)
 
-## Hardware at a Glance
+-   :material-server-network:{ .lg .middle } **2. Choose a Deployment Role**
+
+    ---
+
+    Understand the three node roles: Conductor, Console, and Analytics.
+
+    [:octicons-arrow-right-24: Deployment Roles](deployment-roles.md)
+
+-   :material-cog:{ .lg .middle } **3. Configure the Appliance**
+
+    ---
+
+    Run `sudo wfa configure` to select a role and configure services.
+
+    [:octicons-arrow-right-24: WFA Configure Wizard](wfa-configure.md)
+
+-   :material-login:{ .lg .middle } **4. Log In and Onboard**
+
+    ---
+
+    Access the web UI, change default passwords, and complete the onboarding wizard.
+
+    [:octicons-arrow-right-24: First Login](first-login.md)
+
+-   :material-sitemap:{ .lg .middle } **5. Understand the Architecture**
+
+    ---
+
+    Learn how services, data, and nodes work together.
+
+    [:octicons-arrow-right-24: Architecture](architecture.md)
+
+</div>
+
+## Hardware Requirements at a Glance
 
 | Tier | CPU Cores | RAM | Disk |
 |------|-----------|-----|------|
-| Minimum | 8 | 12 GB | 220 GB |
-| Recommended | 16 | 32 GB | 1 TB |
+| **Minimum** | 8 | 12 GB | 220 GB |
+| **Recommended** | 16 | 32 GB | 1 TB |
 
-Per-role requirements are detailed on the [Deployment Roles](deployment-roles.md) page.
+See [Deployment Roles](deployment-roles.md) for per-role hardware requirements.
 
-## Prerequisites
+## What You'll Need
 
-- A supported hypervisor (VMware, Hyper-V, QEMU), cloud account (AWS, Azure, Google Cloud), or a bare metal server running Ubuntu 24 or RHEL 10
-- Network access to the appliance on HTTPS port **443**
-- An SSH client for initial configuration
+Before you begin, ensure you have:
 
-!!! tip "Need help?"
-    Visit the [WitFoo Community](https://community.witfoo.com) or contact WitFoo Support for assistance with your deployment.
+- A supported hypervisor (VMware, Hyper-V, QEMU), cloud account (AWS, Azure, Google Cloud), or bare metal server running Ubuntu 24 or RHEL 10
+- Network access to the appliance on port **443** (HTTPS)
+- A WitFoo license key (or request a 15-day trial during configuration)
+
+!!! tip "Evaluation Deployments"
+    For evaluation purposes, a single **Analytics** node is the fastest path to a working platform. You can add Conductor and Console nodes later as your deployment grows.

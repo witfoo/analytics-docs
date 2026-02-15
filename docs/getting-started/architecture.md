@@ -1,187 +1,251 @@
 # Architecture
 
-WitFoo Analytics is built on a microservices architecture where each service handles a specific function in the security data pipeline. Services communicate via NATS messaging and HTTP APIs, with Apache Cassandra providing persistent storage.
+WitFoo Analytics uses a distributed, containerized architecture where each node role runs a specific set of services. This page describes the service architecture, inter-node communication, and data flow.
 
-## Service Architecture
+## Deployment Topology
 
-The following diagram shows the core services and their relationships:
+A complete WitFoo Analytics deployment consists of up to three node roles working together:
 
 ```mermaid
 graph TB
-    subgraph External["External"]
-        Browser["Web Browser"]
-        LogSources["Log Sources<br/>(Syslog, API, Files)"]
+    subgraph "Data Sources"
+        DS1[Firewalls]
+        DS2[IDS/IPS]
+        DS3[Endpoints]
+        DS4[Cloud Services]
     end
 
-    subgraph ReverseProxy["Reverse Proxy :443"]
-        RP["reverse-proxy"]
+    subgraph "Conductor Node"
+        NATS_B[NATS Broker]
+        SS[Signal Server]
+        SP[Signal Parser]
+        AE[Artifact Exporter]
+        BE[Broker Edge]
     end
 
-    subgraph Frontend["Frontend"]
-        UI["ui :3000"]
+    subgraph "Analytics Node"
+        RP[Reverse Proxy<br/>Port 443]
+        UI[Web UI]
+        API[API Service]
+        IE[Incident Engine]
+        GP[Graph Processor]
+        AI_SVC[Artifact Ingestion]
+        DISP[Dispatcher]
+        NATS_A[NATS]
+        CASS[(Cassandra)]
+        PROM[Prometheus]
+        GRAF[Grafana]
     end
 
-    subgraph API_Layer["API Layer"]
-        API["api :8080"]
-        IE["incident-engine :8082"]
+    subgraph "Console Node"
+        CON_UI[Console UI<br/>Port 443]
     end
 
-    subgraph Processing["Processing Pipeline"]
-        AI["artifact-ingestion :8081"]
-        GP["graph-processor"]
-        DISP["dispatcher :8083"]
-    end
+    DS1 & DS2 & DS3 & DS4 -->|Signals| NATS_B
+    NATS_B --> SS --> SP --> AE
+    AE -->|Artifacts| NATS_A
 
-    subgraph Messaging["Messaging"]
-        NATS["NATS :4222"]
-    end
-
-    subgraph Storage["Storage"]
-        CASS["Cassandra :9042"]
-    end
-
-    subgraph Observability["Observability"]
-        PROM["Prometheus :9090"]
-        GRAF["Grafana :3001"]
-    end
-
-    subgraph Conductor["Conductor Services"]
-        BE["broker-edge"]
-        SS["signal-server"]
-        SP["signal-parser"]
-        AE["artifact-exporter"]
-    end
-
-    Browser -->|HTTPS| RP
-    LogSources -->|Syslog/API| AI
-    LogSources -->|Signals| BE
-
+    NATS_A --> AI_SVC --> GP --> CASS
+    GP --> IE --> CASS
+    IE --> DISP
+    API --> CASS
     RP --> UI
     RP --> API
-    RP --> IE
+    PROM --> GRAF
 
-    API --> CASS
-    API --> NATS
-    IE --> CASS
-    IE --> NATS
-
-    AI --> NATS
-    NATS --> GP
-    GP --> CASS
-    NATS --> IE
-    NATS --> DISP
-
-    BE --> SS
-    SS --> SP
-    SP --> AE
-    AE --> AI
-
-    PROM --> API
-    PROM --> IE
-    PROM --> GP
-    GRAF --> PROM
+    CON_UI -.->|Manages| NATS_B
+    CON_UI -.->|Manages| RP
 ```
 
-## Core Services
+## Service Architecture — Analytics Node
+
+The Analytics node is the primary platform, running all services required for investigation, correlation, and reporting.
+
+```mermaid
+graph LR
+    subgraph "External Access"
+        Browser[Web Browser]
+    end
+
+    subgraph "Edge Layer"
+        RP[Reverse Proxy<br/>:443 HTTPS]
+    end
+
+    subgraph "Presentation Layer"
+        UI[Web UI<br/>:3000]
+        API[API Service<br/>:8080]
+    end
+
+    subgraph "Processing Layer"
+        IE[Incident Engine<br/>:8082]
+        GP[Graph Processor]
+        AI_SVC[Artifact Ingestion<br/>:8081]
+        DISP[Dispatcher<br/>:8083]
+    end
+
+    subgraph "Messaging Layer"
+        NATS[NATS<br/>:4222]
+    end
+
+    subgraph "Storage Layer"
+        CASS[(Cassandra<br/>:9042)]
+    end
+
+    subgraph "Observability"
+        PROM[Prometheus<br/>:9090]
+        GRAF[Grafana<br/>:3001]
+    end
+
+    Browser -->|HTTPS :443| RP
+    RP --> UI
+    RP --> API
+    API --> IE
+    API --> CASS
+    IE --> CASS
+    IE --> NATS
+    GP --> CASS
+    GP --> NATS
+    AI_SVC --> NATS
+    AI_SVC --> GP
+    DISP --> NATS
+    PROM --> GRAF
+    PROM -.->|Scrape| API
+    PROM -.->|Scrape| IE
+    PROM -.->|Scrape| GP
+```
+
+### Analytics Services
 
 | Service | Port | Description |
 |---------|------|-------------|
-| **reverse-proxy** | 443 | TLS termination, routes requests to UI and API services |
-| **ui** | 3000 | Svelte 5 web application served to the browser |
-| **api** | 8080 | REST API for authentication, graph queries, and configuration |
-| **incident-engine** | 8082 | Incident detection, analysis, reporting, and compliance scoring |
-| **artifact-ingestion** | 8081 | Receives and normalizes security artifacts from log sources |
-| **graph-processor** | — | Builds knowledge graphs from ingested artifacts via NATS |
-| **dispatcher** | 8083 | WebSocket service for real-time UI updates |
-| **NATS** | 4222 | Message broker for inter-service communication |
-| **Cassandra** | 9042 | Distributed database for artifacts, graphs, incidents, and reports |
-| **Prometheus** | 9090 | Metrics collection and alerting |
-| **Grafana** | 3001 | Metrics visualization dashboards |
+| Reverse Proxy | 443 | TLS termination, routes requests to UI and API |
+| Web UI | 3000 | Svelte-based user interface |
+| API Service | 8080 | REST API, authentication, RBAC |
+| Incident Engine | 8082 | Incident correlation, scoring, status management |
+| Graph Processor | — | Builds and maintains the security knowledge graph |
+| Artifact Ingestion | 8081 | Receives and normalizes incoming artifacts |
+| Dispatcher | 8083 | WebSocket notifications and real-time event delivery |
+| NATS | 4222 | Internal message bus for service communication |
+| Cassandra | 9042 | Primary data store for all analytics data |
+| Prometheus | 9090 | Metrics collection (bound to localhost) |
+| Grafana | 3001 | Metrics visualization dashboards |
+
+## Service Architecture — Conductor Node
+
+The Conductor node handles data ingestion from remote networks and forwards processed signals to the Analytics node.
+
+```mermaid
+graph LR
+    subgraph "Data Sources"
+        SRC[Syslog / API / Agents]
+    end
+
+    subgraph "Conductor Services"
+        NATS_B[NATS Broker<br/>:4223 client<br/>:4443 leaf]
+        SS[Signal Server]
+        SP[Signal Parser]
+        AE[Artifact Exporter]
+        BE[Broker Edge]
+    end
+
+    subgraph "Analytics Node"
+        NATS_A[NATS :4222]
+    end
+
+    SRC -->|Signals| NATS_B
+    NATS_B --> SS
+    SS --> SP
+    SP --> AE
+    AE -->|Leaf Connection :4443| NATS_A
+    BE --> NATS_B
+```
 
 ### Conductor Services
 
-These services are present when the appliance role includes Conductor functionality:
+| Service | Port | Description |
+|---------|------|-------------|
+| NATS Broker | 4223 (client), 4443 (leaf) | Message broker for signal ingestion and forwarding |
+| Signal Server | — | Receives raw signals from data sources |
+| Signal Parser | — | Parses and normalizes signals into structured artifacts |
+| Artifact Exporter | — | Forwards processed artifacts to the Analytics node |
+| Broker Edge | — | Manages broker cluster connectivity |
 
-| Service | Description |
-|---------|-------------|
-| **broker-edge** | Receives signals from network sensors and endpoints |
-| **signal-server** | Manages signal routing and deduplication |
-| **signal-parser** | Parses raw signals into structured artifacts |
-| **artifact-exporter** | Forwards parsed artifacts to the ingestion pipeline |
+## Service Architecture — Console Node
+
+The Console node is a lightweight management interface for monitoring and configuring remote Conductor and Analytics nodes.
+
+```mermaid
+graph LR
+    subgraph "Admin Browser"
+        Browser[Web Browser]
+    end
+
+    subgraph "Console Services"
+        CON[Console Container<br/>:443 HTTPS]
+    end
+
+    subgraph "Managed Nodes"
+        C1[Conductor 1]
+        C2[Conductor 2]
+        A1[Analytics 1]
+    end
+
+    Browser -->|HTTPS :443| CON
+    CON -.->|Management API| C1
+    CON -.->|Management API| C2
+    CON -.->|Management API| A1
+```
+
+### Console Services
+
+| Service | Port | Description |
+|---------|------|-------------|
+| Console | 443 | Single-container management UI and API |
 
 ## Data Flow
 
-The following diagram illustrates how security data moves through the platform from ingestion to incident response:
+The following diagram shows how security data flows from ingestion to investigation:
 
 ```mermaid
-flowchart LR
-    subgraph Ingestion
-        A1["Log Sources"] -->|syslog / API| A2["artifact-ingestion"]
-        S1["Network Signals"] -->|Conductor pipeline| A2
-    end
+flowchart TD
+    A[Data Sources<br/>Firewalls, IDS, Endpoints] -->|Raw Signals| B[Conductor<br/>NATS Broker]
+    B -->|Parsed Signals| C[Signal Parser]
+    C -->|Normalized Artifacts| D[Artifact Exporter]
+    D -->|NATS Leaf Connection| E[Analytics<br/>Artifact Ingestion]
+    E -->|Structured Artifacts| F[Graph Processor]
+    F -->|Nodes & Edges| G[(Cassandra<br/>Knowledge Graph)]
+    F -->|Events| H[Incident Engine]
+    H -->|Correlated Incidents| G
+    H -->|Notifications| I[Dispatcher]
+    I -->|WebSocket| J[Web UI]
+    G -->|Query Results| K[API Service]
+    K -->|REST API| J
+    J -->|HTTPS :443| L[Analyst Browser]
 
-    subgraph Processing
-        A2 -->|"publish artifact"| N1["NATS"]
-        N1 -->|"subscribe"| G1["graph-processor"]
-        G1 -->|"write nodes & edges"| C1["Cassandra"]
-        G1 -->|"publish graph events"| N1
-    end
-
-    subgraph Analysis
-        N1 -->|"subscribe"| I1["incident-engine"]
-        I1 -->|"read graph data"| C1
-        I1 -->|"write incidents & reports"| C1
-        I1 -->|"publish notifications"| N1
-    end
-
-    subgraph Presentation
-        N1 -->|"subscribe"| D1["dispatcher"]
-        D1 -->|"WebSocket push"| U1["Browser UI"]
-        U1 -->|"REST API"| API1["api"]
-        API1 -->|"query"| C1
-        U1 -->|"REST API"| I1
-    end
+    style A fill:#f9f,stroke:#333
+    style G fill:#bbf,stroke:#333
+    style L fill:#bfb,stroke:#333
 ```
 
 ### Data Flow Summary
 
-1. **Ingestion** — Security artifacts arrive from log sources (syslog, REST API, file upload) or through the Conductor signal pipeline. The artifact-ingestion service normalizes incoming data and publishes it to NATS.
-
-2. **Graph Processing** — The graph-processor subscribes to artifact events, extracts entities (IP addresses, domains, users, hashes), and builds a knowledge graph in Cassandra with nodes, edges, and relationships.
-
-3. **Incident Analysis** — The incident-engine subscribes to graph events, applies detection rules and observation logic, correlates related artifacts into incidents, and generates compliance reports.
-
-4. **Presentation** — The dispatcher pushes real-time updates to the browser via WebSocket. The UI queries the API and incident-engine for dashboards, search results, and reports.
+1. **Ingestion** — Data sources send raw signals (syslog, API, agents) to the Conductor's NATS broker.
+2. **Parsing** — The Signal Server and Signal Parser normalize raw signals into structured artifacts.
+3. **Export** — The Artifact Exporter forwards normalized artifacts to the Analytics node via a NATS leaf connection.
+4. **Processing** — Artifact Ingestion receives artifacts and passes them to the Graph Processor, which builds a security knowledge graph in Cassandra.
+5. **Correlation** — The Incident Engine analyzes graph data to detect, score, and correlate security incidents.
+6. **Notification** — The Dispatcher delivers real-time updates to connected web UI sessions via WebSocket.
+7. **Investigation** — Analysts access the platform through the web UI (HTTPS on port 443), querying the API for incidents, graph data, and reports.
 
 ## Network Ports
 
-| Port | Protocol | Service | Direction |
-|------|----------|---------|-----------|
-| 443 | HTTPS | reverse-proxy | Inbound — browser access |
-| 22 | SSH | OS | Inbound — administration |
-| 514 | TCP/UDP | artifact-ingestion | Inbound — syslog sources |
-| 8080 | HTTP | api | Internal |
-| 8081 | HTTP | artifact-ingestion | Internal |
-| 8082 | HTTP | incident-engine | Internal |
-| 8083 | HTTP/WS | dispatcher | Internal |
-| 4222 | TCP | NATS | Internal |
-| 9042 | TCP | Cassandra | Internal (or clustered) |
-| 9090 | HTTP | Prometheus | Internal |
-| 3001 | HTTP | Grafana | Internal |
+| Port | Protocol | Service | Direction | Description |
+|------|----------|---------|-----------|-------------|
+| 443 | HTTPS | Reverse Proxy / Console | Inbound | Web UI and API access |
+| 4223 | TCP | NATS Broker (Conductor) | Inbound | Signal ingestion from data sources |
+| 4443 | TCP | NATS Broker (Conductor) | Inbound/Outbound | Leaf node connections to Analytics |
+| 9042 | TCP | Cassandra | Internal | Database communication (not exposed externally) |
+| 4222 | TCP | NATS (Analytics) | Internal | Internal message bus |
 
-!!! tip "Firewall Configuration"
-    For a single-node deployment, only ports **443** (HTTPS) and **22** (SSH) need to be open to external traffic. All other ports are used for internal service-to-service communication. For clustered deployments, Cassandra port **9042** must be open between data nodes.
-
-## Storage Architecture
-
-WitFoo Analytics uses Apache Cassandra as its primary data store. Data is organized into the following categories:
-
-| Data Category | Description | Default Retention |
-|--------------|-------------|-------------------|
-| Artifacts | Raw and normalized security events | 7 days |
-| Graph Nodes & Edges | Knowledge graph entities and relationships | 7 days |
-| Work Units | Individual investigation tasks | 365 days |
-| Work Collections | Grouped investigations (incidents) | 365 days |
-| Reports | Compliance and operational reports | 1,825 days (5 years) |
-
-Retention periods are configurable during the setup wizard or via `sudo wfa configure`.
+!!! tip "Minimal Firewall Configuration"
+    For a single Analytics node deployment, only port **443** needs to be open to users. Ports 4223 and 4443 are only required when deploying Conductor nodes for remote data collection.
