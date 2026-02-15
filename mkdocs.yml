@@ -198,6 +198,31 @@ nav:
       - Monitoring: deployment/monitoring.md
       - TLS: deployment/tls.md
       - Conductor: deployment/conductor.md
+  - Conductor:
+      - conductor/index.md
+      - Signal Pipeline: conductor/pipeline.md
+      - Services:
+          - Broker Edge: conductor/broker-edge.md
+          - Signal Server: conductor/signal-server.md
+          - Signal Client: conductor/signal-client.md
+          - Signal Parser: conductor/signal-parser.md
+          - Parser Catalog: conductor/parsers-catalog.md
+          - Artifact Filter: conductor/artifact-filter.md
+          - Artifact Exporter: conductor/artifact-exporter.md
+      - Conductor UI:
+          - conductor/ui/index.md
+          - Dashboard: conductor/ui/dashboard.md
+          - Parser Management: conductor/ui/parsers.md
+          - Integrations: conductor/ui/integrations.md
+          - Exporters: conductor/ui/exporters.md
+          - Log Servers: conductor/ui/log-servers.md
+          - Users & Auth: conductor/ui/users.md
+      - Configuration: conductor/configuration.md
+      - Deployment: conductor/deployment.md
+      - WFA Integration: conductor/wfa-integration.md
+      - WFA CLI Reference: conductor/wfa-cli.md
+      - Troubleshooting: conductor/troubleshooting.md
+      - Metrics & Monitoring: conductor/metrics.md
   - Reference:
       - reference/index.md
       - Permissions: reference/permissions.md
