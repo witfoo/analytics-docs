@@ -1,0 +1,27 @@
+title: Credential Spraying Attack
+id: b6aa26eb-5a1a-5102-9e1f-78d2c1670061
+custom_id: wf-corr-002
+status: stable
+type: value_count
+rules:
+    - wf-auth-001
+group-by:
+    - serverIP
+timespan: 15m
+condition:
+    field: userName
+    gte: 10
+description: |
+    Correlates authentication failures targeting the same server with 10 or
+    more distinct usernames within 15 minutes. This pattern is characteristic
+    of credential spraying attacks where an adversary tries common passwords
+    across many accounts.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.credential_access
+    - attack.t1110.003
+level: high
+falsepositives:
+    - Shared service account password expiration affecting many users
+    - Directory service issues causing widespread authentication failures

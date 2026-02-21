@@ -1,0 +1,45 @@
+title: Suspicious SSL/TLS Certificate
+id: 4fe33f21-5e75-572e-9175-7122b6f849bb
+custom_id: wf-net-009
+status: stable
+level: medium
+description: |
+    Detects network connections involving suspicious SSL/TLS certificates,
+    including self-signed, expired, or certificates with anomalous attributes.
+    These may indicate man-in-the-middle attacks, malware C2 infrastructure,
+    or compromised certificate authorities.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.command_and_control
+    - attack.t1071.001
+references:
+    - https://attack.mitre.org/techniques/T1071/001/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection_zeek_notice:
+        streamName|contains: "zeek"
+        ruleCategory|contains:
+            - "SSL"
+            - "certificate"
+            - "X509"
+    selection_ids_ssl:
+        messageType: "ids_event"
+        ruleName|contains:
+            - "certificate"
+            - "self-signed"
+            - "expired"
+    condition: selection_zeek_notice or selection_ids_ssl
+fields:
+    - clientIP
+    - serverIP
+    - serverPort
+    - fqdn
+    - ruleName
+    - streamName
+falsepositives:
+    - Internal development environments with self-signed certificates
+    - Certificate renewal windows causing brief expiry alerts
+    - Lab and testing environments

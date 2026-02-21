@@ -1,0 +1,27 @@
+title: Data Exfiltration After Reconnaissance
+id: f25f0c11-cd19-51f3-8e2d-4f2192149b6f
+custom_id: wf-corr-004
+status: stable
+type: temporal_ordered
+rules:
+    - wf-net-005
+    - wf-dlp-002
+group-by:
+    - clientIP
+timespan: 60m
+description: |
+    Detects the attack pattern of network reconnaissance (port scanning)
+    followed by data exfiltration from the same source IP within 60 minutes.
+    This ordered sequence indicates an adversary who has completed discovery
+    and is actively extracting data.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.exfiltration
+    - attack.t1041
+    - attack.discovery
+    - attack.t1046
+level: critical
+falsepositives:
+    - Vulnerability scanners followed by approved data transfers
+    - Network auditing tools generating both scan and transfer events

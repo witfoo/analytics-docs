@@ -272,6 +272,23 @@ nav:
       - WFA CLI Reference: conductor/wfa-cli.md
       - Troubleshooting: conductor/troubleshooting.md
       - Metrics & Monitoring: conductor/metrics.md
+  - Detection Rules:
+      - detection-rules/index.md
+      - Rules:
+          - Network: detection-rules/rules/network.md
+          - Authentication: detection-rules/rules/authentication.md
+          - Malware: detection-rules/rules/malware.md
+          - Data Loss: detection-rules/rules/data-loss.md
+          - Cloud: detection-rules/rules/cloud.md
+          - Compliance: detection-rules/rules/compliance.md
+          - Infrastructure: detection-rules/rules/infrastructure.md
+          - IDS: detection-rules/rules/ids.md
+          - Correlations: detection-rules/rules/correlations.md
+          - Filters: detection-rules/rules/filters.md
+      - Platform Integration:
+          - Splunk: detection-rules/platforms/splunk.md
+          - OpenSearch: detection-rules/platforms/opensearch.md
+          - Microsoft Sentinel: detection-rules/platforms/sentinel.md
   - Reference:
       - reference/index.md
       - Permissions: reference/permissions.md

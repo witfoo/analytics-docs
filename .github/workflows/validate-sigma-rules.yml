@@ -1,0 +1,56 @@
+name: Validate Sigma Rules
+
+on:
+  push:
+    paths:
+      - 'docs/detection-rules/**'
+      - 'utils/sigma-converter/**'
+  pull_request:
+    paths:
+      - 'docs/detection-rules/**'
+      - 'utils/sigma-converter/**'
+
+permissions:
+  contents: read
+
+env:
+  PYTHON_VERSION: '3.12'
+
+jobs:
+  validate:
+    name: Validate Rules & Dashboards
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: utils/sigma-converter
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: utils/sigma-converter/requirements.txt
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Validate Sigma rules
+        run: pytest test_rules.py -v --tb=short
+
+      - name: Validate conversions
+        run: pytest test_convert.py -v --tb=short
+
+      - name: Validate dashboards
+        run: pytest test_dashboards.py -v --tb=short
+
+      - name: Run full conversion
+        run: make all
+
+      - name: Verify generated files
+        run: |
+          echo "Splunk rules: $(ls ../../docs/detection-rules/splunk/rules/*.spl 2>/dev/null | wc -l)"
+          echo "OpenSearch rules: $(ls ../../docs/detection-rules/opensearch/rules/*.dql 2>/dev/null | wc -l)"
+          echo "Sentinel rules: $(ls ../../docs/detection-rules/sentinel/rules/*.kql 2>/dev/null | wc -l)"

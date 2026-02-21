@@ -1,0 +1,34 @@
+title: Content Filter Match
+id: a538c551-98dd-5619-9864-680006f6246e
+custom_id: wf-comp-003
+status: stable
+level: medium
+description: |
+    Detects content filtering events where web content, email content, or
+    file content matched a DLP or content inspection policy. May indicate
+    sensitive data exposure or policy violations.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.command_and_control
+    - attack.t1071
+references:
+    - https://attack.mitre.org/techniques/T1071/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "content_filter"
+    condition: selection
+fields:
+    - clientIP
+    - serverIP
+    - userName
+    - uri
+    - application
+    - ruleName
+    - matchedLeadRules
+falsepositives:
+    - Overly broad content filter rules matching legitimate content
+    - Medical or legal content triggering keyword filters

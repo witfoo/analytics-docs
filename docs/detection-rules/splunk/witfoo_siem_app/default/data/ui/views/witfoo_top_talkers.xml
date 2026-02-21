@@ -1,0 +1,111 @@
+<dashboard version="1.1" theme="dark">
+  <label>WitFoo Top Talkers</label>
+  <description>Identifies the most active network endpoints from WitFoo artifact data. Shows top sources, destinations, source-destination pairs, bandwidth consumers, and user activity.</description>
+
+  <row>
+    <panel>
+      <title>Top 20 Source IPs by Event Count</title>
+      <table>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| stats count dc(serverIP) as "Unique Destinations" values(messageType) as "Event Types" by clientIP
+| sort -count
+| head 20
+| rename clientIP as "Source IP" count as "Events"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">20</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Top 20 Destination IPs by Event Count</title>
+      <table>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| stats count dc(clientIP) as "Unique Sources" values(messageType) as "Event Types" by serverIP
+| sort -count
+| head 20
+| rename serverIP as "Destination IP" count as "Events"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">20</option>
+      </table>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>Top Source-Destination Pairs</title>
+      <table>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| stats count by clientIP serverIP
+| sort -count
+| head 20
+| rename clientIP as "Source" serverIP as "Destination" count as "Events"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+      </table>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>Top Bandwidth Consumers (by Source)</title>
+      <chart>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| eval tb=if(isnotnull(totalBytes),totalBytes,0)
+| stats sum(tb) as totalBytes count as events by clientIP
+| sort -totalBytes
+| head 15
+| eval totalBytes_MB=round(totalBytes/1048576,2)
+| rename clientIP as "Source IP" totalBytes_MB as "Total MB"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">bar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Sessions by User</title>
+      <table>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| where isnotnull(userName)
+| stats count dc(clientIP) as "Source IPs" dc(serverIP) as "Dest IPs" values(messageType) as "Types" by userName
+| sort -count
+| head 20
+| rename userName as "User" count as "Events"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+      </table>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>Connection Frequency (Hourly)</title>
+      <chart>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| timechart span=1h dc(clientIP) as "Unique Sources" dc(serverIP) as "Unique Destinations"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">line</option>
+      </chart>
+    </panel>
+  </row>
+
+</dashboard>

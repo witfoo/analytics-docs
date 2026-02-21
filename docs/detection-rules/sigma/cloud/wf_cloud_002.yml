@@ -1,0 +1,39 @@
+title: Cloud Configuration Change
+id: 1c1ef0ad-ed2c-5d21-a627-1da2bc33e2b0
+custom_id: wf-cloud-002
+status: stable
+level: high
+description: |
+    Detects infrastructure configuration changes in cloud environments that
+    may weaken security posture, including security group modifications,
+    firewall rule changes, and logging configuration alterations.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.defense_evasion
+    - attack.t1562.007
+references:
+    - https://attack.mitre.org/techniques/T1562/007/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "config_change"
+        streamName|contains:
+            - "aws"
+            - "azure"
+            - "gcp"
+            - "cloud"
+    condition: selection
+fields:
+    - clientIP
+    - userName
+    - application
+    - action
+    - severityLabel
+    - matchedLeadRules
+falsepositives:
+    - Infrastructure-as-Code deployments (Terraform, CloudFormation)
+    - Scheduled maintenance and patching
+    - Approved security hardening changes
