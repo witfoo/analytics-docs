@@ -217,6 +217,55 @@ nav:
           - Exporters: conductor/ui/exporters.md
           - Log Servers: conductor/ui/log-servers.md
           - Users & Auth: conductor/ui/users.md
+      - Integration Guides:
+          - conductor/integrations/index.md
+          - Endpoint Security:
+              - Cisco AMP: conductor/integrations/cisco-amp.md
+              - CrowdStrike Falcon: conductor/integrations/crowdstrike-falcon.md
+              - Deep Instinct: conductor/integrations/deep-instinct.md
+              - SentinelOne: conductor/integrations/sentinelone.md
+              - Sophos Central: conductor/integrations/sophos-central.md
+              - Carbon Black: conductor/integrations/carbon-black.md
+              - Halcyon: conductor/integrations/halcyon.md
+          - Cloud Security:
+              - Azure Security: conductor/integrations/azure-security.md
+              - AWS GuardDuty: conductor/integrations/aws-guardduty.md
+              - AWS Security Hub: conductor/integrations/aws-securityhub.md
+              - Google Cloud SCC: conductor/integrations/gcp-scc.md
+              - Wiz: conductor/integrations/wiz.md
+              - Oracle Cloud (OCI): conductor/integrations/oci-cloud.md
+          - Network Security:
+              - Cisco Meraki: conductor/integrations/cisco-meraki.md
+              - Cisco Umbrella: conductor/integrations/cisco-umbrella.md
+              - Stealthwatch: conductor/integrations/stealthwatch.md
+              - Palo Alto Cortex: conductor/integrations/pan-cortex.md
+              - Fortinet FortiAnalyzer: conductor/integrations/fortianalyzer.md
+              - Zscaler ZIA: conductor/integrations/zscaler-zia.md
+              - Darktrace: conductor/integrations/darktrace.md
+          - Identity & Access:
+              - Cisco Duo: conductor/integrations/cisco-duo.md
+              - Okta: conductor/integrations/okta.md
+              - Auth0: conductor/integrations/auth0.md
+              - 1Password Events: conductor/integrations/onepassword-events.md
+              - CyberArk EPM: conductor/integrations/cyberark-epm.md
+              - Arista AGNI: conductor/integrations/arista-agni.md
+          - Email Security:
+              - Mimecast: conductor/integrations/mimecast.md
+              - Proofpoint CASB: conductor/integrations/proofpoint-casb.md
+              - Proofpoint Protect: conductor/integrations/proofpoint-protect.md
+              - Abnormal Security: conductor/integrations/abnormal-security.md
+          - SIEM:
+              - Splunk: conductor/integrations/splunk.md
+              - Rapid7 InsightIDR: conductor/integrations/rapid7-insightidr.md
+          - Infrastructure:
+              - DNS Zone Transfer: conductor/integrations/dns-zone-transfer.md
+              - Druva: conductor/integrations/druva.md
+              - LimaCharlie: conductor/integrations/limacharlie.md
+              - Netskope: conductor/integrations/netskope.md
+          - Vulnerability Management:
+              - Tenable: conductor/integrations/tenable.md
+              - Qualys: conductor/integrations/qualys.md
+          - Common Troubleshooting: conductor/integrations/common-troubleshooting.md
       - Configuration: conductor/configuration.md
       - Deployment: conductor/deployment.md
       - WFA Integration: conductor/wfa-integration.md

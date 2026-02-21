@@ -77,6 +77,12 @@ On first login to an Analytics node, a full-screen onboarding wizard guides you 
 | 10 | AI Capabilities | Optional | AI assistant configuration |
 | 11 | Summary | — | Completion checklist and launch |
 
+!!! tip "Configure Integrations After Onboarding"
+    Once onboarding is complete, connect your security tools using the
+    [Integration Enablement Guides](../conductor/integrations/index.md).
+    39 vendor integrations are supported across endpoint, cloud, network,
+    identity, email, SIEM, infrastructure, and vulnerability categories.
+
 ---
 
 ### Step 0: Welcome (Critical)

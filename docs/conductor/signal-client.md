@@ -40,7 +40,9 @@ Integrations are managed through the [Conductor UI Integrations page](ui/integra
 
 ## Supported Integrations
 
-Signal Client supports all 19 API-based integrations listed on the [Integration Management](ui/integrations.md) page, including Microsoft, Cisco, CrowdStrike, Palo Alto, Proofpoint, and other security vendors.
+Signal Client supports all 39 API-based integrations listed on the [Integration Management](ui/integrations.md) page, spanning endpoint, cloud, network, identity, email, SIEM, infrastructure, and vulnerability management categories.
+
+For vendor-specific setup instructions, see the [Integration Guides](integrations/index.md).
 
 !!! note
     Configuration changes propagate from the Conductor UI to Signal Client within 5–10 seconds via the NATS KV watch mechanism. No container restart is required.

@@ -60,7 +60,7 @@ Conductor consists of 7 core services, each running as an independent Docker con
 ## Key Features
 
 - **200+ Log Parsers** — Comprehensive coverage for firewalls, IDS/IPS, authentication systems, DNS, cloud platforms, endpoints, email security, and network infrastructure
-- **19 API Integrations** — Pull-based collection from Microsoft, Cisco, CrowdStrike, Palo Alto, Proofpoint, Okta, and more
+- **39 API Integrations** — Pull-based collection from Microsoft, Cisco, CrowdStrike, Palo Alto, Proofpoint, Okta, and [many more](integrations/index.md)
 - **8 Export Destinations** — Splunk HEC, OpenSearch, Microsoft Sentinel, AlienVault, SCP Transfer, UDP Syslog, Local FileSystem, and WitFoo Analytics Reporter
 - **Real-Time Dashboard** — WebSocket-driven monitoring with pipeline throughput, service health, and container metrics
 - **ProtoGraph Deduplication** — 11-tuple artifact matching reduces noise while preserving security-relevant event variations

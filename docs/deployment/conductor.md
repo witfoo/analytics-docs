@@ -62,3 +62,11 @@ Both stacks share an external network:
 ```bash
 docker network create witfoo-analytics-net
 ```
+
+## Next Steps
+
+After deployment, configure your data source integrations:
+
+- [Integration Enablement Guides](../conductor/integrations/index.md) — Step-by-step setup for 39 supported integrations
+- [Signal Client](../conductor/signal-client.md) — API-based signal collection architecture
+- [Conductor Troubleshooting](../conductor/troubleshooting.md) — Common issues and diagnostics

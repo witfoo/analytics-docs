@@ -67,6 +67,7 @@ WitFoo Analytics ingests security artifacts from your infrastructure, correlates
 | [API Reference](api/index.md) | REST API documentation for 150+ endpoints |
 | [AI & MCP](ai/index.md) | AI assistant configuration and MCP server integration |
 | [Deployment](deployment/index.md) | Docker Compose, WFA, TLS, and monitoring setup |
+| [Conductor Integrations](conductor/integrations/index.md) | Setup guides for 39 supported security tool integrations |
 | [Reference](reference/index.md) | Permissions matrix, environment variables, and schema |
 
 ## WitFoo Resources

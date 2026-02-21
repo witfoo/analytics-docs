@@ -4,6 +4,9 @@
 
 The Integration Management page configures pull-based API integrations for the Signal Client service. Each integration connects to an external cloud or security platform to collect log data on a scheduled basis.
 
+!!! tip "Looking for step-by-step setup instructions?"
+    See the [Integration Guides](../integrations/index.md) for vendor-specific prerequisites, credential creation walkthroughs, and troubleshooting for all 39 supported integrations.
+
 ## Supported Integrations
 
 | Vendor | Integrations |

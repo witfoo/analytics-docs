@@ -85,6 +85,14 @@ free -h
 !!! tip
     For nodes with limited memory, consider reducing the number of enabled parsers and integrations.
 
+## Integration-Specific Troubleshooting
+
+For issues related to specific data source integrations (authentication errors,
+rate limiting, missing data), see the per-vendor troubleshooting sections in the
+[Integration Enablement Guides](integrations/index.md), or the shared
+[Common Integration Troubleshooting](integrations/common-troubleshooting.md)
+page covering connection, authentication, rate limiting, and data flow diagnostics.
+
 ## Log Locations
 
 | Source | Location |
