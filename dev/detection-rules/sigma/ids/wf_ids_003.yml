@@ -1,0 +1,36 @@
+title: Zeek Notice Event
+id: 4dc0777c-148e-55cf-855a-2a88fcc7f7fc
+custom_id: wf-ids-003
+status: stable
+level: high
+description: |
+    Detects Zeek (formerly Bro) notice events, which are higher-level network
+    analysis findings including protocol violations, certificate anomalies,
+    and behavioral detections from Zeek's scripting engine.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.discovery
+    - attack.t1046
+references:
+    - https://zeek.org/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        streamName|contains:
+            - "zeek_notice"
+            - "zeek_weird"
+    condition: selection
+fields:
+    - clientIP
+    - serverIP
+    - serverPort
+    - protocol
+    - ruleName
+    - message
+    - streamName
+falsepositives:
+    - Benign protocol anomalies from legacy systems
+    - Network configuration changes causing temporary notice floods

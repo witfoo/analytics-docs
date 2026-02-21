@@ -1,0 +1,36 @@
+title: Brute Force Indicator
+id: 8aab7806-a54b-59a6-9a1b-9970f42ec97d
+custom_id: wf-auth-002
+status: stable
+level: high
+description: |
+    Detects high-severity authentication failures that may indicate active
+    brute force attempts. These single-event indicators are enriched by
+    WitFoo's lead rule engine to flag repeated failures.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.credential_access
+    - attack.t1110.001
+references:
+    - https://attack.mitre.org/techniques/T1110/001/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "auth_failure"
+        severityLabel:
+            - "high"
+            - "critical"
+    condition: selection
+fields:
+    - clientIP
+    - serverIP
+    - userName
+    - application
+    - severityCode
+    - matchedLeadRules
+falsepositives:
+    - Account lockout events from legitimate users
+    - Automated testing systems with expired credentials

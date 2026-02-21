@@ -1,0 +1,34 @@
+title: ICMP Anomaly Detection
+id: 6e60bb4d-2021-5b0a-9c2a-f5ac65779aee
+custom_id: wf-net-006
+status: stable
+level: medium
+description: |
+    Detects anomalous ICMP traffic patterns that may indicate ICMP tunneling,
+    covert channels, or network reconnaissance. Large ICMP payloads or unusual
+    ICMP types can signify data exfiltration or C2 communication.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.command_and_control
+    - attack.t1095
+references:
+    - https://attack.mitre.org/techniques/T1095/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        protocol: "ICMP"
+    filter_large_payload:
+        totalBytes|gte: 1024
+    condition: selection and filter_large_payload
+fields:
+    - clientIP
+    - serverIP
+    - totalBytes
+    - streamName
+falsepositives:
+    - Path MTU discovery
+    - Network diagnostic tools (ping with large payloads)
+    - Traceroute operations

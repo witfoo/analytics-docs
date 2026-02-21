@@ -1,0 +1,35 @@
+title: Privilege Escalation
+id: d134c547-be64-589a-94eb-fe05969ead09
+custom_id: wf-auth-004
+status: stable
+level: critical
+description: |
+    Detects privilege escalation events where a user or process gains elevated
+    access beyond their normal permissions. This is a critical security event
+    that may indicate exploitation of vulnerabilities or misconfigurations.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.privilege_escalation
+    - attack.t1068
+references:
+    - https://attack.mitre.org/techniques/T1068/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "privilege_escalation"
+    condition: selection
+fields:
+    - clientIP
+    - serverIP
+    - userName
+    - program
+    - cve
+    - severityLabel
+    - matchedLeadRules
+falsepositives:
+    - Authorized sudo usage by system administrators
+    - Service account elevation during scheduled maintenance
+    - Installer programs requiring temporary elevation

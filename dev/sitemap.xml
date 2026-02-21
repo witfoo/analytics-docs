@@ -469,6 +469,62 @@
          <lastmod>2026-02-21</lastmod>
     </url>
     <url>
+         <loc>https://witfoo.github.io/analytics-docs/latest/detection-rules/</loc>
+         <lastmod>2026-02-21</lastmod>
+    </url>
+    <url>
+         <loc>https://witfoo.github.io/analytics-docs/latest/detection-rules/platforms/opensearch/</loc>
+         <lastmod>2026-02-21</lastmod>
+    </url>
+    <url>
+         <loc>https://witfoo.github.io/analytics-docs/latest/detection-rules/platforms/sentinel/</loc>
+         <lastmod>2026-02-21</lastmod>
+    </url>
+    <url>
+         <loc>https://witfoo.github.io/analytics-docs/latest/detection-rules/platforms/splunk/</loc>
+         <lastmod>2026-02-21</lastmod>
+    </url>
+    <url>
+         <loc>https://witfoo.github.io/analytics-docs/latest/detection-rules/rules/authentication/</loc>
+         <lastmod>2026-02-21</lastmod>
+    </url>
+    <url>
+         <loc>https://witfoo.github.io/analytics-docs/latest/detection-rules/rules/cloud/</loc>
+         <lastmod>2026-02-21</lastmod>
+    </url>
+    <url>
+         <loc>https://witfoo.github.io/analytics-docs/latest/detection-rules/rules/compliance/</loc>
+         <lastmod>2026-02-21</lastmod>
+    </url>
+    <url>
+         <loc>https://witfoo.github.io/analytics-docs/latest/detection-rules/rules/correlations/</loc>
+         <lastmod>2026-02-21</lastmod>
+    </url>
+    <url>
+         <loc>https://witfoo.github.io/analytics-docs/latest/detection-rules/rules/data-loss/</loc>
+         <lastmod>2026-02-21</lastmod>
+    </url>
+    <url>
+         <loc>https://witfoo.github.io/analytics-docs/latest/detection-rules/rules/filters/</loc>
+         <lastmod>2026-02-21</lastmod>
+    </url>
+    <url>
+         <loc>https://witfoo.github.io/analytics-docs/latest/detection-rules/rules/ids/</loc>
+         <lastmod>2026-02-21</lastmod>
+    </url>
+    <url>
+         <loc>https://witfoo.github.io/analytics-docs/latest/detection-rules/rules/infrastructure/</loc>
+         <lastmod>2026-02-21</lastmod>
+    </url>
+    <url>
+         <loc>https://witfoo.github.io/analytics-docs/latest/detection-rules/rules/malware/</loc>
+         <lastmod>2026-02-21</lastmod>
+    </url>
+    <url>
+         <loc>https://witfoo.github.io/analytics-docs/latest/detection-rules/rules/network/</loc>
+         <lastmod>2026-02-21</lastmod>
+    </url>
+    <url>
          <loc>https://witfoo.github.io/analytics-docs/latest/getting-started/</loc>
          <lastmod>2026-02-21</lastmod>
     </url>

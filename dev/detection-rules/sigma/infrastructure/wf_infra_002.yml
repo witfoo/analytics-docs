@@ -1,0 +1,33 @@
+title: Degraded Hardware Alert
+id: 9c2fd067-2bde-5277-b736-500b2d549772
+custom_id: wf-infra-002
+status: stable
+level: medium
+description: |
+    Detects hardware health degradation alerts from infrastructure monitoring
+    systems. Includes disk failures, memory errors, CPU thermal events, and
+    power supply issues that may affect system availability.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.impact
+    - attack.t1499
+references:
+    - https://attack.mitre.org/techniques/T1499/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "degraded_hardware"
+    condition: selection
+fields:
+    - serverIP
+    - serverHostname
+    - application
+    - message
+    - severityLabel
+    - matchedLeadRules
+falsepositives:
+    - Predictive maintenance alerts for components within acceptable thresholds
+    - SMART drive warnings for drives already scheduled for replacement

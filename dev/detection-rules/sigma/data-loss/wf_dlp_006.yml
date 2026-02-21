@@ -1,0 +1,44 @@
+title: Unauthorized File Transfer
+id: b66c2977-3f6b-5d5f-a90b-f199836711a2
+custom_id: wf-dlp-006
+status: stable
+level: high
+description: |
+    Detects file transfer activity to destinations not on the approved list,
+    including FTP, SCP, and other file transfer protocols carrying potentially
+    sensitive data to unauthorized servers.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.exfiltration
+    - attack.t1041
+references:
+    - https://attack.mitre.org/techniques/T1041/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection_protocol:
+        protocol|contains:
+            - "FTP"
+            - "SCP"
+            - "SFTP"
+    selection_port:
+        serverPort:
+            - "21"
+            - "22"
+            - "69"
+        fileName|re: ".+"
+    condition: selection_protocol or selection_port
+fields:
+    - clientIP
+    - serverIP
+    - serverPort
+    - protocol
+    - fileName
+    - totalBytes
+    - userName
+falsepositives:
+    - Authorized SFTP transfers to partner systems
+    - Backup operations using SCP
+    - Firmware updates via TFTP
