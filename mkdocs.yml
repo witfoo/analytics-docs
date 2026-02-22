@@ -217,6 +217,7 @@ nav:
           - Exporters: conductor/ui/exporters.md
           - Log Servers: conductor/ui/log-servers.md
           - Users & Auth: conductor/ui/users.md
+          - Notifications: conductor/ui/notifications.md
       - Integration Guides:
           - conductor/integrations/index.md
           - Endpoint Security:
@@ -289,6 +290,8 @@ nav:
           - Splunk: detection-rules/platforms/splunk.md
           - OpenSearch: detection-rules/platforms/opensearch.md
           - Microsoft Sentinel: detection-rules/platforms/sentinel.md
+  - Console:
+      - console/index.md
   - Reference:
       - reference/index.md
       - Permissions: reference/permissions.md

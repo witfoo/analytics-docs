@@ -40,6 +40,7 @@ https://<conductor-hostname>/
 | `/admin/settings/integrations` | [API Integration Management](integrations.md) |
 | `/admin/settings/artifact-exporters` | [Export Destination Configuration](exporters.md) |
 | `/admin/settings/log-servers` | [Log Server Configuration](log-servers.md) |
+| `/admin/settings/notifications` | [Notification Management](notifications.md) |
 
 ## Real-Time Updates
 
