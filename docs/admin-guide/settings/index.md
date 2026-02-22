@@ -16,6 +16,10 @@ Enable compliance frameworks and set the primary framework.
 
 Configure LDAP, SAML, and local authentication settings.
 
+### [SAML SSO](saml-sso.md)
+
+Step-by-step guide for enabling SAML 2.0 SSO with Okta, Azure AD, Google Workspace, and other IdPs.
+
 ### [Notifications](notifications.md)
 
 Set up email, Slack, and webhook notification channels.
