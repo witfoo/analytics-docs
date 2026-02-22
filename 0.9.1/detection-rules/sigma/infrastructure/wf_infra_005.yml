@@ -1,0 +1,38 @@
+title: Infrastructure Exploit Attempt
+id: 89099789-c049-554d-8e43-b5233eee7d83
+custom_id: wf-infra-005
+status: stable
+level: critical
+description: |
+    Detects exploit attempts targeting infrastructure components including
+    web servers, application servers, databases, and network devices. Matches
+    events classified as exploit attempts with associated CVE identifiers.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.initial_access
+    - attack.t1190
+references:
+    - https://attack.mitre.org/techniques/T1190/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection_type:
+        messageType: "exploit_attempt"
+    selection_cve:
+        cve|re: "^CVE-\\d{4}-\\d+"
+    condition: selection_type or selection_cve
+fields:
+    - clientIP
+    - serverIP
+    - serverPort
+    - cve
+    - cveDescription
+    - uri
+    - matchedLeadRules
+    - severityLabel
+falsepositives:
+    - Vulnerability scanner probes
+    - Security penetration testing activities
+    - Proof-of-concept research against test environments

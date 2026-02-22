@@ -1,0 +1,41 @@
+title: Long-Lived Network Connection
+id: 4a280e86-419b-5e46-abe9-2df70020709b
+custom_id: wf-net-008
+status: stable
+level: medium
+description: |
+    Detects network connections with abnormally long durations that may indicate
+    persistent C2 channels, data exfiltration tunnels, or compromised hosts
+    maintaining backdoor connections. Flags connections classified as anomalous
+    behavior by WitFoo enrichment.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.command_and_control
+    - attack.t1071
+references:
+    - https://attack.mitre.org/techniques/T1071/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "anomalous_behavior"
+        protocol|contains:
+            - "TCP"
+            - "SSL"
+            - "TLS"
+    condition: selection
+fields:
+    - clientIP
+    - serverIP
+    - serverPort
+    - protocol
+    - totalBytes
+    - startTimeUTC
+    - endTimeUTC
+falsepositives:
+    - VPN and SSH tunnels for remote administration
+    - Database connection pools
+    - Monitoring agent persistent connections
+    - WebSocket-based real-time applications

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "workbookDisplayName": {
+      "type": "string",
+      "defaultValue": "WitFoo Network Overview",
+      "metadata": {
+        "description": "Display name for the workbook"
+      }
+    },
+    "workbookType": {
+      "type": "string",
+      "defaultValue": "workbook",
+      "metadata": {
+        "description": "The gallery type of the workbook"
+      }
+    },
+    "workspaceResourceId": {
+      "type": "string",
+      "metadata": {
+        "description": "Log Analytics workspace resource ID"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Insights/workbooks",
+      "apiVersion": "2022-04-01",
+      "name": "[guid('witfoo-network-overview')]",
+      "location": "[resourceGroup().location]",
+      "kind": "shared",
+      "properties": {
+        "category": "[parameters('workbookType')]",
+        "displayName": "[parameters('workbookDisplayName')]",
+        "serializedData": "[string(createObject('version', 'Notebook/1.0', 'items', createArray(createObject('type', 1, 'content', createObject('json', '## WitFoo Network Overview\\n\\nNetwork traffic analysis from WitFoo artifact exports via the artifact-exporter service.'), 'name', 'header'), createObject('type', 3, 'content', createObject('version', 'KqlParameterItem/1.0', 'parameters', createArray(createObject('id', 'timeRange', 'name', 'TimeRange', 'type', 4, 'isRequired', true, 'value', createObject('durationMs', 86400000), 'typeSettings', createObject('selectableValues', createArray(createObject('durationMs', 3600000), createObject('durationMs', 14400000), createObject('durationMs', 43200000), createObject('durationMs', 86400000), createObject('durationMs', 604800000)))))), 'name', 'parameters'), createObject('type', 3, 'content', createObject('version', 'KqlItem/1.0', 'query', 'WitFoo_CL\\n| where TimeGenerated {TimeRange}\\n| summarize EventCount=count() by bin(TimeGenerated, 1h)\\n| order by TimeGenerated asc\\n| render timechart', 'size', 0, 'title', 'Traffic Volume Over Time', 'queryType', 0, 'resourceType', 'microsoft.operationalinsights/workspaces'), 'name', 'trafficVolume'), createObject('type', 3, 'content', createObject('version', 'KqlItem/1.0', 'query', 'WitFoo_CL\\n| where TimeGenerated {TimeRange}\\n| summarize UniqueSourceIPs=dcount(clientIP_s), UniqueDestIPs=dcount(serverIP_s), TotalConnections=count(), TotalBytes=sum(totalBytes_d)\\n| project UniqueSourceIPs, UniqueDestIPs, TotalConnections, TotalBytes=format_bytes(TotalBytes)', 'size', 4, 'title', 'Connection Summary', 'queryType', 0, 'resourceType', 'microsoft.operationalinsights/workspaces'), 'name', 'connectionSummary'), createObject('type', 3, 'content', createObject('version', 'KqlItem/1.0', 'query', 'WitFoo_CL\\n| where TimeGenerated {TimeRange}\\n| summarize Connections=count() by clientIP_s\\n| top 20 by Connections\\n| project SourceIP=clientIP_s, Connections', 'size', 0, 'title', 'Top Source IPs', 'queryType', 0, 'resourceType', 'microsoft.operationalinsights/workspaces'), 'name', 'topSourceIPs'), createObject('type', 3, 'content', createObject('version', 'KqlItem/1.0', 'query', 'WitFoo_CL\\n| where TimeGenerated {TimeRange}\\n| summarize Connections=count() by serverIP_s\\n| top 20 by Connections\\n| project DestinationIP=serverIP_s, Connections', 'size', 0, 'title', 'Top Destination IPs', 'queryType', 0, 'resourceType', 'microsoft.operationalinsights/workspaces'), 'name', 'topDestIPs'), createObject('type', 3, 'content', createObject('version', 'KqlItem/1.0', 'query', 'WitFoo_CL\\n| where TimeGenerated {TimeRange}\\n| summarize Count=count() by protocol_s\\n| order by Count desc\\n| render piechart', 'size', 0, 'title', 'Protocol Distribution', 'queryType', 0, 'resourceType', 'microsoft.operationalinsights/workspaces'), 'name', 'protocolDist'), createObject('type', 3, 'content', createObject('version', 'KqlItem/1.0', 'query', 'WitFoo_CL\\n| where TimeGenerated {TimeRange}\\n| summarize TotalBytes=sum(totalBytes_d) by bin(TimeGenerated, 1h)\\n| order by TimeGenerated asc\\n| render timechart', 'size', 0, 'title', 'Bytes Transferred Over Time', 'queryType', 0, 'resourceType', 'microsoft.operationalinsights/workspaces'), 'name', 'bytesTimechart'), createObject('type', 3, 'content', createObject('version', 'KqlItem/1.0', 'query', 'WitFoo_CL\\n| where TimeGenerated {TimeRange}\\n| where isnotempty(serverPort_d)\\n| summarize Connections=count() by tostring(toint(serverPort_d))\\n| top 15 by Connections\\n| render barchart', 'size', 0, 'title', 'Top Destination Ports', 'queryType', 0, 'resourceType', 'microsoft.operationalinsights/workspaces'), 'name', 'topPorts'), createObject('type', 3, 'content', createObject('version', 'KqlItem/1.0', 'query', 'WitFoo_CL\\n| where TimeGenerated {TimeRange}\\n| where isnotempty(geoRegion_s)\\n| summarize Connections=count() by geoRegion_s\\n| top 20 by Connections\\n| render barchart', 'size', 0, 'title', 'Geographic Regions', 'queryType', 0, 'resourceType', 'microsoft.operationalinsights/workspaces'), 'name', 'geoRegions'))))]",
+        "sourceId": "[parameters('workspaceResourceId')]"
+      }
+    }
+  ]
+}

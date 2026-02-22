@@ -1,0 +1,34 @@
+title: Data Exfiltration
+id: 4a9c6988-4b05-51d0-b019-fa76a56d3a5a
+custom_id: wf-dlp-002
+status: stable
+level: critical
+description: |
+    Detects data exfiltration events where sensitive data is being transferred
+    to unauthorized external destinations. This is a critical alert requiring
+    immediate investigation and response.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.exfiltration
+    - attack.t1041
+references:
+    - https://attack.mitre.org/techniques/T1041/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "data_exfiltration"
+    condition: selection
+fields:
+    - clientIP
+    - serverIP
+    - userName
+    - totalBytes
+    - protocol
+    - matchedLeadRules
+    - severityLabel
+falsepositives:
+    - Authorized cloud file sharing (OneDrive, SharePoint)
+    - Approved data transfers to business partners
