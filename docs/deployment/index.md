@@ -111,6 +111,49 @@ WitFoo Analytics consists of the following core services:
 !!! info "Default Credentials"
     The default administrator account is `admin` / `F00theN0ise!`. Change this password immediately after first login.
 
+## Production Readiness Checklist
+
+Before deploying WitFoo Analytics to production, verify the following:
+
+### Load Balancer Configuration
+
+- [ ] **HSTS headers** enabled on the load balancer or reverse proxy (`Strict-Transport-Security: max-age=31536000; includeSubDomains`)
+- [ ] **SSL termination** configured with valid TLS certificates
+- [ ] Health check endpoint configured (e.g., `/api/v1/status`)
+
+### Trusted Proxies
+
+- [ ] Set `WF_TRUSTED_PROXIES` environment variable with the comma-separated list of trusted proxy IPs for correct forwarded header processing
+- [ ] Verify `X-Forwarded-For`, `X-Forwarded-Proto`, and `X-Real-IP` headers are passed correctly
+
+### Security Headers
+
+The reverse-proxy automatically applies 7 OWASP security headers to all responses:
+
+| Header | Value |
+|---|---|
+| `X-Content-Type-Options` | `nosniff` |
+| `X-Frame-Options` | `DENY` |
+| `X-XSS-Protection` | `0` |
+| `Referrer-Policy` | `strict-origin-when-cross-origin` |
+| `Content-Security-Policy` | Restrictive default policy |
+| `Permissions-Policy` | Restrictive feature policy |
+| `Strict-Transport-Security` | `max-age=31536000; includeSubDomains` |
+
+### Database Credentials
+
+- [ ] Cassandra credentials are auto-generated per node during WFA installation -- do not use default credentials in production
+- [ ] Verify Cassandra is not exposed on public network interfaces
+
+### Network Hardening
+
+- [ ] Restrict internal service ports (8080, 8082, 8090, 4222, 9042) to the host or internal network only
+- [ ] Only expose the reverse-proxy port (443) externally
+- [ ] Configure firewall rules to limit inter-node communication to required ports
+
+!!! warning "Environment Variables"
+    See the [Environment Variables](../reference/environment-variables.md) reference for all security-related configuration options including `WF_TRUSTED_PROXIES`, `AUTH_CONFIG_ENCRYPTION_KEY`, and `WF_JWT_SECRET`.
+
 ## Next Steps
 
 - [Docker Compose Reference](docker-compose.md) -- Compose file details, service definitions, and ports

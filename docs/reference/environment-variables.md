@@ -30,8 +30,10 @@ Complete reference for WitFoo Analytics environment variables.
 
 | Variable | Default | Description |
 | --- | --- | --- |
-| `AUTH_CONFIG_ENCRYPTION_KEY` | (empty) | AES-256-GCM encryption key (base64) |
+| `AUTH_CONFIG_ENCRYPTION_KEY` | (empty) | AES-256-GCM encryption key for encrypting LDAP/SAML credentials at rest (base64-encoded) |
 | `ANALYTICS_SECRET` | (empty) | HMAC-SHA256 secret for Conductor auth |
+| `WF_TRUSTED_PROXIES` | (empty) | Comma-separated list of trusted proxy IPs for forwarded header processing |
+| `WF_JWT_SECRET` | (auto) | Shared JWT secret for Conductor SSO; auto-generated when not set |
 
 ## Feature Flags
 
@@ -40,6 +42,7 @@ Complete reference for WitFoo Analytics environment variables.
 | `WF_LICENSE` | (empty) | Intel API license for framework sync |
 | `VITE_UI_MODULES` | `all` | UI module visibility |
 | `REVERSE_PROXY_MODE` | `false` | Enable proxy header trust for Conductor UI |
+| `WF_DEMO_MODE` | `false` | Enable demo mode with sample data and guided onboarding |
 
 ## Monitoring
 
@@ -56,3 +59,9 @@ Complete reference for WitFoo Analytics environment variables.
 | `CASSANDRA_HEAP` | `1G` | JVM heap size |
 | `CASSANDRA_NEWSIZE` | `200M` | JVM new generation size |
 | `DATA_NODE_HOSTS` | (empty) | External Cassandra hosts (comma-separated) |
+
+## Localization
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `default_locale` | `en` | Default locale for AI background tasks such as playbook analysis (set via business settings) |

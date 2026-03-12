@@ -147,6 +147,8 @@ nav:
           - Business Metrics: admin-guide/settings/business-metrics.md
           - Frameworks: admin-guide/settings/frameworks.md
           - Authentication: admin-guide/settings/authentication.md
+          - Microsoft Sentinel: admin-guide/settings/sentinel.md
+          - Localization: admin-guide/settings/localization.md
           - Notifications: admin-guide/settings/notifications.md
           - Certificates: admin-guide/settings/certificates.md
       - Conductor: admin-guide/conductor.md

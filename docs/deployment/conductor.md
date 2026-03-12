@@ -55,6 +55,20 @@ ANALYTICS_SECRET=your-shared-secret
 # Same secret in conductor-node.json
 ```
 
+## SAML Authentication in Conductor UI
+
+When deployed in AIO (All-in-One) mode with SSO enabled, the Conductor UI inherits SAML authentication from the analytics reverse proxy. The SAML Provider Wizard is available in the Conductor UI settings at **Settings** > **Authentication**, providing the same guided 7-step configuration as the analytics UI.
+
+Key details for Conductor SAML:
+
+- Conductor UI runs with `REVERSE_PROXY_MODE=true`, trusting `X-Auth-*` headers from the analytics reverse proxy
+- A shared `WF_JWT_SECRET` enables JWT-based SSO between analytics and conductor
+- The `/conductor/status` endpoint remains unauthenticated to allow NavBar visibility checks
+- SAML auth fallback (`?auth_fallback=true`) works on the conductor login page as well
+
+!!! info "SSO Prerequisite"
+    SAML must be configured in the analytics **Admin** > **Settings** > **Authentication** page first. The conductor inherits the authentication configuration from the analytics stack.
+
 ## Docker Network
 
 Both stacks share an external network:

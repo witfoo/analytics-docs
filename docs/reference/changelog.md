@@ -17,6 +17,30 @@ Version history for WitFoo products.
 - **Disconnected Network Support** — Self-hosted IBM Plex fonts for air-gapped deployments
 - **CI Quality Gates** — Race detection, security scanning, release branch handling
 
+## v0.9.3 (2026-03-12)
+
+### Features
+- SAML onboarding wizard with provider presets (Azure AD, Okta, OneLogin, PingIdentity)
+- SAML wizard ported to conductor-ui and console-ui
+- Microsoft Sentinel integration connector
+- SAML auth fallback with redirect loop detection
+- Te Reo Maori (mi) locale -- 7th supported language
+- AI language awareness for summaries and chat
+- Classification rules management page
+- Features settings page
+- SP key pair auto-generation for SAML
+- SAML configuration test endpoint
+
+### Bug Fixes
+- 25 pre-release bug fixes (PR189) across AI, signals, playbooks, CyberGrid, and conductor
+- Work unit layout consolidated from 10 to 5 tabs
+- Production deployment hardening (HSTS, trusted proxies, security headers)
+
+### Infrastructure
+- Cassandra seeder consolidation (DDL/DML separation)
+- WFA v2.0.36 with dependency updates
+- 89 i18n keys across 7 locales for SAML wizard
+
 ## dev (Initial Release)
 
 - Initial documentation site created

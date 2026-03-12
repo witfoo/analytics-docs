@@ -39,6 +39,16 @@ The interactive wizard configures:
 | `wfa analytics status` | Show service status |
 | `wfa analytics upgrade` | Upgrade to new version |
 
+## Current Version
+
+The latest WFA release is **v2.0.36**, which includes dependency updates, container resilience improvements, and SAML wizard support.
+
+## Authentication Configuration
+
+WFA deployments support SAML single sign-on configuration through the built-in wizard, available in both conductor-ui and console-ui settings pages. The wizard provides provider presets for Azure AD, Okta, OneLogin, and PingIdentity with automatic SP key pair generation.
+
+For detailed SAML setup instructions, see [Authentication Settings](../admin-guide/settings/authentication.md).
+
 ## Hardware Validation
 
 The `install` command validates hardware against the role's minimum requirements before proceeding:
