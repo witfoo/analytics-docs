@@ -1,0 +1,27 @@
+title: Multi-Source C2 Beaconing
+id: e3a7f8fd-f93a-50dc-a1a0-a4eaa19f1074
+custom_id: wf-corr-007
+status: stable
+type: value_count
+rules:
+    - wf-net-002
+group-by:
+    - serverIP
+timespan: 60m
+condition:
+    field: clientIP
+    gte: 3
+description: |
+    Detects a single C2 server receiving beaconing connections from 3 or more
+    distinct internal hosts within 60 minutes. Multiple infections communicating
+    with the same C2 infrastructure indicates a widespread compromise requiring
+    coordinated response.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.command_and_control
+    - attack.t1071.001
+level: critical
+falsepositives:
+    - CDN or cloud service endpoints contacted by many hosts
+    - Legitimate SaaS applications with periodic check-ins
