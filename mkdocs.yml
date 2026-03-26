@@ -300,4 +300,5 @@ nav:
       - Roles: reference/roles.md
       - Environment Variables: reference/environment-variables.md
       - Cassandra Schema: reference/cassandra-schema.md
+      - EULA: reference/eula.md
       - Changelog: reference/changelog.md
