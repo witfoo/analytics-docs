@@ -1,81 +1,171 @@
-# End User License Agreement
+# WitFoo Software License Agreement
 
-**30-Day Trial Period End User License Agreement**
+This Software License Agreement and attached exhibits ("Agreement") is made by and between **WitFoo, Inc.**, having its principal place of business at 2494 Jett Ferry Rd, Suite 255, Dunwoody, GA 30338 ("Licensor" or "WitFoo"), and the customer entity ("Licensee").
 
 ---
 
-READ THESE TERMS CAREFULLY BEFORE DOWNLOADING, INSTALLING OR USING THIS SOFTWARE. BY DOWNLOADING OR INSTALLING THIS SOFTWARE, YOU ACKNOWLEDGE THAT YOU HAVE READ THIS 30-DAY TRIAL PERIOD END USER LICENSE AGREEMENT ("AGREEMENT"), THAT YOU UNDERSTAND IT, AND THAT YOU AGREE TO BE BOUND BY ALL OF THE TERMS. IF YOU ARE ENTERING INTO THIS AGREEMENT ON BEHALF OF A COMPANY OR OTHER LEGAL ENTITY, YOU REPRESENT THAT YOU HAVE THE AUTHORITY TO BIND SUCH ENTITY AND ITS AFFILIATES TO THESE TERMS AND CONDITIONS, IN WHICH CASE THE TERMS "YOU" OR "YOUR" SHALL REFER TO SUCH ENTITY AND ITS AFFILIATES. IF YOU DO NOT HAVE SUCH AUTHORITY, OR IF YOU DO NOT AGREE WITH THESE TERMS AND CONDITIONS, YOU MUST NOT DOWNLOAD OR INSTALL THIS SOFTWARE.
-
-This Agreement is by and between WitFoo, Inc., a Delaware limited liability company ("Licensor" or "WitFoo") and the customer, individual or entity ("Licensee") accessing the Software for this 30-Day Trial Period.
-
-## Definitions
+## 1. Definitions
 
 "Documentation" means the explanatory materials published and generally available in print, electronic or online for Licensee delivered with the Software, including online help, and as updated from time to time.
 
-"Software" means only the WitFoo software (WitFoo Precinct (inclusive of Detective, Lieutenant, Patrolman and Library) and/or WitFoo Evidence Locker) and/or code, Upgrades, Updates, and Documentation accessible to Licensee.
+"Perpetual" means an indefinite Software license, except as otherwise set forth herein or in the attached Exhibits.
 
-## Software License Grant and Property Rights
+"Software" means only the licensed WitFoo software, code, Upgrades, Updates, and Documentation. Software is further defined and identified in Exhibit A attached hereto.
 
-Subject to the terms of this Agreement, Licensor hereby grants Licensee a limited, revocable (automatically upon thirty (30) days from acceptance of this Agreement), non-sublicensable, non-transferable, non-exclusive license to use the Software as set forth herein only for Licensee's internal evaluation for business use during and only in accordance with the Agreement.
+"Updates" are related to content of the Software, including, without limitation, signature sets, policy updates, and database updates for the Software as part of the Maintenance and Support Services and are made generally available to Licensees who are current on subscription payments.
 
-The Software, whether or not provided to Licensee, is strictly confidential to Licensor. WitFoo exclusively owns and reserves all rights, title, and interest in and to the Software, including, without limitation, all intellectual property rights in and to the Software, except to the extent of the limited Software license granted in this Agreement. This Agreement is only for a 30-day trial period and is not an agreement of sale, and no title, intellectual property rights, trademark(s), patent(s), pending applications, or ownership rights to the Software are transferred pursuant to this Agreement. Licensee acknowledges and agrees that the Software and all ideas, methods, algorithms, formulae, processes, and concepts used in developing or incorporated into the Software, all future Updates and Upgrades, and all other improvements, revisions, corrections, bug-fixes, hot-fixes, patches, modifications, enhancements, releases, DATs, signature sets, upgrades, and policy and database updates and other updates in, of, or to the Software, all derivative works based upon any of the foregoing, and all copies of the foregoing are trade secrets and proprietary property of WitFoo, and have great commercial value to WitFoo. Licensee may provide feedback (which may be oral or written) to Licensor on the functions, operation, and utility of the Software and encouraged to provide prompt reports of any issues, bugs or service errors (collectively "Feedback"). Licensee agrees that any Feedback provided (including, without limitation, feature suggestions and corrections to problems in the Software and/or documentation) becomes the property of Licensor and that Licensor may use or exploit the same without any accounting or any payment to Licensee.
+"Upgrade" means any and all improvements in the Software as part of the Maintenance and Support Services and are made generally available to Licensees who are current on subscription payments.
 
-## License Restrictions
+"Maintenance and Support" are those services provided to a Licensee which has specifically purchased these services along with a Perpetual or Subscription license as identified in Exhibit A and further explained in Exhibit B.
+
+"Subscription" means Software which is licensed only for the period of time ("Term") set forth herein or in the attached Exhibit A.
+
+## 2. Software License Grant and Property Rights
+
+Subject to the terms of this Agreement, Licensor hereby grants Licensee a limited, non-sublicensable, non-transferable, non-exclusive license to use the Software as set forth in Exhibit A only for Licensee's internal business use during the Term of the Agreement and only in accordance with the corresponding Documentation that accompanies the Software. Licensee is not granted rights to Updates and Upgrades unless purchased separately or as part of the Maintenance and Support Services.
+
+The Software, whether or not provided to Licensee, is strictly confidential to Licensor. WitFoo exclusively owns and reserves all rights, title, and interest in and to the Software, including, without limitation, all intellectual property rights in and to the Software, except to the extent of the limited Software license granted in this Agreement. This Agreement is not an agreement of sale, and no title, intellectual property rights, trademark(s), patent(s), pending applications, or ownership rights to the Software are transferred pursuant to this Agreement. Licensee acknowledges and agrees that the Software and all ideas, methods, algorithms, formulae, processes, and concepts used in developing or incorporated into the Software, all future Updates and Upgrades, and all other improvements, revisions, corrections, bug-fixes, hot-fixes, patches, modifications, enhancements, releases, DATs, signature sets, upgrades, and policy and database updates and other updates in, of, or to the Software, all derivative works based upon any of the foregoing, and all copies of the foregoing are trade secrets and proprietary property of WitFoo, and have great commercial value to WitFoo.
+
+Licensee acknowledges and agrees that WitFoo collects several statistics as support data which are automatically encrypted and sent to a WitFoo library every minute. Statistics are gathered on items such as the CPU, disk and memory usage, parsing errors, and engine performance, which are evaluated to enhance the product and better support Licensee with Software deployment. Licensee may provide feedback (which may be oral or written) to Licensor on the functions, operation, and utility of the Software and encouraged to provide prompt reports of any issues, bugs or service errors (collectively "Feedback"). Licensee agrees that any Feedback provided (including, without limitation, feature suggestions and corrections to problems in the Software and/or documentation) becomes the property of Licensor and that Licensor may use or exploit the same without any accounting or any payment to Licensee.
+
+## 3. License Restrictions
 
 Except as expressly and unambiguously permitted by this Agreement, Licensee shall not, nor permit anyone else to, directly or indirectly:
 
 1. Copy, modify, or distribute the Software or any part thereof;
 2. Reverse engineer, disassemble, decompile or otherwise attempt to discover the source code or structure, sequence and organization of the Software (except where the foregoing is expressly prohibited by applicable local law, and then only to the extent so prohibited);
 3. Rent, lend, lease, or use the Software for timesharing or service bureau purposes, or otherwise use the Software on behalf of any third party;
-4. Use the Software for performing comparisons or other "benchmarking" activities; sell, market, license, sublicense, distribute, or otherwise grant to any person or entity any right to use the Software except to the extent expressly permitted in this Agreement; either alone or in connection with any software (and Licensee will not publish or disclose any such performance information or comparisons); or
-5. Use the Software in contravention to any applicable laws or government regulations.
+4. Exceed the number of licenses as set forth in Exhibit A;
+5. Use the Software for performing comparisons or other "benchmarking" activities; sell, market, license, sublicense, distribute, or otherwise grant to any person or entity any right to use the Software except to the extent expressly permitted in this Agreement; either alone or in connection with any software (and Licensee will not publish or disclose any such performance information or comparisons); or
+6. Use the Software in contravention to any applicable laws or government regulations.
 
 Licensee shall maintain and not remove or obscure any proprietary notices on the Software. As between the parties, title, ownership rights, and intellectual property rights in and to the Software, and any copies or portions thereof, shall remain in Licensor and its suppliers or licensors. Licensee understands that Licensor may modify or discontinue offering the Software at any time. The Software and documentation is protected by the copyright laws of the United States and international copyright treaties. This Agreement does not give Licensee any rights not expressly granted herein.
 
-## Limitation of Liability
+## 4. Support and Upgrades
 
-FOR ALL EVENTS AND CIRCUMSTANCES, LICENSOR'S AGGREGATE AND CUMULATIVE LIABILITY ARISING OUT OF OR RELATING TO THIS AGREEMENT, INCLUDING WITHOUT LIMITATION ON ACCOUNT OF PERFORMANCE OR NON-PERFORMANCE OF OBLIGATIONS, REGARDLESS OF THE FORM OF THE CAUSE OF ACTION, WHETHER IN CONTRACT, TORT (INCLUDING WITHOUT LIMITATION NEGLIGENCE), STATUTE OR OTHERWISE WILL BE LIMITED TO DIRECT DAMAGES AND WILL NOT TO EXCEED THE AMOUNT.
+This Agreement does not entitle Licensee to any support, upgrades, patches, enhancements, or fixes for the Software (collectively, "Maintenance and Support Services") unless Licensee is under a current Maintenance and Support Services agreement or Subscription Agreement. Any such Maintenance and Support Services for the Software that may be made available by Licensor will be subject to this Agreement. After the termination or expiration of the Maintenance and Support Services term, Licensee may contact Licensor or Licensor may contact Licensee to discuss the continuation of support and maintenance for the Software on the Licensor's standard then-existing support and maintenance terms. All Maintenance and Support Services provided hereunder are subject to the terms of this Agreement and its exhibits.
 
-## Disclaimer of Damages
+## 5. Fees
 
-NOTWITHSTANDING ANYTHING TO THE CONTRARY CONTAINED IN THIS AGREEMENT, IN NO EVENT WILL LICENSOR BE LIABLE TO LICENSEE OR ITS AFFILIATES FOR DAMAGES OTHER THAN DIRECT DAMAGES, INCLUDING, WITHOUT LIMITATION, ANY INCIDENTAL, CONSEQUENTIAL, SPECIAL, INDIRECT, EXEMPLARY OR PUNITIVE DAMAGES, WHETHER ARISING IN TORT, CONTRACT, OR OTHERWISE; LICENSOR WILL ALSO NOT BE LIABLE TO LICENSEE FOR ANY DAMAGES ARISING OUT OF OR IN CONNECTION WITH ANY MALFUNCTIONS, REGULATORY NON-COMPLIANCE, DELAYS, LOSS OF DATA, LOST PROFITS, LOST SAVINGS, INTERRUPTION OF SERVICE, LOSS OF BUSINESS OR ANTICIPATORY PROFITS, EVEN IF LICENSOR HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. THE LICENSOR'S AGGREGATE LIABILITY UNDER OR IN CONNECTION WITH THIS AGREEMENT WILL BE LIMITED TO THE AMOUNT THAT LICENSEE PAID ($0.00) TO LICENSOR UNDER THIS AGREEMENT.
+Licensee shall pay Licensor the fees for the Software and any Support Services as set forth in Exhibit A, within 30 days from invoice. All fees shall be non-refundable and payable in US dollars on the date they come due. Licensee shall also pay all sales, use, value-added and other taxes, tariffs and duties of any type except for taxes on Licensor's income.
 
-SOME STATE LAWS DO NOT ALLOW CERTAIN LIMITATIONS AND DISCLAIMERS OF DAMAGES. IF THESE LAWS APPLY TO LICENSEE, IT MAY HAVE ADDITIONAL RIGHTS.
+If Licensee provides credit card information to Licensor, Licensee authorizes Licensor to charge such credit card for all Fees listed in Exhibit A, including any renewal subscription term(s) and Maintenance and Support Services. Such charges shall be made in advance, either annually or in accordance with any different billing frequency stated herein or Licensor's subsequent invoices. If any charges are not received from Licensee by the due date, then at Licensor's discretion, such charges may accrue late interest at the rate of 1.5% of the outstanding balance per month, or the maximum rate permitted by law, whichever is lower, from the date such payment was due until the date paid. If any amount owing by Licensee under the Agreement is 15 or more days overdue or if Licensee's credit card is not valid, in the event of payment by credit card, Licensee shall be considered in default of this Agreement and Licensor may, without limiting its other rights and remedies, accelerate Licensee's unpaid fee obligations so that all such obligations become immediately due and payable, and suspend Licensor's Services to Licensee until such amounts are paid in full.
 
-## Warranty
+At its discretion and subject to the foregoing, Licensor may reinstate Licensee at any time following a suspension or cancellation of the Software and Maintenance and Support services by paying all sums owing from the due date or otherwise assessed above, which would have been paid had the Fees at issue been timely paid; provided, however, that such cancellation was not due to Licensee's default or non-performance of this Agreement.
 
-THE SOFTWARE IS PROVIDED "AS IS" AND WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, INCLUDING THE IMPLIED WARRANTIES OF MERCHANTABILITY, NON-INFRINGEMENT, AND FITNESS FOR A PARTICULAR PURPOSE. LICENSOR DOES NOT GUARANTEE OR WARRANT THAT THE USE OF THE SOFTWARE WILL BE UNINTERRUPTED, COMPLY WITH REGULATORY REQUIREMENTS, OR BE ERROR FREE OR THAT LICENSOR WILL CORRECT ALL SOFTWARE ERRORS. LICENSEE agrees that it is solely responsible for its use and evaluation of the Software.
-
-## Indemnification
+## 6. Indemnity
 
 Licensor will defend and hold harmless at its own expense any action against Licensee brought by a third party to the extent that the action is based upon a claim that the Software infringes any known U.S. patents or copyrights or misappropriates any trade secrets recognized as such under the Uniform Trade Secret Law, so long as Licensee: (a) promptly notifies Licensor in writing after learning of the suit or claim; (b) gives Licensor the authority to defend or settle the suit or claim (provided that Licensor does not agree to any settlement that requires you to pay money or make any admissions); and (c) gives Licensor all available non-privileged information and assistance reasonably requested by Licensor concerning the suit or claim.
 
-Licensor shall have no obligation pursuant to this Section if the infringement is caused by (i) the modification of the Software other than by Licensor; or (ii) the combination of the Software with other software not provided by Licensor; or (iii) the use of other than the most current version of the Software, if the current version would be non-infringing and has been made available to the Licensee.
+LICENSOR SHALL HAVE NO OBLIGATION PURSUANT TO THIS SECTION IF THE INFRINGEMENT IS CAUSED BY (I) THE MODIFICATION OF THE SOFTWARE OTHER THAN BY LICENSOR; OR (II) THE COMBINATION OF THE SOFTWARE WITH OTHER SOFTWARE NOT PROVIDED BY LICENSOR; OR (III) THE USE OF OTHER THAN THE MOST CURRENT VERSION OF THE SOFTWARE, IF THE CURRENT VERSION WOULD BE NON-INFRINGING AND HAS BEEN MADE AVAILABLE TO THE LICENSEE.
 
 If the unmodified Software becomes, or in Licensor's opinion is likely to become, the subject of a claim of infringement or misappropriation, Licensor may, at its option and expense, use its reasonable efforts to (i) modify or replace the Software to be non-infringing while giving equivalent performance and functionality, or (ii) obtain for the Licensee the right to continue using the Software. If it is not reasonably practicable to perform either of the above options, then Licensor may terminate this Agreement with respect to the infringing Software and refund to Licensee the License fees paid by Licensee less a prorated amount for Licensee's use.
 
-Licensee shall indemnify and hold harmless Licensor from any claims, damages, liabilities, costs and fees (including reasonable attorney fees) arising from Licensee's misuse of the Software as well as from Licensee's failure to comply with any term of this Agreement. The foregoing states Licensor's entire obligation and your exclusive remedy for claims of patent or copyright infringement, or trade secret misappropriation, by the Software.
+LICENSEE SHALL INDEMNIFY AND HOLD HARMLESS LICENSOR FROM ANY CLAIMS, DAMAGES, LIABILITIES, COSTS AND FEES (INCLUDING REASONABLE ATTORNEY FEES) ARISING FROM LICENSEE'S MISUSE OF THE SOFTWARE AS WELL AS FROM LICENSEE'S FAILURE TO COMPLY WITH ANY TERM OF THIS AGREEMENT. THE FOREGOING STATES LICENSOR'S ENTIRE OBLIGATION AND YOUR EXCLUSIVE REMEDY FOR CLAIMS OF PATENT OR COPYRIGHT INFRINGEMENT, OR TRADE SECRET MISAPPROPRIATION, BY THE SOFTWARE.
 
-## Term and Termination
+## 7. Warranties and Disclaimer
 
-The Term of this Agreement shall take effect immediately on the date Licensee accepts this Agreement ("Effective Date") and will continue for a period of thirty (30) days ("Trial Period"), and automatically terminate at the end of the Trial Period. Parties may terminate this Agreement at any time. Any termination of this Agreement shall also terminate the licenses granted hereunder. Upon termination of this Agreement for any reason, Licensee shall destroy and remove from all computers, hard drives, networks, and other storage media all copies of the Software.
+Licensor warrants that the Software will perform in substantial accordance with the Documentation for a period of ninety (90) days from delivery (the "Warranty Period"). If the Software does not perform as warranted, Licensor shall undertake to correct the Software, or if the correction of the Software is not reasonably possible, replace such Software free of charge with conforming Software. If neither of the foregoing is commercially practicable, Licensor shall terminate this Agreement with respect to the non-conforming Software and refund the monies paid by Licensee attributable to such non-conforming Software. THE FOREGOING ARE LICENSEE'S SOLE AND EXCLUSIVE REMEDIES FOR BREACH OF WARRANTY. The warranty set forth above is made to and for the benefit of Licensee and will be enforceable against Licensor only if: the Software has been used at all times in accordance with the instructions for such use; and Licensee has not made or caused to be made modifications, alterations or additions to the Software that cause it to deviate from the Documentation.
 
-## Confidentiality
+THE ABOVE LIMITED WARRANTY WILL NOT APPLY IF: (I) THE SOFTWARE IS NOT USED IN ACCORDANCE WITH THIS AGREEMENT OR THE DOCUMENTATION; (II) THE SOFTWARE OR ANY PART THEREOF HAS BEEN MODIFIED BY ANY ENTITY OTHER THAN LICENSOR OR (III) A MALFUNCTION IN THE SOFTWARE HAS BEEN CAUSED BY ANY EQUIPMENT OR SOFTWARE NOT SUPPLIED BY LICENSOR. EXCEPT FOR THE LIMITED WARRANTY SET FORTH ABOVE THE SOFTWARE IS PROVIDED "AS IS". NO RIGHTS OR REMEDIES REFERRED TO ARTICLE 2A OF THE UNIFORM COMMERCIAL CODE WILL BE CONFERRED UNLESS EXPRESSLY GRANTED HEREIN. LICENSOR DOES NOT MAKE (AND HAS NOT AUTHORIZED ANYONE TO MAKE) ANY REPRESENTATIONS OR WARRANTIES, AND LICENSOR DISCLAIMS ALL REPRESENTATIONS, WARRANTIES, AND CONDITIONS, ORAL OR WRITTEN, EXPRESS OR IMPLIED, ARISING FROM COURSE OF DEALING, COURSE OF PERFORMANCE, OR USAGE IN TRADE, OR OTHERWISE, INCLUDING, WITHOUT LIMITATION, IMPLIED WARRANTIES OF MERCHANTABILITY, QUALITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, NON-INFRINGEMENT, OR SYSTEMS INTEGRATION. WITHOUT LIMITING THE FOREGOING, LICENSOR MAKES NO WARRANTY, REPRESENTATION, OR GUARANTEE AS TO THE SOFTWARE'S USE OR PERFORMANCE AND DOES NOT WARRANT, REPRESENT, OR GUARANTEE THAT THE OPERATION OF THE SOFTWARE WILL BE FAIL-SAFE, UNINTERRUPTED, OR FREE FROM ERRORS OR DEFECTS OR THAT THE SOFTWARE WILL PROTECT AGAINST ALL POSSIBLE THREATS.
+
+## 8. Limitation of Liability
+
+UNDER NO CIRCUMSTANCES AND UNDER NO LEGAL THEORY, INCLUDING, BUT NOT LIMITED TO, TORT, CONTRACT, NEGLIGENCE, STRICT LIABILITY, OR OTHERWISE, SHALL LICENSOR OR ITS SUPPLIERS OR RESELLERS BE LIABLE TO LICENSEE OR ANY OTHER PERSON FOR ANY (I) INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES OF ANY CHARACTER INCLUDING, WITHOUT LIMITATION, DAMAGES FOR LOST PROFITS, LOSS OF GOODWILL, WORK STOPPAGE, ACCURACY OF RESULTS, COMPUTER FAILURE OR MALFUNCTION, OR DAMAGES RESULTING FROM LICENSEE'S USE OF THE SOFTWARE; (II) COST OF PROCUREMENT OF SUBSTITUTE GOODS OR TECHNOLOGY; OR (III) ANY MATTER BEYOND ITS REASONABLE CONTROL. NOTWITHSTANDING ANYTHING TO THE CONTRARY, LICENSOR'S LIABILITY FOR DAMAGES OF ANY KIND WHATSOEVER ARISING OUT OF THIS AGREEMENT SHALL BE LIMITED TO THE FEES PAID BY LICENSEE HEREUNDER DURING THE 12 MONTHS IMMEDIATELY PRECEDING THE EVENT GIVING RISE TO SUCH CLAIM. THE FOREGOING LIMITATIONS SHALL APPLY EVEN IF LICENSOR HAS BEEN INFORMED OF THE POSSIBILITY OF SUCH DAMAGES.
+
+THE LIMITATION OF LIABILITY IN THIS SECTION IS BASED ON THE FACT THAT LICENSORS USE THEIR COMPUTERS FOR DIFFERENT PURPOSES. THEREFORE, ONLY LICENSOR CAN IMPLEMENT BACK-UP PLANS AND SAFEGUARDS APPROPRIATE TO LICENSOR'S NEEDS IN THE EVENT THAT AN ERROR IN THE SOFTWARE CAUSES COMPUTER PROBLEMS AND RELATED DATA LOSSES. FOR THESE BUSINESS REASONS, LICENSOR AGREES TO THE LIMITATIONS OF LIABILITY IN THIS SECTION AND ACKNOWLEDGES THAT WITHOUT LICENSOR'S AGREEMENT TO THIS PROVISION, THE FEE CHARGED FOR THE SOFTWARE WOULD BE HIGHER.
+
+## 9. Term and Termination
+
+The Term of this Agreement shall be set forth in Exhibit A. Licensee may terminate this Agreement at any time. Licensor may terminate this Agreement immediately if Licensee is in breach of any provision of this Agreement and fails to cure such breach to such party's reasonable satisfaction within thirty (30) days following receipt of written notice thereof. Any termination of this Agreement shall also terminate the licenses granted hereunder. Upon termination of this Agreement for any reason, Licensee shall destroy and remove from all computers, hard drives, networks, and other storage media all copies of the Software, and shall so certify to Licensor in writing that such actions have occurred. Licensor shall have the right to inspect and audit Licensee's facilities to confirm the foregoing. Sections 2, 4 and 6 through 12, and all accrued rights to payment, shall survive termination of this Agreement as well as any legal rights to seek injunctive relief.
+
+## 10. Confidentiality
 
 Each party acknowledges that it may be furnished with or may otherwise receive or have access to information or material of the other party that relates to past, present or future Software(s), software (including Source Code and Object Code), research development, inventions, processes, techniques, designs or technical information and data, and marketing plans (the "Confidential Information"). Each party agrees to preserve and protect the confidentiality of the Confidential Information, pricing, and all physical forms, whether disclosed to the other party before this Agreement is signed or afterward. Licensee accepts responsibility for the actions of its agents or employees and shall protect Licensor's Confidential Information in the same manner as it protects its own valuable confidential information, but in no event shall less than reasonable care be used. In addition, a party will not disclose or disseminate the Confidential Information for its own benefit or for the benefit or any third party unless otherwise provided in this Agreement.
 
-The foregoing obligations do not apply to any information that (1) is publicly known; (2) is given to a party by a third party who is not obligated to maintain confidentiality; or (3) a party had already lawfully developed prior to the day this Agreement is signed, as evidenced by documents, unless otherwise provided herein. The Licensee may disclose Confidential Information pursuant to court order from a court of competent jurisdiction provided that it immediately gives the Licensor written notice to permit the Licensor time to contest such disclosure, and such disclosure is otherwise limited to the required disclosure. Neither party will take or cause to be taken any physical forms of Confidential Information (nor make copies of same) without the other party's written permission. Licensee shall promptly notify the Licensor upon becoming aware of a breach or threatened breach hereunder, and shall cooperate with any reasonable request of the Licensor in enforcing its rights. Despite any other provisions of this Agreement, the requirements of this Section will survive termination of this Agreement. Licensee agrees to share non-identifiable statistics and appliance metrics automatically with Licensor.
+The foregoing obligations do not apply to any information that (1) is publicly known; (2) is given to a party by a third party who is not obligated to maintain confidentiality; or (3) a party had already lawfully developed prior to the day this Agreement is signed, as evidenced by documents, unless otherwise provided herein. The Licensee may disclose Confidential Information pursuant to court order from a court of competent jurisdiction provided that it immediately gives the Licensor written notice to permit the Licensor time to contest such disclosure, and such disclosure is otherwise limited to the required disclosure. Neither party will take or cause to be taken any physical forms of Confidential Information (nor make copies of same) without the other party's written permission. Licensee shall promptly notify the Licensor upon becoming aware of a breach or threatened breach hereunder, and shall cooperate with any reasonable request of the Licensor in enforcing its rights. Despite any other provisions of this Agreement, the requirements of this Section will survive termination of this Agreement. *Licensee agrees to share non-identifiable statistics and appliance metrics automatically with Licensor.*
 
-## Government Use
+## 11. Government Use
 
 If Licensee is part of an agency, department, or other entity of the United States Government ("Government"), the use, duplication, reproduction, release, modification, disclosure or transfer of the Software is restricted in accordance with the Federal Acquisition Regulations as applied to civilian agencies and the Defense Federal Acquisition Regulation Supplement ("DFAR") as applied to military agencies. The Software is a "commercial item," "commercial computer Software" and "commercial computer Software documentation" pursuant to DFAR. In accordance with such provisions, any use of the Software by the Government shall be governed solely by the terms of this Agreement unless otherwise mutually agreed to in writing.
 
-## Export Controls
+## 12. Export Controls
 
 Licensee shall comply with all export laws and restrictions and regulations of the Department of Commerce, the United States Department of Treasury Office of Foreign Assets Control ("OFAC"), or other United States or foreign agency or authority, and Licensee shall not export, or allow the export or re-export of the Software in violation of any such restrictions, laws or regulations. By installing or using the Software, Licensee agrees to the foregoing and represents and warrants that Licensee is not located in, under the control of, or a national or resident of any restricted country.
 
-## General
+## 13. Miscellaneous
 
-This Agreement represents the entire agreement concerning the Software between the parties, to the exclusion of any pre-printed or contrary terms of any Licensee purchase order (or similar document), and supersedes all prior agreements and representations. This Agreement may be amended only by a writing executed by both parties. If any provision of this Agreement is held to be unenforceable for any reason, such provision shall be reformed only to the extent necessary to make the Agreement enforceable. The failure of Licensor to act with respect to a breach of this Agreement by Licensee or others does not constitute a waiver and shall not limit Licensor's rights with respect to such breach or any subsequent breaches. This Agreement will bind and inure to the benefit of permitted successors and assigns. Licensor may assign this Agreement, in whole or in part, without the Licensee's prior written consent. Any attempt to assign this Agreement other than in accordance with this provision shall be void. This Agreement shall be governed by and construed in accordance with the laws of the State of Georgia without regard to its conflicts of law provisions. Unless waived by Licensor in a particular instance, the sole and exclusive jurisdiction and venue for actions arising under this Agreement shall be the State and Federal courts in Georgia and each party hereby consents to the jurisdiction of such courts for any such dispute. The party prevailing in any dispute under this Agreement shall be entitled to its costs and legal fees.
+This Agreement represents the entire agreement concerning the Software between the parties, to the exclusion of any pre-printed or contrary terms of any Licensee purchase order (or similar document), and supersedes all prior agreements and representations. This Agreement may be amended only by a writing executed by both parties. If any provision of this Agreement is held to be unenforceable for any reason, such provision shall be reformed only to the extent necessary to make the Agreement enforceable. The failure of Licensor to act with respect to a breach of this Agreement by Licensee or others does not constitute a waiver and shall not limit Licensor's rights with respect to such breach or any subsequent breaches. This Agreement will bind and inure to the benefit of permitted successors and assigns. Licensor may assign this Agreement, in whole or in part, without the Licensee's prior written consent; subject to prior written consent, which will not be unreasonably withheld, Licensee may assign the Agreement in connection with a merger, sale or acquisition. Any attempt to assign this Agreement other than in accordance with this provision shall be void. This Contract shall be governed by and construed in accordance with the laws of the State of Georgia without regard to its conflicts of law provisions. Unless waived by Licensor in a particular instance, the sole and exclusive jurisdiction and venue for actions arising under this Agreement shall be the State and Federal courts in Georgia and each party hereby consents to the jurisdiction of such courts for any such dispute. The party prevailing in any dispute under this Agreement shall be entitled to its costs and legal fees. All notices required under this Agreement shall be sent to the addresses identified in the first part of the Agreement. The Parties, by like notice in writing, may designate, from time-to-time, another address or office to which notices shall be delivered pursuant to this Contract.
 
-This Agreement shall be binding on Licensee upon clicking "I accept the 30-Day Trial Period End User License Agreement" checkbox. By clicking and accessing Software, you agree to be bound to the terms and conditions contained within this Agreement, and to use Software only as permitted by the express terms of this Agreement.
+## 14. Exhibits
+
+The following Exhibits are attached and incorporated by this reference.
+
+- Exhibit A -- Software and Fees
+- Exhibit B -- Maintenance and Support Services
+
+---
+
+## Exhibit A: Software and Fees
+
+### 1. Software
+
+Pursuant to the terms of the Agreement and this Schedule, Licensor is providing Licensee with a license to the following software (check applicable Software):
+
+**A. Perpetual License**
+
+- WitFoo Precinct
+
+**B. Subscription License**
+
+- WitFoo Precinct
+
+### 2. Maintenance and Support Services
+
+Are those services provided to a Licensee which has specifically purchased them as identified herein and further explained in the Agreement and Exhibit B.
+
+### 3. Fees
+
+The following fees shall compensate Licensor in full for all products and services provided under this Schedule. All fees are due thirty (30) days from the Effective Date.
+
+| Product Name | License Quantity | Term | List Price | Total in USD |
+|---|---|---|---|---|
+| WitFoo Precinct Software License(s) | | Per agreement | | |
+| Annual Maintenance and Support Services | | Per agreement | | |
+| Professional Services | | | | |
+| **Total** | | | | |
+
+---
+
+## Exhibit B: Maintenance and Support Services
+
+During each Maintenance and Support Services term and subject to Licensee being current on Maintenance and Support Services fees, Licensor will provide Licensee with the following Services:
+
+### 1. Help Desk Support
+
+Telephone, email and web-based support to Licensee's technical support personnel during normal business hours between the hours of 8:00 a.m. and 5:00 p.m. Eastern Time, Monday through Friday. Licensee may designate up to three (3) support contacts and provide their names to Licensor.
+
+| Feature | Enterprise Edition |
+|---|---|
+| Technical Support Requests | Unlimited |
+| Designated Support Contacts | Up to 3 |
+| Web Support Portal URL | https://support.WitFoo.com |
+| Email Support Address | support@WitFoo.com |
+| Telephone Support Number | +1 (503) 445-6900 |
+| Support Availability | 8:00 a.m. -- 5:00 p.m. ET (GMT-5), excluding weekends and holidays |
+
+### 2. Software Updates
+
+Updates will be available for electronic download by Licensee. Engineering patches will generally be incorporated into the next released update. Licensor will provide installation and configuration documentation for all updates and will allow Licensee to install and configure the Software as documented.
+
+### 3. Incident Submission
+
+Each issue or incident related to the Software that has been submitted by Licensee for resolution will be issued a tracking number and will be tracked by Licensor. Licensor may acknowledge submission of each issue or incident within fifteen (15) minutes of receipt through automated means (e.g. automated response email) or during normal business hours by direct contact via email or phone by a Licensor technical representative.
+
+### 4. Licensee Obligations
+
+In order for Licensor to provide the Maintenance and Support Services, Licensee will, if applicable: (a) grant to Licensor such reasonable access to Licensee's premises, as will be necessary or appropriate, to enable Licensor to perform its obligations hereunder; (b) fully cooperate with Licensor in providing the Support Services hereunder; (c) provide adequate resources to participate in or facilitate the performance of the Support Services; (d) timely participate in meetings and make its personnel readily available for such meetings; and (e) assign personnel with relevant training and experience to work in consultation with Licensor.
+
+### 5. Reinstatement of Support Services
+
+Licensee's failure to pay an invoice for the Maintenance and Support Services are subject to the terms in the Agreement and the attached exhibits.
