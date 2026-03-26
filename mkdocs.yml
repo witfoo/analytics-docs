@@ -300,5 +300,6 @@ nav:
       - Roles: reference/roles.md
       - Environment Variables: reference/environment-variables.md
       - Cassandra Schema: reference/cassandra-schema.md
-      - Software License Agreement: reference/eula.md
+      - Software License Agreement (U.S.A.): reference/eula-usa.md
+      - Software License Agreement (New Zealand): reference/eula-nz.md
       - Changelog: reference/changelog.md
