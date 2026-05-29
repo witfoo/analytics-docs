@@ -41,7 +41,12 @@ The interactive wizard configures:
 
 ## Current Version
 
-The latest WFA release is **v2.0.36**, which includes dependency updates, container resilience improvements, and SAML wizard support.
+The latest WFA release is **v2.1.17**. Highlights:
+
+- **Container self-healing** — a running container whose environment has drifted from the current node specification (for example, a newly required encryption key added by an upgrade) is recreated automatically within the ~60-second reconcile loop; a configured-but-absent container is likewise recreated, and image pulls fall back to a present local image during a brief registry outage.
+- **Startup-race hardening** — service initialization uses a level-triggered readiness model, eliminating a class of startup deadlocks.
+- **Certificate stability** — the generated local CA is preserved across upgrades (no trust break), and the reverse proxy is supplied with the local CA bundle for Conductor WebSocket/API TLS.
+- **Supply chain** — Go 1.26.3 and refreshed dependencies (22 CVEs closed).
 
 ## Authentication Configuration
 

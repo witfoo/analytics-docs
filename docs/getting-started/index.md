@@ -1,6 +1,6 @@
 # Getting Started
 
-Welcome to WitFoo Analytics v1.0.0 — an enterprise security operations platform for investigation, correlation, and reporting. This guide walks you through deploying your first WitFoo Appliance and completing initial configuration.
+Welcome to WitFoo Analytics — an enterprise security operations platform for investigation, correlation, and reporting. This guide walks you through deploying your first WitFoo Appliance and completing initial configuration.
 
 ## Quick Start Path
 

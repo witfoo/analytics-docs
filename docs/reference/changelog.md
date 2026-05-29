@@ -17,9 +17,54 @@ Version history for WitFoo products.
 - **Disconnected Network Support** — Self-hosted IBM Plex fonts for air-gapped deployments
 - **CI Quality Gates** — Race detection, security scanning, release branch handling
 
+## v0.9.7 (2026-05-29)
+
+Security-hardening and operational-resilience release. Consolidates the hardening work delivered across the 0.9.4–0.9.7 line into a single recommended upgrade.
+
+### Security & Hardening
+
+- Tenant isolation — active organization is derived from the verified session, never from client-supplied request parameters; SAML/LDAP user lookups are scoped per-organization
+- Conductor management UI reachable only through the authenticated reverse proxy; internal trust headers gated behind an IP allowlist (`WF_TRUSTED_PROXIES`)
+- Mandatory secret-key enforcement — `JWT_SECRET` and `AUTH_CONFIG_ENCRYPTION_KEY` fail closed instead of falling back to insecure defaults; stored credentials and AI-provider keys encrypted at rest under a consolidated XChaCha20-Poly1305 key
+- WebSocket authorization enforced before upgrade; origin checking tightened across real-time endpoints
+- Attachment and user-rendered content hardened against script-injection (XSS)
+- Input encoding and bounded query limits; log sanitization and on-disk path containment
+
+### Operational Resilience
+
+- Startup-race sweep — service initialization moved to a level-triggered readiness model, eliminating a class of startup deadlocks
+- Container environment-drift self-heal — a running container missing a newly required environment variable after a WFA upgrade is recreated automatically within ~60 seconds
+- Missing-container self-heal — a configured-but-absent container is recreated automatically; image pulls fall back to a present local image during a brief registry outage
+
+### Conductor & Pipeline
+
+- New opt-in redaction pipeline tokenizes PII before export to downstream SIEMs (requires `REDACTION_MASTER_KEY`)
+- Conductor WebSocket/API TLS and header-auth fix for AIO+Conductor deployments
+- Tenable.io REST asset-inventory parser
+
+### Infrastructure
+
+- Go 1.26.3 and refreshed dependency tree — 22 CVEs closed
+- WFA bumped to v2.1.17
+- New build-discipline guardrails and three operator runbooks (build discipline, submodule pin management, environment-variable drift recovery)
+- Encryption/secret-key configuration reference added
+
+### Upgrade Notes
+
+- `JWT_SECRET` and `AUTH_CONFIG_ENCRYPTION_KEY` are required on the API and Incident Engine (WFA generates them automatically; standalone/Compose deployments use `scripts/dev/generate-secrets.sh`)
+- No database migration; no breaking API changes
+
+## WFA 2.1.17 (2026-05-29)
+
+- Container environment-drift self-heal and missing-container self-heal
+- Startup-race hardening across agent and pipeline services
+- Generated CA preserved across upgrades; `SSL_CERT_FILE` supplied to the reverse proxy for Conductor WebSocket TLS
+- Go 1.26.3, common v1.5.20, dependency CVE remediations
+
 ## v0.9.3 (2026-03-12)
 
 ### Features
+
 - SAML onboarding wizard with provider presets (Azure AD, Okta, OneLogin, PingIdentity)
 - SAML wizard ported to conductor-ui and console-ui
 - Microsoft Sentinel integration connector
@@ -32,11 +77,13 @@ Version history for WitFoo products.
 - SAML configuration test endpoint
 
 ### Bug Fixes
+
 - 25 pre-release bug fixes (PR189) across AI, signals, playbooks, CyberGrid, and conductor
 - Work unit layout consolidated from 10 to 5 tabs
 - Production deployment hardening (HSTS, trusted proxies, security headers)
 
 ### Infrastructure
+
 - Cassandra seeder consolidation (DDL/DML separation)
 - WFA v2.0.36 with dependency updates
 - 89 i18n keys across 7 locales for SAML wizard
