@@ -1,0 +1,35 @@
+title: Anomalous Network Behavior
+id: 7d8315be-17f4-5a48-ba1c-565e88a3680f
+custom_id: wf-ids-005
+status: stable
+level: medium
+description: |
+    Detects anomalous network behavior events that deviate from established
+    baselines. These behavioral anomalies may indicate novel attacks, insider
+    threats, or compromised systems exhibiting unusual communication patterns.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.command_and_control
+    - attack.t1071
+references:
+    - https://attack.mitre.org/techniques/T1071/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "anomalous_behavior"
+    condition: selection
+fields:
+    - clientIP
+    - serverIP
+    - serverPort
+    - protocol
+    - totalBytes
+    - streamName
+    - matchedLeadRules
+falsepositives:
+    - New applications or services creating unfamiliar traffic patterns
+    - Network topology changes affecting traffic baselines
+    - Seasonal or time-based traffic pattern variations

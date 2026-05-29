@@ -1,0 +1,33 @@
+title: Malicious Session Detection
+id: 0827c275-02b9-5e34-9258-d6ad77f373e7
+custom_id: wf-auth-006
+status: stable
+level: high
+description: |
+    Detects sessions classified as malicious by WitFoo's behavioral analysis.
+    This includes sessions exhibiting characteristics of account takeover,
+    session hijacking, or unauthorized access after credential compromise.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.defense_evasion
+    - attack.t1078
+references:
+    - https://attack.mitre.org/techniques/T1078/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "malicious_session"
+    condition: selection
+fields:
+    - clientIP
+    - serverIP
+    - userName
+    - application
+    - matchedLeadRules
+    - severityLabel
+falsepositives:
+    - VPN reconnections from different IP ranges
+    - Shared account usage (should be investigated regardless)

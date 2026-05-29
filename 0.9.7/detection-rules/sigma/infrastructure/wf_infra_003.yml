@@ -1,0 +1,34 @@
+title: Degraded Service Alert
+id: cf160da6-924f-5c99-99d6-f9978d0ddbc4
+custom_id: wf-infra-003
+status: stable
+level: medium
+description: |
+    Detects service health degradation including increased latency, elevated
+    error rates, connection pool exhaustion, and service dependency failures
+    reported by application performance monitoring tools.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.impact
+    - attack.t1499
+references:
+    - https://attack.mitre.org/techniques/T1499/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "degraded_service"
+    condition: selection
+fields:
+    - serverIP
+    - serverHostname
+    - application
+    - action
+    - message
+    - severityLabel
+    - matchedLeadRules
+falsepositives:
+    - Transient network congestion causing brief latency spikes
+    - Deployment rolling updates causing temporary service degradation

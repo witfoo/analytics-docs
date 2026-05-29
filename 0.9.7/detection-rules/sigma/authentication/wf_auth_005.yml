@@ -1,0 +1,40 @@
+title: Administrative Account Activity
+id: 42447905-4754-53b3-9772-dbe5b8c3d8b7
+custom_id: wf-auth-005
+status: stable
+level: medium
+description: |
+    Detects activity by administrative or high-privilege accounts. While not
+    inherently malicious, tracking admin actions provides audit trail for
+    compliance and helps identify compromised privileged accounts.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.persistence
+    - attack.t1078.002
+references:
+    - https://attack.mitre.org/techniques/T1078/002/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        userName|contains:
+            - "admin"
+            - "root"
+            - "Administrator"
+        severityLabel:
+            - "high"
+            - "critical"
+    condition: selection
+fields:
+    - clientIP
+    - serverIP
+    - userName
+    - application
+    - action
+    - streamName
+falsepositives:
+    - Routine system administration tasks
+    - Automated configuration management (Ansible, Puppet, Chef)
+    - Scheduled maintenance windows

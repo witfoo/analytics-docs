@@ -1,0 +1,32 @@
+title: Credential Access Attempt
+id: be26a7dc-4b66-55bc-aa4b-e0069b960f9c
+custom_id: wf-auth-003
+status: stable
+level: high
+description: |
+    Detects credential access attempts including credential dumping, token theft,
+    and keystroke logging indicators classified by WitFoo's artifact enrichment.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.credential_access
+    - attack.t1003
+references:
+    - https://attack.mitre.org/techniques/T1003/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "credential_access"
+    condition: selection
+fields:
+    - clientIP
+    - serverIP
+    - userName
+    - program
+    - filePath
+    - matchedLeadRules
+falsepositives:
+    - Legitimate credential management tools
+    - Password vault or PAM system operations

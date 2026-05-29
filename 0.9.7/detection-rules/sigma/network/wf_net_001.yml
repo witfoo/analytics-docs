@@ -1,0 +1,37 @@
+title: DNS Tunneling Detection
+id: c09dc03e-23e0-5d3c-a605-5d9eb632b6c5
+custom_id: wf-net-001
+status: stable
+level: high
+description: |
+    Detects potential DNS tunneling activity indicated by unusually long DNS query
+    domain names (>100 characters), which may indicate data exfiltration or C2
+    communication via DNS protocol.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.command_and_control
+    - attack.t1071.004
+    - attack.exfiltration
+    - attack.t1048
+references:
+    - https://attack.mitre.org/techniques/T1071/004/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        protocol: "DNS"
+    filter_long_query:
+        fqdn|re: ".{100,}"
+    condition: selection and filter_long_query
+fields:
+    - clientIP
+    - serverIP
+    - fqdn
+    - totalBytes
+    - streamName
+falsepositives:
+    - CDN health check domains with long subdomains
+    - DKIM/SPF verification queries
+    - Legitimate cloud service discovery queries
