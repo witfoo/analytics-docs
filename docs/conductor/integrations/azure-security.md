@@ -6,16 +6,18 @@ tags:
 
 # Azure Security
 
-Collects security alerts and incidents from Microsoft Azure Security services
-including Microsoft Defender for Cloud, Sentinel, and Entra ID, providing
-visibility into cloud workload protection and identity threats.
+Collects security and identity telemetry from Microsoft Azure via the Microsoft
+Graph API — Defender XDR incidents and alerts, Entra ID sign-in and directory
+audit logs, Identity Protection risk detections and risky users, and Microsoft
+Secure Score — providing visibility into cloud workload protection and identity
+threats.
 
 | | |
 |---|---|
 | **Category** | Cloud Security |
 | **Connector Name** | `signal-client.azure-security` |
 | **Auth Method** | OAuth2 (Azure AD — Client ID + Client Secret + Tenant ID) |
-| **Polling Interval** | 5 min (alerts), 15 min (incidents) |
+| **Polling Interval** | 5 min default (configurable) |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [Microsoft Graph Security API](https://learn.microsoft.com/en-us/graph/api/resources/security-api-overview) |
 
@@ -43,10 +45,18 @@ visibility into cloud workload protection and identity threats.
     - **Description**: `WitFoo Conductor`
     - **Expires**: 24 months (recommended)
 7. Copy the **Value** (client secret) — it is only shown once
-8. Navigate to **API permissions** → **Add a permission** → **Microsoft Graph** → **Application permissions**
-    - Add: `SecurityEvents.Read.All`
-    - Add: `SecurityAlert.Read.All` (for v2 alerts)
-9. Click **Grant admin consent** for your organization
+8. Navigate to **API permissions** → **Add a permission** → **Microsoft Graph** → **Application permissions**, and add the following **six** application permissions (all read-only):
+
+    | Permission | Unlocks |
+    |------------|---------|
+    | `SecurityIncident.Read.All` | Defender incidents |
+    | `SecurityAlert.Read.All` | Defender alerts (v2) |
+    | `AuditLog.Read.All` | Entra ID sign-in **and** directory audit logs |
+    | `IdentityRiskEvent.Read.All` | Identity Protection risk detections |
+    | `IdentityRiskyUser.Read.All` | Identity Protection risky users |
+    | `SecurityEvents.Read.All` | Microsoft Secure Score |
+
+9. Click **Grant admin consent for your tenant** and confirm every row shows **Granted**. Application permissions require admin consent, and any later change requires re-consent.
 
 !!! warning "Store Credentials Securely"
     The client secret grants access to your Azure security data. Store it
@@ -95,14 +105,20 @@ After saving, verify the integration is working:
 
 ### Data Collection Details
 
-The Azure Security connector collects data from two Microsoft Graph API
-versions:
+Each polling cycle, the connector pulls **seven** Microsoft Graph v1.0 endpoints.
+Every endpoint is collected independently: if your tenant is not licensed or
+permissioned for one, only that endpoint is skipped (and reported as unavailable)
+— the rest keep flowing.
 
-| Endpoint | Version | Interval | Description |
-|----------|---------|----------|-------------|
-| Security Alerts | v1 | 5 min | Microsoft Defender for Cloud alerts |
-| Security Alerts v2 | v2 | 5 min | Enhanced alerts with typed evidence |
-| Incidents | v1 | 15 min | Correlated incident data from Sentinel |
+| Check | Graph endpoint | Data | Required permission | License |
+|-------|----------------|------|---------------------|---------|
+| Incidents | `/security/incidents` | Correlated Defender XDR incidents | `SecurityIncident.Read.All` | Microsoft Defender XDR |
+| Alerts (v2) | `/security/alerts_v2` | Defender alerts with typed evidence | `SecurityAlert.Read.All` | A Microsoft Defender product |
+| Sign-in logs | `/auditLogs/signIns` | Entra ID interactive sign-ins | `AuditLog.Read.All` | Entra ID **P1** or **P2** |
+| Directory audits | `/auditLogs/directoryAudits` | Entra ID directory change audit | `AuditLog.Read.All` | Entra ID (any; P1/P2 for 30-day retention) |
+| Risk detections | `/identityProtection/riskDetections` | Identity Protection risk events | `IdentityRiskEvent.Read.All` | Entra ID **P2** |
+| Risky users | `/identityProtection/riskyUsers` | Identity Protection risky users | `IdentityRiskyUser.Read.All` | Entra ID **P2** |
+| Secure Score | `/security/secureScores` | Microsoft Secure Score posture | `SecurityEvents.Read.All` | Microsoft 365 / Defender |
 
 #### V2 Alert Evidence Types
 
@@ -126,12 +142,29 @@ Pagination is handled automatically via `@odata.nextLink` response links.
 
 ### Required API Permissions
 
-| Permission | Type | Purpose |
-|------------|------|--------|
-| `SecurityEvents.Read.All` | Application | Read security events (v1 API) |
-| `SecurityAlert.Read.All` | Application | Read security alerts (v2 API) |
+Grant these **six** Microsoft Graph **application** permissions (admin-consented)
+for full coverage of all seven checks. `*.Read.All` is read-only and
+least-privilege, so the `*.ReadWrite.All` variants are never required.
 
-Both permissions require **admin consent** to be granted.
+| Permission | Type | Unlocks |
+|------------|------|---------|
+| `SecurityIncident.Read.All` | Application | Incidents |
+| `SecurityAlert.Read.All` | Application | Alerts (v2) |
+| `AuditLog.Read.All` | Application | Sign-in logs **and** directory audits |
+| `IdentityRiskEvent.Read.All` | Application | Risk detections |
+| `IdentityRiskyUser.Read.All` | Application | Risky users |
+| `SecurityEvents.Read.All` | Application | Secure Score |
+
+All six require **admin consent**, and Microsoft does not apply a permission
+change until an administrator re-consents.
+
+!!! info "License-gated checks are expected, not errors"
+    Some checks require a specific Microsoft license. Without **Entra ID P2**,
+    *Risk detections* and *Risky users* are unavailable; without **P1**,
+    *Sign-in logs*; without a **Defender** product, *Incidents* and *Alerts*.
+    The connector keeps every licensed and permissioned check flowing and reports
+    the rest as unavailable with the reason — add the matching license **and**
+    confirm the permission is consented to enable a gated check.
 
 ## Troubleshooting
 
@@ -141,11 +174,15 @@ Both permissions require **admin consent** to be granted.
 - Ensure the client secret has not expired
 - Check that the app registration exists in the correct Azure AD tenant
 
-### Forbidden (403)
+### Forbidden (403) on one or more checks
 
-- The app registration may lack required API permissions
-- Required: `SecurityEvents.Read.All` and `SecurityAlert.Read.All`
-- Ensure **admin consent** has been granted for the permissions
+- A 403 affects only the specific check whose permission or license is missing —
+  the other checks keep collecting.
+- Confirm the matching **application permission** from the table above is added
+  **and** that **admin consent** has been (re-)granted — a permission added without
+  re-consent still returns 403.
+- If the permission is consented, confirm the tenant holds the required **license**
+  for that check (Entra ID P1/P2, or a Defender product).
 
 ### Rate Limited (429)
 
