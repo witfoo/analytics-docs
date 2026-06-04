@@ -45,7 +45,7 @@ threats.
     - **Description**: `WitFoo Conductor`
     - **Expires**: 24 months (recommended)
 7. Copy the **Value** (client secret) — it is only shown once
-8. Navigate to **API permissions** → **Add a permission** → **Microsoft Graph** → **Application permissions**, and add the following **six** application permissions (all read-only):
+8. Navigate to **API permissions** → **Add a permission** → **Microsoft Graph** → **Application permissions**, and add the following **seven** application permissions (all read-only):
 
     | Permission | Unlocks |
     |------------|---------|
@@ -55,6 +55,7 @@ threats.
     | `IdentityRiskEvent.Read.All` | Identity Protection risk detections |
     | `IdentityRiskyUser.Read.All` | Identity Protection risky users |
     | `SecurityEvents.Read.All` | Microsoft Secure Score |
+    | `SignInIdentifier.Read.All` | User Identifiers |
 
 9. Click **Grant admin consent for your tenant** and confirm every row shows **Granted**. Application permissions require admin consent, and any later change requires re-consent.
 
@@ -105,7 +106,7 @@ After saving, verify the integration is working:
 
 ### Data Collection Details
 
-Each polling cycle, the connector pulls **seven** Microsoft Graph v1.0 endpoints.
+Each polling cycle, the connector pulls **eight** Microsoft Graph v1.0 endpoints.
 Every endpoint is collected independently: if your tenant is not licensed or
 permissioned for one, only that endpoint is skipped (and reported as unavailable)
 — the rest keep flowing.
@@ -119,6 +120,7 @@ permissioned for one, only that endpoint is skipped (and reported as unavailable
 | Risk detections | `/identityProtection/riskDetections` | Identity Protection risk events | `IdentityRiskEvent.Read.All` | Entra ID **P2** |
 | Risky users | `/identityProtection/riskyUsers` | Identity Protection risky users | `IdentityRiskyUser.Read.All` | Entra ID **P2** |
 | Secure Score | `/security/secureScores` | Microsoft Secure Score posture | `SecurityEvents.Read.All` | Microsoft 365 / Defender |
+| User Identifiers | `/users` | Identifier-related fields | `SignInIdentifier.Read.All` | Entra ID (any) / Microsoft 365 E5 |
 
 #### V2 Alert Evidence Types
 
@@ -142,8 +144,8 @@ Pagination is handled automatically via `@odata.nextLink` response links.
 
 ### Required API Permissions
 
-Grant these **six** Microsoft Graph **application** permissions (admin-consented)
-for full coverage of all seven checks. `*.Read.All` is read-only and
+Grant these **seven** Microsoft Graph **application** permissions (admin-consented)
+for full coverage of all eight checks. `*.Read.All` is read-only and
 least-privilege, so the `*.ReadWrite.All` variants are never required.
 
 | Permission | Type | Unlocks |
@@ -154,8 +156,9 @@ least-privilege, so the `*.ReadWrite.All` variants are never required.
 | `IdentityRiskEvent.Read.All` | Application | Risk detections |
 | `IdentityRiskyUser.Read.All` | Application | Risky users |
 | `SecurityEvents.Read.All` | Application | Secure Score |
+| `SignInIdentifier.Read.All` | Application | User Identifiers |
 
-All six require **admin consent**, and Microsoft does not apply a permission
+All seven require **admin consent**, and Microsoft does not apply a permission
 change until an administrator re-consents.
 
 !!! info "License-gated checks are expected, not errors"
