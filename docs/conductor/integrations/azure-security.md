@@ -45,7 +45,7 @@ threats.
     - **Description**: `WitFoo Conductor`
     - **Expires**: 24 months (recommended)
 7. Copy the **Value** (client secret) — it is only shown once
-8. Navigate to **API permissions** → **Add a permission** → **Microsoft Graph** → **Application permissions**, and add the following **seven** application permissions (all read-only):
+8. Navigate to **API permissions** → **Add a permission** → **Microsoft Graph** → **Application permissions**, and add the following **ten** application permissions (all read-only):
 
     | Permission | Unlocks |
     |------------|---------|
@@ -56,6 +56,17 @@ threats.
     | `IdentityRiskyUser.Read.All` | Identity Protection risky users |
     | `SecurityEvents.Read.All` | Microsoft Secure Score |
     | `SignInIdentifier.Read.All` | User Identifiers |
+    | `DeviceManagementManagedDevices.Read.All` | Intune managed-device & detected-app inventory (CSC8 2/4) |
+    | `User.Read.All` | Entra ID user-account inventory (CSC8 5) |
+    | `Device.Read.All` | Entra ID registered/joined device inventory |
+
+    !!! note "Inventory licensing"
+        User **sign-in activity** (`signInActivity` on `/users`) additionally requires
+        **Entra ID P1/P2** plus `AuditLog.Read.All`. The optional
+        `DeviceManagementConfiguration.Read.All` unlocks Intune compliance/configuration
+        policy detail for control 4. These inventory pulls are snapshots on an hourly
+        cadence and **auto-disable** if the tenant lacks the license/permission — the rest
+        keep flowing.
 
 9. Click **Grant admin consent for your tenant** and confirm every row shows **Granted**. Application permissions require admin consent, and any later change requires re-consent.
 
@@ -106,10 +117,11 @@ After saving, verify the integration is working:
 
 ### Data Collection Details
 
-Each polling cycle, the connector pulls **eight** Microsoft Graph v1.0 endpoints.
+Each polling cycle, the connector pulls **twelve** Microsoft Graph v1.0 endpoints.
 Every endpoint is collected independently: if your tenant is not licensed or
 permissioned for one, only that endpoint is skipped (and reported as unavailable)
-— the rest keep flowing.
+— the rest keep flowing. The four **inventory** endpoints are *snapshots* (the full
+list is re-pulled on an hourly cadence, not every cycle).
 
 | Check | Graph endpoint | Data | Required permission | License |
 |-------|----------------|------|---------------------|---------|
@@ -121,6 +133,10 @@ permissioned for one, only that endpoint is skipped (and reported as unavailable
 | Risky users | `/identityProtection/riskyUsers` | Identity Protection risky users | `IdentityRiskyUser.Read.All` | Entra ID **P2** |
 | Secure Score | `/security/secureScores` | Microsoft Secure Score posture | `SecurityEvents.Read.All` | Microsoft 365 / Defender |
 | User Identifiers | `/users` | Identifier-related fields | `SignInIdentifier.Read.All` | Entra ID (any) / Microsoft 365 E5 |
+| Managed devices *(snapshot)* | `/deviceManagement/managedDevices` | Intune device inventory + compliance state | `DeviceManagementManagedDevices.Read.All` | Microsoft Intune |
+| Detected apps *(snapshot)* | `/deviceManagement/detectedApps` | Intune installed-software inventory | `DeviceManagementManagedDevices.Read.All` | Microsoft Intune |
+| Entra users *(snapshot)* | `/users` | User-account inventory (enabled, last sign-in) | `User.Read.All` (+ `AuditLog.Read.All`) | Entra ID (P1/P2 for sign-in activity) |
+| Entra devices *(snapshot)* | `/devices` | Registered/joined device inventory | `Device.Read.All` | Entra ID |
 
 #### V2 Alert Evidence Types
 
@@ -144,8 +160,8 @@ Pagination is handled automatically via `@odata.nextLink` response links.
 
 ### Required API Permissions
 
-Grant these **seven** Microsoft Graph **application** permissions (admin-consented)
-for full coverage of all eight checks. `*.Read.All` is read-only and
+Grant these **ten** Microsoft Graph **application** permissions (admin-consented)
+for full coverage of all twelve checks. `*.Read.All` is read-only and
 least-privilege, so the `*.ReadWrite.All` variants are never required.
 
 | Permission | Type | Unlocks |
@@ -157,8 +173,11 @@ least-privilege, so the `*.ReadWrite.All` variants are never required.
 | `IdentityRiskyUser.Read.All` | Application | Risky users |
 | `SecurityEvents.Read.All` | Application | Secure Score |
 | `SignInIdentifier.Read.All` | Application | User Identifiers |
+| `DeviceManagementManagedDevices.Read.All` | Application | Managed devices **and** detected apps (Intune inventory) |
+| `User.Read.All` | Application | Entra ID user-account inventory |
+| `Device.Read.All` | Application | Entra ID registered/joined device inventory |
 
-All seven require **admin consent**, and Microsoft does not apply a permission
+All ten require **admin consent**, and Microsoft does not apply a permission
 change until an administrator re-consents.
 
 !!! info "License-gated checks are expected, not errors"
@@ -168,6 +187,32 @@ change until an administrator re-consents.
     The connector keeps every licensed and permissioned check flowing and reports
     the rest as unavailable with the reason — add the matching license **and**
     confirm the permission is consented to enable a gated check.
+
+## CSC8 Compliance Coverage
+
+Once the Azure connector is collecting and the data reaches Analytics, these CIS Controls v8
+(`csc8`) controls populate on the **Compliance Reporting** page, each attributed to the
+detecting Microsoft product:
+
+| CSC8 Control | Detecting product | Microsoft data source |
+|--------------|-------------------|-----------------------|
+| 1 — Inventory & Control of Enterprise Assets | Microsoft Defender | Defender for Endpoint device coverage (Intune/Entra device inventory supplements) |
+| 2 — Inventory & Control of Software Assets | Microsoft Intune | Detected apps |
+| 4 — Secure Configuration | Microsoft Intune | Managed-device compliance state |
+| 5 — Account Management | Microsoft Entra ID | User accounts |
+| 6 — Access Control Management | Microsoft Entra ID | Sign-in / directory audit |
+| 7 — Continuous Vulnerability Management | Microsoft Defender | Defender for Endpoint alerts |
+| 9 — Email & Web Browser Protections | Microsoft Defender | Defender for Office 365 alerts |
+| 10 — Malware Defenses | Microsoft Defender | Defender Antivirus / Endpoint alerts |
+
+!!! note "Coverage appears once the product is detected"
+    A control lights up only when its Microsoft product is **detected in your environment**
+    (data flowing). Controls 1/5/6/7/9/10 activate from the Defender and Entra streams already
+    collected above; controls **2** and **4** require the Intune device/app inventory
+    permission (`DeviceManagementManagedDevices.Read.All`) so the inventory snapshots flow. If
+    a control still shows *"No detection configured"*, confirm the integration is connected and
+    the relevant permission is admin-consented — see
+    [Common Troubleshooting](common-troubleshooting.md).
 
 ## Troubleshooting
 
