@@ -20,6 +20,10 @@ Sankey flow diagrams showing artifact-to-incident pipelines, Venn diagrams of pr
 
 FTE analysis, profit & loss table, savings histograms, and security spend as a percentage of revenue.
 
+### [Audit Report](audit-report.md)
+
+Organization-wide configuration-audit snapshot: overall and per-framework compliance, findings by severity, per-connector results, top failing checks, and a 30-day trend. Connectors are configured in the [Auditor](../auditor/index.md) section.
+
 ## Date Range Selection
 
 All reports are filtered by date range. Click the date tag in the report header to open the date range picker. Select from preset ranges (7 days, 30 days, 90 days, 1 year) or choose custom dates.

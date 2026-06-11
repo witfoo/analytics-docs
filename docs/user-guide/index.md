@@ -20,6 +20,10 @@ Track analyst work through work units, organize investigations into work collect
 
 Generate executive reports covering compliance readiness, tool effectiveness, and cost/savings analysis. Date-range filtering and CSV export for all report data.
 
+### [Auditor](auditor/index.md)
+
+Periodic configuration assessment of cloud platforms and vulnerability scanners against CIS Benchmarks, with per-framework compliance, finding drill-down, and structured remediation guidance. Configure connectors under Reporter → Auditor.
+
 ### [CyberGrid](cybergrid/index.md)
 
 Subscribe to and publish threat intelligence feeds. Manage intelligence jobs, browse the threat intelligence library, and share indicators across organizations.

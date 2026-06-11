@@ -44,6 +44,10 @@ Score = (green + yellow nodes) / auto-detectable nodes * 100. Manual-only contro
 
 Two combinable filter dimensions: Compliance status and Focus type.
 
+## Audit Findings
+
+Control rows backed by [Auditor](../auditor/index.md) checks show an **Audit findings (N)** link in the actions column, where N is the number of failing audit checks for that control. The link opens the Auditor **Findings** tab pre-filtered to that framework and control, so you can see and remediate the exact failing checks. It appears only when there are failing findings, independent of whether a detection product is deployed for the control.
+
 ## Delta Indicator
 
 Shows compliance score change across date range snapshots.

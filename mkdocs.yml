@@ -127,6 +127,18 @@ nav:
           - Compliance Readiness: user-guide/reporter/compliance.md
           - Tool Effectiveness: user-guide/reporter/tool-effectiveness.md
           - Cost & Savings: user-guide/reporter/cost-savings.md
+          - Audit Report: user-guide/reporter/audit-report.md
+      - Auditor:
+          - user-guide/auditor/index.md
+          - Connector Setup:
+              - AWS: user-guide/auditor/connectors/aws.md
+              - GCP: user-guide/auditor/connectors/gcp.md
+              - Azure: user-guide/auditor/connectors/azure.md
+              - Microsoft 365: user-guide/auditor/connectors/microsoft-365.md
+              - OCI: user-guide/auditor/connectors/oci.md
+              - Qualys: user-guide/auditor/connectors/qualys.md
+              - Nessus / Tenable: user-guide/auditor/connectors/nessus-tenable.md
+              - Carson & SAINT: user-guide/auditor/connectors/carson-saint.md
       - CyberGrid:
           - user-guide/cybergrid/index.md
           - Subscriptions: user-guide/cybergrid/subscriptions.md
