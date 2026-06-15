@@ -149,6 +149,11 @@ This fallback mechanism is implemented consistently across all three UI backends
 | **Attribute not found** | Missing attribute mapping | Verify IdP sends required attributes (email at minimum); check claim URIs |
 | **Clock skew** | Server time difference > 5 minutes | Synchronize NTP on both WitFoo and IdP servers |
 | **SP key pair mismatch** | Private key doesn't match certificate | Regenerate the key pair using the built-in generator |
+| **"SAML SSO is not configured properly. Contact your administrator."** | The login flow could not load an *enabled* SAML config for the appliance's organization. Most often: SAML is saved but disabled, the SP secret was overwritten by the redaction placeholder on a re-save, or the appliance predates the org-aware SSO-login resolution | Confirm SAML is **enabled** (auth mode `saml` or `mixed_saml`) and saved; re-save **without re-typing the secrets** (the `***REDACTED***` placeholder is preserved server-side); run the diagnostic at the bottom of the Authentication page; ensure the appliance is on a build with org-aware SSO login (see the note below) |
+| **Conductor SSO wizard "Invalid request body" at Test Connection** | A freshly-built wizard config sent empty server-managed timestamps (`created_at`/`updated_at`) the backend could not parse | Update conductor to a build where the SAML config tolerates empty timestamps, then re-run the wizard |
+
+!!! note "SSO login binds to the appliance's primary organization"
+    The **diagnostic** validates the SAML config for the *signed-in administrator's* organization, while the unauthenticated **"Sign in with SSO"** button resolves the appliance's **primary organization** (`WF_ORG_ID`). On a single-tenant appliance these are the same, so configure SAML while signed in as an administrator of the primary organization. If the diagnostic passes but SSO login reports "not configured", the appliance likely predates the org-aware login resolution — update to the latest build.
 
 #### Recovering from Lockout
 

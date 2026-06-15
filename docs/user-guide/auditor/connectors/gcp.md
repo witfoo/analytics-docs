@@ -30,9 +30,44 @@ your enabled compliance frameworks.
 ## Step 1: Create credentials in Google Cloud Platform
 
 1. Open the **Google Cloud Console** and go to **IAM & Admin → Service Accounts**.
-2. Create a service account with read-only **Viewer** (or Security Reviewer) roles.
+2. Create a service account with read-only roles (see [Required APIs and permissions](#required-apis-and-permissions) below).
 3. Create a **JSON key** for the service account and download it.
 4. Note the **Project ID** to audit.
+
+### Required APIs and permissions
+
+*Test Connection* only needs `resourcemanager.projects.get`. A full **audit run** calls five
+Google APIs — **each must be enabled on the audited project** and the service account needs the
+matching read permission. A disabled API is the usual cause of a *"Corporate login required"*
+error (the request is rejected before authentication is evaluated).
+
+Enable all required APIs in one command:
+
+```bash
+gcloud services enable \
+  cloudresourcemanager.googleapis.com iam.googleapis.com \
+  storage.googleapis.com compute.googleapis.com sqladmin.googleapis.com \
+  --project <PROJECT_ID>
+```
+
+| Audit check | Google API | Service-account permission (role) |
+| --- | --- | --- |
+| Project access (Test Connection) | `cloudresourcemanager.googleapis.com` | `resourcemanager.projects.get` (**roles/browser** or **roles/viewer**) |
+| Org-policy domain restriction | `cloudresourcemanager` / `orgpolicy.googleapis.com` | `resourcemanager.projects.getIamPolicy`, `orgpolicy.policy.get` (**roles/iam.securityReviewer**) |
+| Audit logging config | `cloudresourcemanager.googleapis.com` | `resourcemanager.projects.getIamPolicy` (**roles/iam.securityReviewer**) |
+| Service-account key rotation | `iam.googleapis.com` | `iam.serviceAccounts.list`, `iam.serviceAccountKeys.list` (**roles/iam.securityReviewer**) |
+| Public buckets | `storage.googleapis.com` | `storage.buckets.list`, `storage.buckets.getIamPolicy` (**roles/iam.securityReviewer** + a list role) |
+| Default network | `compute.googleapis.com` | `compute.networks.list` (**roles/compute.viewer**) |
+| Cloud SQL SSL | `sqladmin.googleapis.com` | `cloudsql.instances.list`, `cloudsql.instances.get` (**roles/cloudsql.viewer**) |
+
+Simplest grant (covers all checks):
+
+```bash
+for ROLE in roles/iam.securityReviewer roles/cloudsql.viewer roles/compute.viewer roles/storage.objectViewer; do
+  gcloud projects add-iam-policy-binding <PROJECT_ID> \
+    --member="serviceAccount:<SA_EMAIL>" --role="$ROLE"
+done
+```
 
 ## Step 2: Configure in Analytics
 
@@ -58,8 +93,11 @@ your enabled compliance frameworks.
 ## Troubleshooting
 
 - **Authentication failed** — confirm the JSON key is pasted in full and not expired.
-- **Permission denied** — ensure the service account has Viewer/Security Reviewer roles on the project.
+- **Permission denied** — ensure the service account has the roles in [Required APIs and permissions](#required-apis-and-permissions).
 - **Wrong project** — verify the Project ID matches the project you intend to audit.
+- **HTTP 404 on `cloudresourcemanager.googleapis.com/v1/projects/<id>`** — confirm the Project ID is correct and the service account has `resourcemanager.projects.get` (Browser/Viewer) on it. (The connector uses the per-service host; the legacy `www.googleapis.com` host returns 404 for every project.)
+- **"Corporate login required"** — a required **Google API is not enabled** on the project. Run the `gcloud services enable …` command above. If your org uses Context-Aware Access / VPC Service Controls, also confirm the service account is not excluded by an access-level policy.
+- **"Cloud SQL requires SSL"** — if shown as a **finding** (not an error), the check is working as designed: the instance *requires* SSL = **compliant**. If shown as a hard **error** during the run, enable `sqladmin.googleapis.com` and grant **roles/cloudsql.viewer**.
 
 ---
 
