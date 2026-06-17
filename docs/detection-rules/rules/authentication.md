@@ -30,7 +30,6 @@ Detects individual authentication failure events. While a single failure
 may be benign, these events are the building blocks for brute force and
 credential spray correlation rules.
 
-
 **Tags:** `attack.credential_access`, `attack.t1110`
 
 ??? example "Detection Logic"
@@ -49,7 +48,6 @@ credential spray correlation rules.
 Detects high-severity authentication failures that may indicate active
 brute force attempts. These single-event indicators are enriched by
 WitFoo's lead rule engine to flag repeated failures.
-
 
 **Tags:** `attack.credential_access`, `attack.t1110.001`
 
@@ -70,7 +68,6 @@ WitFoo's lead rule engine to flag repeated failures.
 Detects credential access attempts including credential dumping, token theft,
 and keystroke logging indicators classified by WitFoo's artifact enrichment.
 
-
 **Tags:** `attack.credential_access`, `attack.t1003`
 
 ??? example "Detection Logic"
@@ -90,7 +87,6 @@ Detects privilege escalation events where a user or process gains elevated
 access beyond their normal permissions. This is a critical security event
 that may indicate exploitation of vulnerabilities or misconfigurations.
 
-
 **Tags:** `attack.privilege_escalation`, `attack.t1068`
 
 ??? example "Detection Logic"
@@ -109,7 +105,6 @@ that may indicate exploitation of vulnerabilities or misconfigurations.
 Detects activity by administrative or high-privilege accounts. While not
 inherently malicious, tracking admin actions provides audit trail for
 compliance and helps identify compromised privileged accounts.
-
 
 **Tags:** `attack.persistence`, `attack.t1078.002`
 
@@ -131,7 +126,6 @@ Detects sessions classified as malicious by WitFoo's behavioral analysis.
 This includes sessions exhibiting characteristics of account takeover,
 session hijacking, or unauthorized access after credential compromise.
 
-
 **Tags:** `attack.defense_evasion`, `attack.t1078`
 
 ??? example "Detection Logic"
@@ -150,7 +144,6 @@ session hijacking, or unauthorized access after credential compromise.
 Detects defense evasion techniques including log tampering, security tool
 disabling, indicator removal, and other actions intended to avoid detection
 by security monitoring systems.
-
 
 **Tags:** `attack.defense_evasion`, `attack.t1562`
 
@@ -171,7 +164,6 @@ Detects service discovery and network enumeration activity that may indicate
 reconnaissance by an attacker who has gained initial access. Includes port
 scanning, service fingerprinting, and network mapping.
 
-
 **Tags:** `attack.discovery`, `attack.t1046`
 
 ??? example "Detection Logic"
@@ -179,4 +171,3 @@ scanning, service fingerprinting, and network mapping.
     - **messageType**: `service_discovery`
 
 ---
-

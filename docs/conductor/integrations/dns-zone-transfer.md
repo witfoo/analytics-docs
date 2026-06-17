@@ -86,7 +86,8 @@ After saving, verify the integration is working:
     ```
 
     Look for successful transfer messages:
-    ```
+
+    ```text
     [INFO] dns-zone-transfer: fetched <N> records
     ```
 

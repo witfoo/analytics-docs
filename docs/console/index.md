@@ -14,16 +14,19 @@ The WitFoo Console is the centralized management interface for multi-appliance W
 ## Key Features
 
 ### Appliance Management
+
 - Register and monitor Conductor and Analytics appliances
 - View real-time health status across the fleet
 - Approve or reject appliance registration requests
 
 ### User Management
+
 - Local and LDAP authentication
 - Role-based access control (Administrator, Analyst, Viewer)
 - Session-based security with encrypted cookies
 
 ### Disconnected Network Support
+
 - Self-hosted IBM Plex fonts for air-gapped deployments
 - No external CDN dependencies
 - All static assets bundled locally
@@ -32,7 +35,7 @@ The WitFoo Console is the centralized management interface for multi-appliance W
 
 The Console runs on the designated Console node and is accessed via HTTPS:
 
-```
+```text
 https://<console-hostname>/
 ```
 
@@ -40,7 +43,7 @@ https://<console-hostname>/
 
 The Console is deployed as a Docker container managed by WFA:
 
-```
+```text
 ghcr.io/witfoo-dev/console-ui:main
 ```
 

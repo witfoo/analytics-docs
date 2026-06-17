@@ -27,7 +27,6 @@ Detects high-severity Suricata IDS alerts (severity 1-2) forwarded through
 WitFoo's artifact pipeline. These represent the most critical network-based
 threat detections requiring immediate investigation.
 
-
 **Tags:** `attack.initial_access`, `attack.t1190`
 
 ??? example "Detection Logic"
@@ -47,7 +46,6 @@ threat detections requiring immediate investigation.
 Detects Suricata alerts that have been enriched with MITRE ATT&CK technique
 mappings, indicating that the IDS signature corresponds to a known adversary
 technique. These are higher-confidence detections with tactical context.
-
 
 **Tags:** `attack.execution`, `attack.t1059`
 
@@ -69,7 +67,6 @@ Detects Zeek (formerly Bro) notice events, which are higher-level network
 analysis findings including protocol violations, certificate anomalies,
 and behavioral detections from Zeek's scripting engine.
 
-
 **Tags:** `attack.discovery`, `attack.t1046`
 
 ??? example "Detection Logic"
@@ -89,7 +86,6 @@ Detects usage of deprecated TLS versions (TLS 1.0 and TLS 1.1) that are
 no longer considered secure. These connections may be targeted for
 downgrade attacks and violate modern compliance requirements.
 
-
 **Tags:** `attack.command_and_control`, `attack.t1573`
 
 ---
@@ -105,7 +101,6 @@ Detects anomalous network behavior events that deviate from established
 baselines. These behavioral anomalies may indicate novel attacks, insider
 threats, or compromised systems exhibiting unusual communication patterns.
 
-
 **Tags:** `attack.command_and_control`, `attack.t1071`
 
 ??? example "Detection Logic"
@@ -113,4 +108,3 @@ threats, or compromised systems exhibiting unusual communication patterns.
     - **messageType**: `anomalous_behavior`
 
 ---
-

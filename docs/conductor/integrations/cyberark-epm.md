@@ -75,7 +75,8 @@ After saving, verify the integration is working:
     ```
 
     Look for successful authentication messages:
-    ```
+
+    ```text
     [INFO] cyberark-epm: authenticated, fetching events
     ```
 

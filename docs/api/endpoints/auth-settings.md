@@ -51,7 +51,7 @@ Test your SAML configuration before saving. Performs 4 validation checks.
 
 ### Request
 
-```
+```text
 POST /v1/admin/settings/auth/saml/test
 Content-Type: application/json
 ```
@@ -105,7 +105,7 @@ Generate a service provider RSA 2048-bit key pair for SAML request signing.
 
 ### Request
 
-```
+```text
 POST /v1/admin/settings/auth/saml/generate-keypair
 ```
 
@@ -129,7 +129,7 @@ Fetch and parse SAML metadata from an identity provider's metadata URL.
 
 ### Request
 
-```
+```text
 POST /v1/admin/settings/auth/saml/fetch-metadata
 Content-Type: application/json
 ```

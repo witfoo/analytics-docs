@@ -28,7 +28,6 @@ Detects privilege escalation events in cloud environments including
 IAM role assumption, service account key creation, and permission
 boundary modifications.
 
-
 **Tags:** `attack.privilege_escalation`, `attack.t1078.004`
 
 ??? example "Detection Logic"
@@ -48,7 +47,6 @@ boundary modifications.
 Detects infrastructure configuration changes in cloud environments that
 may weaken security posture, including security group modifications,
 firewall rule changes, and logging configuration alterations.
-
 
 **Tags:** `attack.defense_evasion`, `attack.t1562.007`
 
@@ -70,7 +68,6 @@ Detects anomalous cloud API call patterns that may indicate compromised
 credentials, unauthorized automation, or adversary reconnaissance of
 cloud infrastructure.
 
-
 **Tags:** `attack.execution`, `attack.t1106`
 
 ??? example "Detection Logic"
@@ -91,7 +88,6 @@ Detects phishing emails identified by email security gateways or
 WitFoo's threat intelligence enrichment. Phishing is one of the most
 common initial access vectors for cyber attacks.
 
-
 **Tags:** `attack.initial_access`, `attack.t1566`
 
 ??? example "Detection Logic"
@@ -110,7 +106,6 @@ common initial access vectors for cyber attacks.
 Detects when a user clicks on a phishing link, indicating potential
 credential compromise or malware delivery. This is a high-priority event
 requiring immediate user notification and credential reset evaluation.
-
 
 **Tags:** `attack.initial_access`, `attack.t1204.001`
 
@@ -131,7 +126,6 @@ Detects security policy violations including acceptable use violations,
 data handling policy breaches, and compliance control failures detected
 by DLP, CASB, or policy enforcement tools.
 
-
 **Tags:** `attack.defense_evasion`, `attack.t1078`
 
 ??? example "Detection Logic"
@@ -139,4 +133,3 @@ by DLP, CASB, or policy enforcement tools.
     - **messageType**: `policy_violation`
 
 ---
-

@@ -13,7 +13,7 @@ WFA follows a deterministic startup sequence:
 
 ### Dependency Order
 
-```
+```text
 broker-edge
     ├── signal-server
     ├── signal-client

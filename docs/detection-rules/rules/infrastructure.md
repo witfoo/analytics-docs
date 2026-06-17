@@ -27,7 +27,6 @@ Detects service disruption events including denial of service indicators,
 service outages, and availability degradation. May indicate active DDoS
 attacks, resource exhaustion, or infrastructure failures.
 
-
 **Tags:** `attack.impact`, `attack.t1499`
 
 ??? example "Detection Logic"
@@ -46,7 +45,6 @@ attacks, resource exhaustion, or infrastructure failures.
 Detects hardware health degradation alerts from infrastructure monitoring
 systems. Includes disk failures, memory errors, CPU thermal events, and
 power supply issues that may affect system availability.
-
 
 **Tags:** `attack.impact`, `attack.t1499`
 
@@ -67,7 +65,6 @@ Detects service health degradation including increased latency, elevated
 error rates, connection pool exhaustion, and service dependency failures
 reported by application performance monitoring tools.
 
-
 **Tags:** `attack.impact`, `attack.t1499`
 
 ??? example "Detection Logic"
@@ -86,7 +83,6 @@ reported by application performance monitoring tools.
 Detects anomalous activity in financial systems including unauthorized
 transaction patterns, accounting system modifications, and payment
 processing irregularities that may indicate fraud or data manipulation.
-
 
 **Tags:** `attack.impact`, `attack.t1565`
 
@@ -107,8 +103,6 @@ Detects exploit attempts targeting infrastructure components including
 web servers, application servers, databases, and network devices. Matches
 events classified as exploit attempts with associated CVE identifiers.
 
-
 **Tags:** `attack.initial_access`, `attack.t1190`
 
 ---
-

@@ -135,7 +135,7 @@ The Console node provides a centralized management and monitoring interface for 
 
 Deploy a single **Analytics** node for evaluation, lab environments, or small organizations.
 
-```
+```text
 [Data Sources] → [Analytics]
 ```
 
@@ -147,7 +147,7 @@ Deploy a single **Analytics** node for evaluation, lab environments, or small or
 
 Deploy a **Conductor** for data collection and an **Analytics** node for analysis.
 
-```
+```text
 [Data Sources] → [Conductor] → [Analytics]
 ```
 
@@ -159,7 +159,7 @@ Deploy a **Conductor** for data collection and an **Analytics** node for analysi
 
 Deploy **Conductors** at each site, a central **Analytics** node, and a **Console** for management.
 
-```
+```text
 [Site A Sources] → [Conductor A] ──┐
 [Site B Sources] → [Conductor B] ──┤→ [Analytics] ← [Console]
 [Cloud Sources]  → [Conductor C] ──┘

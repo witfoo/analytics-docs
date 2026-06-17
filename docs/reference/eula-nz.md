@@ -152,8 +152,8 @@ Telephone, email and web-based support to Licensee's technical support personnel
 |---|---|
 | Technical Support Requests | Unlimited |
 | Designated Support Contacts | Up to 3 |
-| Web Support Portal URL | https://support.WitFoo.com |
-| Email Support Address | support@WitFoo.com |
+| Web Support Portal URL | <https://support.WitFoo.com> |
+| Email Support Address | <support@WitFoo.com> |
 | Telephone Support Number | +1 (503) 445-6900 |
 | Support Availability | 8:00 a.m. -- 5:00 p.m. US Eastern Time (GMT-5), excluding US weekends and holidays |
 

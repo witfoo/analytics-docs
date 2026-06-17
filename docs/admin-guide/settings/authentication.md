@@ -133,9 +133,11 @@ This fallback mechanism is implemented consistently across all three UI backends
 
 !!! warning "Fallback URL"
     If SAML is completely broken, navigate directly to:
-    ```
+
+    ```text
     https://your-instance/ui/login?auth_fallback=true
     ```
+
     This forces the local login form to appear, allowing administrators to log in and fix the SAML configuration.
 
 ### Troubleshooting

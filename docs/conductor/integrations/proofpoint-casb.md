@@ -74,7 +74,8 @@ After saving, verify the integration is working:
     ```
 
     Look for successful poll messages:
-    ```
+
+    ```text
     [INFO] proofpoint-casb: fetched <N> events
     ```
 

@@ -27,7 +27,6 @@ Detects intrusion detection system (IDS) alerts forwarded through WitFoo's
 artifact pipeline. These are network-based or host-based IDS signatures
 that matched suspicious or malicious traffic patterns.
 
-
 **Tags:** `attack.initial_access`, `attack.t1190`
 
 ??? example "Detection Logic"
@@ -46,7 +45,6 @@ that matched suspicious or malicious traffic patterns.
 Detects intrusion prevention system (IPS) events where protective action
 was taken (block, drop, reset). These indicate the IPS actively prevented
 a detected attack from succeeding.
-
 
 **Tags:** `attack.initial_access`, `attack.t1190`
 
@@ -67,7 +65,6 @@ Detects content filtering events where web content, email content, or
 file content matched a DLP or content inspection policy. May indicate
 sensitive data exposure or policy violations.
 
-
 **Tags:** `attack.command_and_control`, `attack.t1071`
 
 ??? example "Detection Logic"
@@ -86,7 +83,6 @@ sensitive data exposure or policy violations.
 Detects matches against known indicators of compromise (IOCs) from threat
 intelligence feeds. This includes IP addresses, domain names, file hashes,
 and URLs associated with known threat actors or malware campaigns.
-
 
 **Tags:** `attack.command_and_control`, `attack.t1071`
 
@@ -108,7 +104,6 @@ vulnerabilities. Includes open ports, weak encryption, missing patches,
 and non-compliant configurations detected by vulnerability scanners
 or configuration audit tools.
 
-
 **Tags:** `attack.defense_evasion`, `attack.t1562`
 
 ??? example "Detection Logic"
@@ -116,4 +111,3 @@ or configuration audit tools.
     - **messageType**: `iom_match`
 
 ---
-

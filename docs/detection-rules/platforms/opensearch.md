@@ -125,9 +125,11 @@ Convert the 55 DQL rule files into OpenSearch alerting monitors:
 
 !!! warning "No Data in Dashboards"
     Check that documents are flowing to the `witfoo-*` index:
-    ```
+
+    ```text
     GET witfoo-*/_count
     ```
+
     If count is 0, verify the artifact-exporter endpoint and authentication.
 
 !!! warning "Field Type Conflicts"

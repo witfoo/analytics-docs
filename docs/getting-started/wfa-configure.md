@@ -32,7 +32,7 @@ Not every step applies to every role. Use this table as a quick reference:
 
 The wizard begins by collecting your organization details.
 
-```
+```text
 === Organization Information ===
 Organization ID: mycompany
 Organization Name: My Company Inc.
@@ -48,7 +48,7 @@ Organization Name: My Company Inc.
 
 Select the role this appliance will perform in your deployment.
 
-```
+```text
 === Role Selection ===
 Select appliance role:
   1) Conductor
@@ -68,7 +68,7 @@ After selection, the wizard performs a hardware check against the minimum requir
 
 If the host does not meet the minimum requirements, the wizard displays a warning:
 
-```
+```text
 ⚠ WARNING: This host has 4 CPU cores but the Analytics role requires a minimum of 8.
   Performance may be degraded. Continue anyway? [y/N]:
 ```
@@ -86,7 +86,7 @@ The wizard configures your WitFoo license, which determines available features a
 
 **Cloud deployments** (AWS, Azure, Google Cloud marketplace instances):
 
-```
+```text
 === License Configuration ===
 Cloud deployment detected. Fetching license from licensing.witfoo.com...
 License validated successfully.
@@ -99,7 +99,7 @@ The license is automatically retrieved from `licensing.witfoo.com` based on the 
 
 **On-premises deployments:**
 
-```
+```text
 === License Configuration ===
 Select license method:
   1) Enter license key
@@ -110,14 +110,14 @@ Enter selection [1-2]:
 
 **Option 1 — Enter license key:**
 
-```
+```text
 License Key: XXXX-XXXX-XXXX-XXXX
 Validating license... ✓
 ```
 
 **Option 2 — Request 15-day trial:**
 
-```
+```text
 Company Name: My Company Inc.
 Contact Name: Jane Smith
 Contact Email: jane@mycompany.com
@@ -134,7 +134,7 @@ Trial license activated. Expires: 2026-02-01
 
 An Appliance ID uniquely identifies this node within your deployment. This step is **skipped for Console nodes**, which manage other appliances rather than processing data directly.
 
-```
+```text
 === Appliance ID ===
 Auto-generated Appliance ID: a1b2c3d4-e5f6-7890-abcd-ef1234567890
 Accept this ID? [Y/n]:
@@ -149,7 +149,7 @@ The wizard auto-generates a UUID. Accept the default or enter a custom UUID if r
 
 Configure the network identity of this node.
 
-```
+```text
 === Node Hostname and IP ===
 Hostname [wfa-analytics-01]: wfa-analytics-01
 Detected IP address: 10.0.1.50
@@ -161,7 +161,7 @@ Use detected IP? [Y/n]:
 
 If you decline the detected IP:
 
-```
+```text
 Enter IP address: 10.0.1.100
 ```
 
@@ -172,7 +172,7 @@ Enter IP address: 10.0.1.100
 
 This step configures the NATS message broker ports and limits. It appears **only for Conductor nodes**.
 
-```
+```text
 === Network Configuration ===
 Broker client port [4223]: 4223
 Broker leaf node port [4443]: 4443
@@ -190,7 +190,7 @@ Max data size (MB) [1024]: 1024
 
 Configure access to the WitFoo container registry for pulling service images.
 
-```
+```text
 === Registry Configuration ===
 Container registry credentials populated from license validation.
   Registry: registry.witfoo.com
@@ -200,7 +200,7 @@ Container registry credentials populated from license validation.
 
 Registry credentials are automatically populated from the license validation performed in Step 3. If credentials need to be entered manually:
 
-```
+```text
 Registry URL [registry.witfoo.com]: registry.witfoo.com
 Registry Username: mycompany
 Registry Password: ********
@@ -211,14 +211,14 @@ Validating credentials... ✓
 
 Configure TLS certificates for secure communication between nodes and with the web UI.
 
-```
+```text
 === Certificate Configuration ===
 Configure custom TLS certificates? [y/N]:
 ```
 
 If you accept the defaults, the wizard uses self-signed certificates stored under `/witfoo/certs/`. To provide your own certificates:
 
-```
+```text
 Configure custom TLS certificates? [y/N]: y
 
 Client certificate path [/witfoo/certs/client-cert.pem]: /path/to/client-cert.pem
@@ -240,7 +240,7 @@ Validating certificates... ✓
 
 Set the administrative password for the appliance.
 
-```
+```text
 === Admin Password ===
 Enter admin password (min 8 characters): ********
 Confirm admin password: ********
@@ -261,7 +261,7 @@ The wizard presents role-specific optional features. Available options vary by r
 
 ### Conductor Options
 
-```
+```text
 === Optional Features ===
 Enable local metrics (Prometheus/Grafana)? [y/N]: y
 Enable offline mode? [y/N]: n
@@ -278,7 +278,7 @@ Remote console FQDN (leave blank to skip): console.mycompany.com
 
 ### Console Options
 
-```
+```text
 === Optional Features ===
 Enable offline mode? [y/N]: n
 Enable auto-update? [y/N]: y
@@ -289,7 +289,7 @@ Enable auto-update? [y/N]: y
 
 ### Analytics Options
 
-```
+```text
 === Optional Features ===
 Configure data retention policies? [y/N]: y
   Artifact retention (days) [7]: 30
@@ -318,7 +318,7 @@ Configure clustering? [y/N]: n
 
 The wizard displays a summary of all configured settings for review.
 
-```
+```text
 === Configuration Summary ===
 Organization ID:    mycompany
 Organization Name:  My Company Inc.

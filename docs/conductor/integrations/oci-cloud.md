@@ -59,7 +59,7 @@ audit events, logging service data, and Cloud Guard problem detections.
 
 Create an IAM policy for the API user:
 
-```
+```text
 Allow user <username> to read audit-events in tenancy
 Allow user <username> to read log-content in tenancy
 Allow user <username> to read cloud-guard-problems in tenancy
@@ -103,7 +103,8 @@ After saving, verify the integration is working:
     ```
 
     Look for successful poll messages:
-    ```
+
+    ```text
     [INFO] oci-cloud: fetched <N> audit events
     ```
 

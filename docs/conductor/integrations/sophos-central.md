@@ -73,7 +73,8 @@ After saving, verify the integration is working:
     ```
 
     Look for successful authentication and poll messages:
-    ```
+
+    ```text
     [INFO] sophos-central: authenticated via OAuth2
     [INFO] sophos-central: fetched <N> alerts
     ```
