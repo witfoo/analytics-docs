@@ -311,6 +311,8 @@ nav:
           - Microsoft Sentinel: detection-rules/platforms/sentinel.md
   - Console:
       - console/index.md
+      - Configuration Generator: console/configuration-generator.md
+      - Node Management: console/node-management.md
   - Reference:
       - reference/index.md
       - Permissions: reference/permissions.md
