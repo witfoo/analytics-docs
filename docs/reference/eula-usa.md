@@ -112,11 +112,11 @@ The following Exhibits are attached and incorporated by this reference.
 
 Pursuant to the terms of the Agreement and this Schedule, Licensor is providing Licensee with a license to the following software (check applicable Software):
 
-**A. Perpetual License**
+#### A. Perpetual License
 
 - WitFoo Precinct
 
-**B. Subscription License**
+#### B. Subscription License
 
 - WitFoo Precinct
 
@@ -149,8 +149,8 @@ Telephone, email and web-based support to Licensee's technical support personnel
 |---|---|
 | Technical Support Requests | Unlimited |
 | Designated Support Contacts | Up to 3 |
-| Web Support Portal URL | https://support.WitFoo.com |
-| Email Support Address | support@WitFoo.com |
+| Web Support Portal URL | <https://support.WitFoo.com> |
+| Email Support Address | <support@WitFoo.com> |
 | Telephone Support Number | +1 (503) 445-6900 |
 | Support Availability | 8:00 a.m. -- 5:00 p.m. ET (GMT-5), excluding weekends and holidays |
 

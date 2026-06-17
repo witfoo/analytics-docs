@@ -6,7 +6,7 @@ The Artifact Filter is the quality gate between parsing and export. It deduplica
 
 The filter implements a three-stage processing pipeline:
 
-```
+```text
 artifacts.parsed → Deduplication → STIX Enrichment → Predicate Filter → artifacts.final
 ```
 

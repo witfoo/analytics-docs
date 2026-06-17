@@ -44,7 +44,7 @@ graph TD
 
 All pipeline data flows through the **DATA** stream using a hierarchical subject pattern:
 
-```
+```text
 {applianceID}.data.artifacts.{stage}
 ```
 

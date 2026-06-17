@@ -73,7 +73,8 @@ After saving, verify the integration is working:
     ```
 
     Look for successful authentication and poll messages:
-    ```
+
+    ```text
     [INFO] halcyon: authenticated, fetching events
     ```
 

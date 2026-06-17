@@ -27,7 +27,6 @@ Filters out port scan detections originating from known authorized
 vulnerability scanners and asset discovery tools. Customize the
 scanner IP list to match your environment.
 
-
 **Tags:** `attack.discovery`, `attack.t1046`
 
 ??? example "Detection Logic"
@@ -46,7 +45,6 @@ scanner IP list to match your environment.
 Filters out large data transfer alerts caused by authorized backup
 operations. Customize the backup server IPs and schedule windows
 to match your backup infrastructure.
-
 
 **Tags:** `attack.exfiltration`, `attack.t1048`
 
@@ -68,7 +66,6 @@ Service accounts may generate periodic auth failures during credential
 rotation or configuration changes. Customize the service account list
 to match your environment.
 
-
 **Tags:** `attack.credential_access`, `attack.t1110`
 
 ??? example "Detection Logic"
@@ -87,7 +84,6 @@ to match your environment.
 Filters out DNS tunneling false positives caused by CDN health check
 domains, cloud service discovery domains, and other legitimate long
 DNS names. Customize domain patterns to match your environment.
-
 
 **Tags:** `attack.command_and_control`, `attack.t1071.004`
 
@@ -108,7 +104,6 @@ Filters out long-lived connection alerts from known monitoring agents
 and management tools that maintain persistent connections by design.
 Customize agent patterns to match your monitoring infrastructure.
 
-
 **Tags:** `attack.command_and_control`, `attack.t1071`
 
 ??? example "Detection Logic"
@@ -116,4 +111,3 @@ Customize agent patterns to match your monitoring infrastructure.
     - **messageType**: `anomalous_behavior`
 
 ---
-

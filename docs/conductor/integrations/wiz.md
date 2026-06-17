@@ -81,7 +81,8 @@ After saving, verify the integration is working:
     ```
 
     Look for successful poll messages:
-    ```
+
+    ```text
     [INFO] wiz: fetched <N> issues
     ```
 

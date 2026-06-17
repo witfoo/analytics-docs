@@ -6,7 +6,7 @@ The Conductor UI is a web-based management interface for configuring and monitor
 
 The Conductor UI runs internally on port **8000** and is served externally via an HTTPS reverse proxy on port **443**.
 
-```
+```text
 https://<conductor-hostname>/
 ```
 

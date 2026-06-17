@@ -28,7 +28,6 @@ Detects data staging activity where an adversary collects and stages data
 in preparation for exfiltration. This may include copying files to a
 central location, archiving data, or staging data on network shares.
 
-
 **Tags:** `attack.collection`, `attack.t1074`
 
 ??? example "Detection Logic"
@@ -47,7 +46,6 @@ central location, archiving data, or staging data on network shares.
 Detects data exfiltration events where sensitive data is being transferred
 to unauthorized external destinations. This is a critical alert requiring
 immediate investigation and response.
-
 
 **Tags:** `attack.exfiltration`, `attack.t1041`
 
@@ -68,7 +66,6 @@ Detects data destruction events including unauthorized file deletion,
 disk wiping, and database truncation. May indicate a disgruntled insider,
 ransomware cleanup phase, or adversary covering tracks.
 
-
 **Tags:** `attack.impact`, `attack.t1485`
 
 ??? example "Detection Logic"
@@ -88,7 +85,6 @@ Detects large outbound data transfers that exceed typical thresholds,
 potentially indicating data exfiltration via network protocols. Focuses
 on client-originated bytes to external destinations.
 
-
 **Tags:** `attack.exfiltration`, `attack.t1048`
 
 ??? example "Detection Logic"
@@ -107,7 +103,6 @@ on client-originated bytes to external destinations.
 Detects large HTTP POST requests to external servers that may indicate
 data exfiltration via web protocols. Attackers commonly use HTTP/HTTPS
 POST to exfiltrate data as it blends with normal web traffic.
-
 
 **Tags:** `attack.exfiltration`, `attack.t1048.003`
 
@@ -129,8 +124,6 @@ Detects file transfer activity to destinations not on the approved list,
 including FTP, SCP, and other file transfer protocols carrying potentially
 sensitive data to unauthorized servers.
 
-
 **Tags:** `attack.exfiltration`, `attack.t1041`
 
 ---
-

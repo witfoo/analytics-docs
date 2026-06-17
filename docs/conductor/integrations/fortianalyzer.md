@@ -77,7 +77,8 @@ After saving, verify the integration is working:
     ```
 
     Look for successful session messages:
-    ```
+
+    ```text
     [INFO] fortianalyzer: session established, fetching logs
     ```
 

@@ -72,7 +72,8 @@ After saving, verify the integration is working:
     ```
 
     Look for successful poll messages:
-    ```
+
+    ```text
     [INFO] cisco-meraki: fetched <N> events
     ```
 

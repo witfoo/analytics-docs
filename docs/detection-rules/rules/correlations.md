@@ -30,7 +30,6 @@ Correlates multiple authentication failure events from the same source IP
 within a 5-minute window. Five or more failures indicate a likely brute
 force attack requiring investigation and potential IP blocking.
 
-
 **Tags:** `attack.credential_access`, `attack.t1110`
 
 **Type:** `event_count`  
@@ -50,7 +49,6 @@ Correlates authentication failures targeting the same server with 10 or
 more distinct usernames within 15 minutes. This pattern is characteristic
 of credential spraying attacks where an adversary tries common passwords
 across many accounts.
-
 
 **Tags:** `attack.credential_access`, `attack.t1110.003`
 
@@ -73,7 +71,6 @@ are followed by malicious session indicators from the same source IP
 within 30 minutes. This ordered sequence suggests an attacker moving
 through the network after initial compromise.
 
-
 **Tags:** `attack.lateral_movement`, `attack.t1021.002`
 
 **Type:** `temporal_ordered`  
@@ -92,7 +89,6 @@ Detects the attack pattern of network reconnaissance (port scanning)
 followed by data exfiltration from the same source IP within 60 minutes.
 This ordered sequence indicates an adversary who has completed discovery
 and is actively extracting data.
-
 
 **Tags:** `attack.exfiltration`, `attack.t1041`, `attack.discovery`, `attack.t1046`
 
@@ -113,7 +109,6 @@ active encryption from the same source within 60 minutes. This is a
 critical alert indicating a ransomware attack has progressed from
 delivery to impact phase.
 
-
 **Tags:** `attack.impact`, `attack.t1486`
 
 **Type:** `temporal_ordered`  
@@ -133,7 +128,6 @@ followed by a malicious session from the same user within 30 minutes.
 This indicates successful credential harvesting leading to account
 compromise.
 
-
 **Tags:** `attack.initial_access`, `attack.t1566`, `attack.t1078`
 
 **Type:** `temporal_ordered`  
@@ -152,7 +146,6 @@ Detects a single C2 server receiving beaconing connections from 3 or more
 distinct internal hosts within 60 minutes. Multiple infections communicating
 with the same C2 infrastructure indicates a widespread compromise requiring
 coordinated response.
-
 
 **Tags:** `attack.command_and_control`, `attack.t1071.001`
 
@@ -174,7 +167,6 @@ Detects users who trigger 5 or more security policy violations within a
 24-hour period. Repeated violations may indicate a compromised account,
 insider threat activity, or a user systematically circumventing controls.
 
-
 **Tags:** `attack.defense_evasion`, `attack.t1078`
 
 **Type:** `event_count`  
@@ -182,4 +174,3 @@ insider threat activity, or a user systematically circumventing controls.
 **gte:** `5`  
 
 ---
-

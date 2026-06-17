@@ -24,7 +24,7 @@ Broker Edge auto-creates all required streams on first startup. Streams are crea
 
 The DATA stream uses a hierarchical subject pattern for pipeline stages:
 
-```
+```text
 {applianceID}.data.artifacts.{stage}
 ```
 

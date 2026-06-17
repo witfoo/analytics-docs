@@ -34,7 +34,6 @@ Detects potential DNS tunneling activity indicated by unusually long DNS query
 domain names (>100 characters), which may indicate data exfiltration or C2
 communication via DNS protocol.
 
-
 **Tags:** `attack.command_and_control`, `attack.t1071.004`, `attack.exfiltration`, `attack.t1048`
 
 ??? example "Detection Logic"
@@ -53,7 +52,6 @@ communication via DNS protocol.
 Detects potential command-and-control beaconing by identifying connections
 to external servers classified as botnet or C2 activity by WitFoo lead rules.
 Regular-interval check-ins are a hallmark of malware C2 communication.
-
 
 **Tags:** `attack.command_and_control`, `attack.t1071.001`
 
@@ -74,7 +72,6 @@ Detects network connections on non-standard ports that may indicate evasion
 techniques, backdoor communication, or misconfigurations. Focuses on
 high-numbered ephemeral ports used as server-side listeners.
 
-
 **Tags:** `attack.command_and_control`, `attack.t1571`
 
 ??? example "Detection Logic"
@@ -93,7 +90,6 @@ high-numbered ephemeral ports used as server-side listeners.
 Detects unusually large outbound data transfers that may indicate data
 exfiltration. Triggers when total bytes transferred exceeds 100MB in a
 single connection/session.
-
 
 **Tags:** `attack.exfiltration`, `attack.t1048`
 
@@ -114,7 +110,6 @@ Detects network reconnaissance through port scanning activity. Identified
 by WitFoo's service discovery classification or IDS rule matches indicating
 systematic port probing.
 
-
 **Tags:** `attack.discovery`, `attack.t1046`
 
 ---
@@ -129,7 +124,6 @@ systematic port probing.
 Detects anomalous ICMP traffic patterns that may indicate ICMP tunneling,
 covert channels, or network reconnaissance. Large ICMP payloads or unusual
 ICMP types can signify data exfiltration or C2 communication.
-
 
 **Tags:** `attack.command_and_control`, `attack.t1095`
 
@@ -150,7 +144,6 @@ Detects HTTP or HTTPS traffic on non-standard ports, which may indicate
 evasion of network security controls, malware C2 communication, or
 unauthorized web services.
 
-
 **Tags:** `attack.command_and_control`, `attack.t1571`
 
 ---
@@ -166,7 +159,6 @@ Detects network connections with abnormally long durations that may indicate
 persistent C2 channels, data exfiltration tunnels, or compromised hosts
 maintaining backdoor connections. Flags connections classified as anomalous
 behavior by WitFoo enrichment.
-
 
 **Tags:** `attack.command_and_control`, `attack.t1071`
 
@@ -189,7 +181,6 @@ including self-signed, expired, or certificates with anomalous attributes.
 These may indicate man-in-the-middle attacks, malware C2 infrastructure,
 or compromised certificate authorities.
 
-
 **Tags:** `attack.command_and_control`, `attack.t1071.001`
 
 ---
@@ -205,7 +196,6 @@ Detects transfer of executable files over the network, which may indicate
 malware delivery, lateral movement tool staging, or unauthorized software
 distribution. Matches common executable extensions and binary content types.
 
-
 **Tags:** `attack.command_and_control`, `attack.t1105`, `attack.lateral_movement`
 
 ---
@@ -220,7 +210,6 @@ distribution. Matches common executable extensions and binary content types.
 Detects high rates of DNS resolution failures (NXDOMAIN) that may indicate
 domain generation algorithm (DGA) activity used by malware for C2 rendezvous.
 DGA malware generates pseudo-random domain names, most of which fail to resolve.
-
 
 **Tags:** `attack.command_and_control`, `attack.t1568.002`
 
@@ -242,7 +231,6 @@ Detects SMB (Server Message Block) connections between workstations that may
 indicate lateral movement. Legitimate SMB traffic typically flows from
 workstations to file servers, not between workstations.
 
-
 **Tags:** `attack.lateral_movement`, `attack.t1021.002`
 
 ??? example "Detection Logic"
@@ -250,4 +238,3 @@ workstations to file servers, not between workstations.
     - **serverPort**: `['445', '139']`
 
 ---
-

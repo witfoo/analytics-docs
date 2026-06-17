@@ -123,13 +123,16 @@ All queries use `| spath` to extract JSON fields. Key fields:
 
 !!! warning "No Data in Dashboards"
     Verify the artifact-exporter is sending to the correct HEC endpoint:
-    ```
+
+    ```text
     index=witfoo | head 10
     ```
+
     If no results, check the HEC token configuration and network connectivity.
 
 !!! tip "Slow Dashboard Loads"
     Reduce the time range or add summary indexing for frequently-queried fields:
-    ```
+
+    ```text
     | tstats count where index=witfoo by clientIP, serverIP span=1h
     ```

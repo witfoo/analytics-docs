@@ -83,7 +83,8 @@ After saving, verify the integration is working:
     ```
 
     Look for successful poll messages:
-    ```
+
+    ```text
     [INFO] qualys: fetched host detections
     ```
 

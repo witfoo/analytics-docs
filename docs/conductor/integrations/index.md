@@ -11,6 +11,13 @@ identity providers, email security, network infrastructure, and more through
 vendor's API on a configurable schedule and publishes artifacts to the
 processing pipeline.
 
+!!! info "Looking for log shippers / agents?"
+    For **push-based** collection from Elastic Beats agents
+    (Filebeat, Winlogbeat, Packetbeat — OSS builds), see the
+    [Log Shippers (Beats)](../beats/index.md) guides. Those agents stream to the
+    [Signal Server](../signal-server.md) over TCP 5044/5045 rather than being
+    polled by the Signal Client.
+
 ## Quick Start
 
 1. Ensure you have the required vendor license and API access (see each guide's

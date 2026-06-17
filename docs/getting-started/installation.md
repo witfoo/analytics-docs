@@ -127,7 +127,7 @@ After configuration completes, the WFA daemon starts all services for your selec
 
 1. Open a web browser and navigate to:
 
-    ```
+    ```text
     https://<appliance-ip>
     ```
 

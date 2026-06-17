@@ -8,7 +8,7 @@ Follow these steps to go from zero to a running WitFoo Analytics instance:
 
 <div class="grid cards" markdown>
 
--   :material-download:{ .lg .middle } **1. Install a WitFoo Appliance**
+- :material-download:{ .lg .middle } **1. Install a WitFoo Appliance**
 
     ---
 
@@ -16,7 +16,7 @@ Follow these steps to go from zero to a running WitFoo Analytics instance:
 
     [:octicons-arrow-right-24: Installation](installation.md)
 
--   :material-server-network:{ .lg .middle } **2. Choose a Deployment Role**
+- :material-server-network:{ .lg .middle } **2. Choose a Deployment Role**
 
     ---
 
@@ -24,7 +24,7 @@ Follow these steps to go from zero to a running WitFoo Analytics instance:
 
     [:octicons-arrow-right-24: Deployment Roles](deployment-roles.md)
 
--   :material-cog:{ .lg .middle } **3. Configure the Appliance**
+- :material-cog:{ .lg .middle } **3. Configure the Appliance**
 
     ---
 
@@ -32,7 +32,7 @@ Follow these steps to go from zero to a running WitFoo Analytics instance:
 
     [:octicons-arrow-right-24: WFA Configure Wizard](wfa-configure.md)
 
--   :material-login:{ .lg .middle } **4. Log In and Onboard**
+- :material-login:{ .lg .middle } **4. Log In and Onboard**
 
     ---
 
@@ -40,7 +40,7 @@ Follow these steps to go from zero to a running WitFoo Analytics instance:
 
     [:octicons-arrow-right-24: First Login](first-login.md)
 
--   :material-sitemap:{ .lg .middle } **5. Understand the Architecture**
+- :material-sitemap:{ .lg .middle } **5. Understand the Architecture**
 
     ---
 
