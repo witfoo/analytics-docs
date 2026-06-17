@@ -33,3 +33,11 @@ Changes are saved to the NATS KV `SERVERS` bucket and propagate to the Signal Se
 
 !!! tip
     For most deployments, enable **Syslog UDP** (port 514) for general syslog collection and **Secure Syslog TLS** (port 6514) for devices that support encrypted transport. Use **Beats/Logstash** (ports 5044–5045) for environments with Elastic Beats agents deployed on endpoints.
+
+## Sending from Elastic Beats
+
+To stream data from the OSS editions of **Filebeat**, **Winlogbeat**, or
+**Packetbeat** into the Beats/Logstash listener, see the
+[Log Shippers (Beats)](../beats/index.md) guides. They cover installing the OSS
+(Apache 2.0) builds and the example `output.logstash` configuration for each
+agent.

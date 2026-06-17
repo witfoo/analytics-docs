@@ -281,6 +281,11 @@ nav:
               - Tenable: conductor/integrations/tenable.md
               - Qualys: conductor/integrations/qualys.md
           - Common Troubleshooting: conductor/integrations/common-troubleshooting.md
+      - Log Shippers (Beats):
+          - conductor/beats/index.md
+          - Filebeat (OSS): conductor/beats/filebeat.md
+          - Winlogbeat (OSS): conductor/beats/winlogbeat.md
+          - Packetbeat (OSS): conductor/beats/packetbeat.md
       - Configuration: conductor/configuration.md
       - Deployment: conductor/deployment.md
       - WFA Integration: conductor/wfa-integration.md
