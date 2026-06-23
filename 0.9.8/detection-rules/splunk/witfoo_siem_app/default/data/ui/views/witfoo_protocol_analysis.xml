@@ -1,0 +1,108 @@
+<dashboard version="1.1" theme="dark">
+  <label>WitFoo Protocol Analysis</label>
+  <description>Network protocol and application-level analysis from WitFoo artifact data. Displays protocol distribution, port usage, application breakdown, and encrypted vs cleartext traffic.</description>
+
+  <row>
+    <panel>
+      <title>Protocol Distribution</title>
+      <chart>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| stats count by protocol
+| sort -count</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Port Usage (Top 20)</title>
+      <chart>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| stats count by serverPort
+| sort -count
+| head 20</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">bar</option>
+      </chart>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>Application Breakdown</title>
+      <chart>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| where isnotnull(application)
+| stats count by application
+| sort -count
+| head 15</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Encrypted vs Cleartext Traffic</title>
+      <chart>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| eval encryption=case(
+    serverPort IN ("443","8443","993","995","465","636","989","990","22"),"Encrypted",
+    serverPort IN ("80","8080","143","110","25","389","21","23","69"),"Cleartext",
+    1=1,"Other")
+| stats count by encryption</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+      </chart>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>Protocol Trend (24h)</title>
+      <chart>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| timechart span=1h count by protocol limit=8</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.stackMode">stacked</option>
+      </chart>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>Stream Names by Protocol</title>
+      <table>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| stats count dc(clientIP) as "Unique Sources" by streamName protocol
+| sort -count
+| head 30
+| rename streamName as "Stream" protocol as "Protocol" count as "Events"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>

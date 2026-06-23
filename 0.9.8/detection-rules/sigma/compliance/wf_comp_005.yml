@@ -1,0 +1,36 @@
+title: Indicator of Misconfiguration Match
+id: 4005ffe7-c887-5239-a0a6-65076fd215bb
+custom_id: wf-comp-005
+status: stable
+level: medium
+description: |
+    Detects indicators of misconfiguration (IOMs) that may create security
+    vulnerabilities. Includes open ports, weak encryption, missing patches,
+    and non-compliant configurations detected by vulnerability scanners
+    or configuration audit tools.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.defense_evasion
+    - attack.t1562
+references:
+    - https://attack.mitre.org/techniques/T1562/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "iom_match"
+    condition: selection
+fields:
+    - clientIP
+    - serverIP
+    - serverPort
+    - cve
+    - cveDescription
+    - ruleName
+    - matchedLeadRules
+falsepositives:
+    - Known accepted risks documented in risk register
+    - Temporary configurations during maintenance windows
+    - Legacy systems with documented exceptions

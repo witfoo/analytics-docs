@@ -1,0 +1,34 @@
+title: Defense Evasion Activity
+id: 2f252d3e-23b1-50f6-9eba-b8165067769d
+custom_id: wf-auth-007
+status: stable
+level: high
+description: |
+    Detects defense evasion techniques including log tampering, security tool
+    disabling, indicator removal, and other actions intended to avoid detection
+    by security monitoring systems.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.defense_evasion
+    - attack.t1562
+references:
+    - https://attack.mitre.org/techniques/T1562/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "defense_evasion"
+    condition: selection
+fields:
+    - clientIP
+    - serverIP
+    - userName
+    - program
+    - action
+    - matchedLeadRules
+falsepositives:
+    - Security tool updates and restarts
+    - Log rotation and archival processes
+    - System maintenance requiring temporary security changes

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "workbookDisplayName": {
+      "type": "string",
+      "defaultValue": "WitFoo ATT&CK Coverage",
+      "metadata": {
+        "description": "Display name for the workbook"
+      }
+    },
+    "workbookType": {
+      "type": "string",
+      "defaultValue": "workbook",
+      "metadata": {
+        "description": "The gallery type of the workbook"
+      }
+    },
+    "workspaceResourceId": {
+      "type": "string",
+      "metadata": {
+        "description": "Log Analytics workspace resource ID"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Insights/workbooks",
+      "apiVersion": "2022-04-01",
+      "name": "[guid('witfoo-attack-coverage')]",
+      "location": "[resourceGroup().location]",
+      "kind": "shared",
+      "properties": {
+        "category": "[parameters('workbookType')]",
+        "displayName": "[parameters('workbookDisplayName')]",
+        "serializedData": "[string(createObject('version', 'Notebook/1.0', 'items', createArray(createObject('type', 1, 'content', createObject('json', '## WitFoo ATT&CK Coverage\\n\\nMITRE ATT&CK technique and tactic coverage from WitFoo artifact exports. Maps detected artifacts to ATT&CK framework for coverage analysis.'), 'name', 'header'), createObject('type', 3, 'content', createObject('version', 'KqlParameterItem/1.0', 'parameters', createArray(createObject('id', 'timeRange', 'name', 'TimeRange', 'type', 4, 'isRequired', true, 'value', createObject('durationMs', 604800000), 'typeSettings', createObject('selectableValues', createArray(createObject('durationMs', 86400000), createObject('durationMs', 604800000), createObject('durationMs', 2592000000)))))), 'name', 'parameters'), createObject('type', 3, 'content', createObject('version', 'KqlItem/1.0', 'query', 'WitFoo_CL\\n| where TimeGenerated {TimeRange}\\n| where isnotempty(attackTechniqueIDs_s)\\n| mv-expand TechniqueID = split(attackTechniqueIDs_s, \",\")\\n| summarize UniqueTechniques=dcount(tostring(TechniqueID)), TotalHits=count(), UniqueStreams=dcount(streamName_s)', 'size', 4, 'title', 'Coverage Summary', 'queryType', 0, 'resourceType', 'microsoft.operationalinsights/workspaces'), 'name', 'coverageSummary'), createObject('type', 3, 'content', createObject('version', 'KqlItem/1.0', 'query', 'WitFoo_CL\\n| where TimeGenerated {TimeRange}\\n| where isnotempty(attackTactics_s)\\n| mv-expand Tactic = split(attackTactics_s, \",\")\\n| summarize Count=count() by tostring(Tactic)\\n| order by Count desc\\n| render barchart', 'size', 0, 'title', 'Tactic Distribution', 'queryType', 0, 'resourceType', 'microsoft.operationalinsights/workspaces'), 'name', 'tacticDist'), createObject('type', 3, 'content', createObject('version', 'KqlItem/1.0', 'query', 'WitFoo_CL\\n| where TimeGenerated {TimeRange}\\n| where isnotempty(attackTechniqueIDs_s)\\n| mv-expand TechniqueID = split(attackTechniqueIDs_s, \",\")\\n| summarize Count=count() by tostring(TechniqueID)\\n| top 25 by Count\\n| render barchart', 'size', 0, 'title', 'Top 25 Techniques', 'queryType', 0, 'resourceType', 'microsoft.operationalinsights/workspaces'), 'name', 'topTechniques'), createObject('type', 3, 'content', createObject('version', 'KqlItem/1.0', 'query', 'WitFoo_CL\\n| where TimeGenerated {TimeRange}\\n| where isnotempty(attackTechniqueIDs_s)\\n| mv-expand TechniqueID = split(attackTechniqueIDs_s, \",\")\\n| summarize UniqueTechniques=dcount(tostring(TechniqueID)) by bin(TimeGenerated, 1d)\\n| order by TimeGenerated asc\\n| render timechart', 'size', 0, 'title', 'Technique Discovery Trend', 'queryType', 0, 'resourceType', 'microsoft.operationalinsights/workspaces'), 'name', 'techniqueTrend'), createObject('type', 3, 'content', createObject('version', 'KqlItem/1.0', 'query', 'WitFoo_CL\\n| where TimeGenerated {TimeRange}\\n| where isnotempty(attackTechniqueIDs_s)\\n| summarize Techniques=dcount(attackTechniqueIDs_s), Artifacts=count() by streamName_s\\n| order by Techniques desc\\n| project StreamName=streamName_s, UniqueTechniques=Techniques, TotalArtifacts=Artifacts', 'size', 0, 'title', 'Stream Name Coverage', 'queryType', 0, 'resourceType', 'microsoft.operationalinsights/workspaces'), 'name', 'streamCoverage'), createObject('type', 3, 'content', createObject('version', 'KqlItem/1.0', 'query', 'WitFoo_CL\\n| where TimeGenerated {TimeRange}\\n| where isnotempty(attackTechniqueIDs_s)\\n| mv-expand TechniqueID = split(attackTechniqueIDs_s, \",\")\\n| extend Tactic = iff(isnotempty(attackTactics_s), attackTactics_s, \"Unknown\")\\n| summarize Count=count(), Streams=dcount(streamName_s) by tostring(TechniqueID), Tactic\\n| order by Count desc\\n| project TechniqueID, Tactic, HitCount=Count, UniqueStreams=Streams', 'size', 0, 'title', 'Technique Detail Table', 'queryType', 0, 'resourceType', 'microsoft.operationalinsights/workspaces'), 'name', 'techniqueDetail'))))]",
+        "sourceId": "[parameters('workspaceResourceId')]"
+      }
+    }
+  ]
+}

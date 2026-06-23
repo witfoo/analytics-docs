@@ -1,0 +1,36 @@
+title: NXDOMAIN/DGA Detection
+id: c12ff605-8260-5cbb-af5b-8be79d9e36cf
+custom_id: wf-net-011
+status: stable
+level: high
+description: |
+    Detects high rates of DNS resolution failures (NXDOMAIN) that may indicate
+    domain generation algorithm (DGA) activity used by malware for C2 rendezvous.
+    DGA malware generates pseudo-random domain names, most of which fail to resolve.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.command_and_control
+    - attack.t1568.002
+references:
+    - https://attack.mitre.org/techniques/T1568/002/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        protocol: "DNS"
+        action|contains:
+            - "NXDOMAIN"
+            - "nxdomain"
+            - "SERVFAIL"
+    condition: selection
+fields:
+    - clientIP
+    - fqdn
+    - serverIP
+    - streamName
+falsepositives:
+    - Misconfigured DNS clients
+    - Applications querying stale DNS records
+    - Browser pre-rendering DNS lookups for non-existent domains

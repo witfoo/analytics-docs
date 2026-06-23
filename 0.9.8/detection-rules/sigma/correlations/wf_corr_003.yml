@@ -1,0 +1,25 @@
+title: Lateral Movement Chain
+id: 78c13d77-4147-5da4-b149-7f1a2a16ef1b
+custom_id: wf-corr-003
+status: stable
+type: temporal_ordered
+rules:
+    - wf-net-012
+    - wf-auth-006
+group-by:
+    - clientIP
+timespan: 30m
+description: |
+    Detects a lateral movement chain where SMB connections between workstations
+    are followed by malicious session indicators from the same source IP
+    within 30 minutes. This ordered sequence suggests an attacker moving
+    through the network after initial compromise.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.lateral_movement
+    - attack.t1021.002
+level: critical
+falsepositives:
+    - IT administrators using remote management tools across workstations
+    - Authorized software deployment pushing to multiple endpoints
