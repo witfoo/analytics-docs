@@ -135,6 +135,6 @@ If you see quorum warnings when restarting a data node:
 
 ## Related Documentation
 
-- [Admin Guide - Nodes](../admin-guide/nodes.md)
+- [Admin Guide](../admin-guide/index.md)
 - [Deployment - WFA Integration](../deployment/wfa.md)
 - [WFA CLI Reference](../conductor/wfa-cli.md)

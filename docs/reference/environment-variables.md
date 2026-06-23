@@ -48,7 +48,9 @@ Complete reference for WitFoo Analytics environment variables.
 | `WF_LICENSE` | (empty) | Intel API license for framework sync |
 | `VITE_UI_MODULES` | `all` | UI module visibility |
 | `REVERSE_PROXY_MODE` | `false` | Enable proxy header trust for Conductor UI |
-| `WF_DEMO_MODE` | `false` | Enable demo mode with sample data and guided onboarding |
+| `WF_DEMO_MODE` | `false` | Enable demo mode with sample data and guided onboarding. Also gates AI spend: AI analysis returns canned output at the single analyze chokepoint and the auto-provisioned AI provider is created disabled, so a demo deployment incurs no Anthropic/Claude usage |
+| `PARSER_RECONCILE` | `enabled` | signal-parser self-reconcile policy. On startup the parser enables any first-party parser compiled into the binary but absent from the `PARSERS` KV (so a parser can never ship "dark"), while leaving explicit operator disables untouched. `enabled` applies the reconcile, `report-only` only emits the `parser_registry_dark_count` / `parser_registry_reconciled_total` metrics, `off` disables it |
+| `BROKER_HEALTH_GATE_WARN_SECONDS` | `120` | WFA broker-health startup-gate threshold. While the gate waits for required broker streams/buckets, a persistent wait is logged at INFO and escalates to WARN once it exceeds this many seconds; also surfaces `broker_health_gate_blocked_seconds` and `broker_health_gate_unsatisfied{kind,object}`. The gate fails open on best-effort objects (e.g. `AGENT_STATUS`) so a single optional bucket can never wedge initialization |
 
 ## Monitoring
 

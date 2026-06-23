@@ -2,6 +2,85 @@
 
 Version history for WitFoo products.
 
+## v0.9.8 (2026-06-23)
+
+Operational-resilience, AI-cost, and pipeline-coverage release with broad security hardening. Ships alongside **WitFoo Management Console 1.8.0**, **Conductor 1.7.0**, and **WFA 2.3.0**. **Upgrade recommended.**
+
+### Security & Hardening
+
+- Resolved a class of log-injection and outbound-request (anti-rebinding / SSRF) hardening findings across the platform and the management console; outbound connections now validate the destination host before any credentials are attached
+- Tightened per-route access controls across the incident and configuration APIs, with a build-time guard that fails the pipeline on any newly ungated route
+- Stronger TLS/certificate validation on appliance-to-Conductor health checks
+- Refreshed dependency tree and supply-chain updates, plus new recurring-vulnerability prevention gates (secret scanning, app/image SAST, signed images and SBOMs) added to the build pipeline
+- Azure / SAML single sign-on reliability — assertion-replay handling bounded to the provider acceptance window and request-binding fixes, so a valid login is no longer falsely rejected as a replay
+
+### Operational Resilience
+
+- **Compliance Readiness no longer strands at 0% after a redeploy** — a snapshot guard preserves the last healthy compliance figure and a startup probe waits for data readiness before regenerating, so a restart can never serve a collapsed 0% snapshot
+- **AI cost optimization** — Anthropic prompt caching, a cheaper model tier for report and on-demand summaries, and demo-mode containment dramatically cut AI spend
+- **Production Dashboards** — Custom Dashboard widgets now show real production data or an explicit empty state, never placeholder sample data in a live tenant (sample data renders only in the editor preview or under demo mode)
+- **Monorepo consolidation** — one codebase with change-detected image builds for faster, more reliable releases and independent per-product versioning (no customer-visible behavior change)
+- WFA broker-startup deadlock resilience — a node can no longer get permanently wedged during service initialization; the startup gate is now bounded, observable, and self-creating of its broker objects
+
+### Conductor & Pipeline
+
+- **Beats agent up/down/health tracking** — a new **Agents** page in Conductor, up/down/stale transition alerting, and agent status forwarded to the Console node view
+- **Pipeline self-heal** — a parser present in the build but not yet enabled can no longer ship "dark"; absent first-party parsers auto-enable while respecting explicit operator disables (`PARSER_RECONCILE`)
+- **Fleet-wide Parser Audit** — RFC 5424-compliant severity enforced at a single chokepoint, a five-way detection-metadata cross-reference quality gate, 50 product-mapping corrections, and broader Microsoft Graph / Defender coverage
+- **New Microsoft parsers and parsing fixes** — Microsoft Defender Vulnerability Management, Azure security / Graph sign-ins, directory audits, and Defender incidents now parse instead of landing in unknown
+- **New log auto-parsers** — apt daily, Microsoft Identity Protection, and ModemManager
+- Resolved a Conductor-pipeline noise issue (idle Beats keep-alive connections) and a pipeline-wedge condition
+
+### Features & UX
+
+- **Reliable, consistent faceted search** — one unified filter sidebar across Signals, Nodes, Edges, Work Units, and Work Collections, with facet counts that match the result rows
+- **Assign a Work Unit (or individual response tasks) to an AI Agent** — full AI autonomy with live investigation progress: the AI sets the unit to Investigating, works the playbook step-by-step, and closes the ticket (human attestation is preserved — the AI never silently attests a task)
+- **Reporter ROI corrected** — ROI is now Total Protection Value ÷ Annual Security Spend (including insurance coverage), so zero-incident ROI is non-zero
+- **AI Chat fixes** — work-unit context now reaches the assistant, the chat pop-out works, and direct messages resolve member names and authenticate correctly
+- **Human-friendly names everywhere** — node Products and Frameworks show real names, the work-unit activity feed shows status labels and user names, and the "Configuration Auditor" is renamed **Auditor**
+- **Signal Search from a node's detail view** — pivot on a stable node id to find all of a node's signals, regardless of changing IPs
+- **Auditor UX fixes** — the filter list is reactive, the findings pager works, and the loading spinner renders inline in the correct place
+- **Configuration Auditor connector fixes** — Microsoft 365, Google Cloud, and OCI connectors now add and test successfully
+- Enhanced work-unit activity notes and per-task notes / evidence
+- **Licensing improvements** — licensing.witfoo.com reliability, Dev Mode hidden in non-development deployments, and CyberGrid licensing management
+- **User Profile build-out** — the account profile page is populated and integrated with chat
+
+### Console
+
+- **Configuration Generator + `wfa fetch`** — pre-build a customer node configuration and publish a one-time URL; the customer runs `wfa fetch <url>` for zero-touch provisioning (config encrypted at rest, single-use token, 72h TTL)
+- **Deeper remote management of Analytics/Data nodes** — start / stop / restart / upgrade / pull-images from the Console, with Cassandra data-node safety guards (destructive actions on a data-bearing node require explicit confirmation)
+- The Console now surfaces Beats agent status forwarded from connected appliances
+
+### Upgrade Notes
+
+- No database migration; no breaking API changes
+- New optional operator settings: `PARSER_RECONCILE` (parser self-reconcile policy) and `BROKER_HEALTH_GATE_WARN_SECONDS` (broker-health startup-gate warning threshold). `WF_DEMO_MODE` now also gates AI spend on demo deployments
+
+### Resolved issues
+
+Issues #160, #207, #208, #209, #211, #212, #213, #214, #215, #216, #217, #218, #219, #220, #221, #222, #223, #224, #225, #226, #228, #229, #230, #231, #232, #238, #239, #244, #245, #246, #247, #249, #260, #265, #266, #267, #269, #283 (plus the #203 / #205 / #206 auto-parser additions).
+
+## Console 1.8.0 (2026-06-23)
+
+- **Configuration Generator + `wfa fetch`** — pre-built one-time node configuration for zero-touch provisioning (#244)
+- **Remote node management** — lifecycle and upgrade actions on connected Analytics/Data nodes with data-node safety guards (#160)
+- Beats agent status forwarded from appliances now shown on the node view (#269)
+
+## Conductor 1.7.0 (2026-06-23)
+
+- **Beats agent tracking** — Agents page, up/down/stale alerting, and Console forward (#269)
+- **Pipeline self-heal** — parsers can no longer ship dark; absent first-party parsers auto-enable (#245/#246)
+- **Parser Audit** — RFC 5424 severity, a metadata cross-reference quality gate, 50 mapping corrections, and broader Microsoft Graph / Defender coverage (#266)
+- New Microsoft parsers and parsing fixes (Defender Vulnerability Management, Azure sign-ins, directory audits, Defender incidents) and new auto-parsers (apt daily, Microsoft Identity Protection, ModemManager) (#203/#205/#206/#208/#245/#246/#247)
+- Idle Beats keep-alive connection noise fixed (#247)
+
+## WFA 2.3.0 (2026-06-23)
+
+- Service-init deadlock resilience — a node can't get permanently wedged at startup; the broker-health gate self-creates its broker objects, fails open on best-effort objects, and is bounded + observable (`BROKER_HEALTH_GATE_WARN_SECONDS`) (#283)
+- Bounded broker connect across broker-dependent services, so a broker outage self-heals instead of stranding a service dark (#267)
+- Console node-status forward now carries a bounded Beats agent summary (#269)
+- common v1.5.39; apt/rpm publishing restored
+
 ## Conductor 1.5.0 (2026-02-22)
 
 - **Notification System** — Email, Slack, and webhook alerting with rule-based event routing, cooldown, and delivery history

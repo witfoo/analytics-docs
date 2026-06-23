@@ -413,7 +413,7 @@ Once `wfa fetch` completes:
 
 ## Related Documentation
 
-- [Admin Guide - Nodes](../admin-guide/nodes.md)
+- [Admin Guide](../admin-guide/index.md)
 - [Deployment - WFA](../deployment/wfa.md)
 - [WFA CLI Reference](../conductor/wfa-cli.md)
 - [Deployment Roles](../getting-started/deployment-roles.md)
