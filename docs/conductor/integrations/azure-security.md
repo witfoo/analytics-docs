@@ -189,6 +189,36 @@ change until an administrator re-consents.
     the rest as unavailable with the reason — add the matching license **and**
     confirm the permission is consented to enable a gated check.
 
+## Phishing & Email Security
+
+Microsoft Defender for Office 365 raises email-threat alerts on the v2 alerts endpoint
+(`/security/alerts_v2`). WitFoo classifies each one into a `message_type`, and the analytics
+**Phishing** detection chain turns the phishing ones into **work units** — no extra configuration
+is required beyond the `SecurityAlert.Read.All` permission and a **Defender for Office 365 (Plan 1
+or Plan 2)** license (Safe Links, ZAP, and anti-phishing generate these alerts).
+
+| Defender for O365 signal | WitFoo `message_type` | Outcome |
+|--------------------------|------------------------|---------|
+| Email-threat alert with a **phishing** verdict — `ZapPhish` / `HighConfPhish` / `Phish` in the message threats (or a phishing threat family). Titles like *"Email messages removed after delivery"* or *"Messages containing malicious entity not removed after delivery"*. | `phishing_email` | Matches lead rule 13 → **Phishing** Modus Operandi → a phishing **work unit**. |
+| **Safe Links time-of-click** alert — a user actually clicked a malicious URL. Defender's *"A potentially malicious URL click was detected"* / *"…clicked through to a potentially malicious URL"*. | `phishing_click` | Matches lead rule 14 → **Phishing** Modus Operandi → a phishing **work unit**. |
+| Spam-foldered or benign delivered email (`Spam`-only threats, or no threat) — *"Email message received"*, delivered to inbox/junk. | `email_protection` | Email-protection telemetry — **not** phishing; does **not** create a phishing work unit. |
+
+Each phishing artifact carries the email context already extracted from the alert evidence — the
+**sender**, **subject**, and **recipient** (from the Mailbox/Message evidence), the embedded or
+clicked **URLs**, the delivery disposition (delivered / blocked / quarantined, including ZAP
+auto-purge), and the connector's `remediation_status`/`verdict` signals — plus a `phishing` tag for
+filtering. The resulting **Phishing** work unit groups these so an analyst sees who was targeted,
+what was sent, whether the user clicked, and how Defender disposed of it.
+
+!!! info "phishing_click requires a Safe Links click"
+    A `phishing_click` classification means Defender recorded a **user click** on a malicious URL
+    (Safe Links time-of-click protection), which is distinct from a malicious URL merely *present in
+    a delivered email* (that classifies as `phishing_email`). Click alerts appear only when Safe
+    Links is enabled **and** a user actually clicked, so a tenant may see `phishing_email` work units
+    long before any `phishing_click` ones.
+
+This phishing coverage maps to **CSC8 Control 9 — Email & Web Browser Protections** (below).
+
 ## CSC8 Compliance Coverage
 
 Once the Azure connector is collecting and the data reaches Analytics, these CIS Controls v8
