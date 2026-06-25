@@ -217,6 +217,11 @@ what was sent, whether the user clicked, and how Defender disposed of it.
     Links is enabled **and** a user actually clicked, so a tenant may see `phishing_email` work units
     long before any `phishing_click` ones.
 
+    WitFoo distinguishes the two from the **alert title** — Defender's documented click-alert phrasing
+    (*"…URL click was detected"* / *"…clicked through to a potentially malicious URL"*) classifies as
+    `phishing_click`; every other Defender for O365 email-threat alert with a phishing verdict
+    classifies as `phishing_email`.
+
 This phishing coverage maps to **CSC8 Control 9 — Email & Web Browser Protections** (below).
 
 ## CSC8 Compliance Coverage
