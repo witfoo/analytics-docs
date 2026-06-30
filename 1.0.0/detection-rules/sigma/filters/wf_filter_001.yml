@@ -1,0 +1,32 @@
+title: Internal Scanner False Positive Filter
+id: be734fb8-0816-5e21-85f6-2df4e91a1669
+custom_id: wf-filter-001
+status: stable
+logsource:
+    product: witfoo
+    service: artifact-exporter
+description: |
+    Filters out port scan detections originating from known authorized
+    vulnerability scanners and asset discovery tools. Customize the
+    scanner IP list to match your environment.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.discovery
+    - attack.t1046
+detection:
+    selection:
+        messageType: "service_discovery"
+    filter_scanners:
+        clientIP|cidr:
+            - "10.0.0.0/24"
+            - "172.16.100.0/24"
+        program|contains:
+            - "nessus"
+            - "qualys"
+            - "rapid7"
+            - "openvas"
+            - "nmap"
+    condition: selection and filter_scanners
+falsepositives:
+    - None expected when scanner IPs are correctly configured

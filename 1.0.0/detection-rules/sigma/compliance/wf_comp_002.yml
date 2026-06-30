@@ -1,0 +1,40 @@
+title: IPS Action Taken
+id: b557ee31-1109-58a0-8d48-f5f61961ceb1
+custom_id: wf-comp-002
+status: stable
+level: high
+description: |
+    Detects intrusion prevention system (IPS) events where protective action
+    was taken (block, drop, reset). These indicate the IPS actively prevented
+    a detected attack from succeeding.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.initial_access
+    - attack.t1190
+references:
+    - https://attack.mitre.org/techniques/T1190/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "ids_action"
+    selection_action:
+        action|contains:
+            - "block"
+            - "drop"
+            - "reset"
+            - "deny"
+    condition: selection or selection_action
+fields:
+    - clientIP
+    - serverIP
+    - serverPort
+    - ruleName
+    - ruleCategory
+    - action
+    - matchedLeadRules
+falsepositives:
+    - IPS blocking legitimate traffic due to signature false positives
+    - Rate limiting actions during traffic spikes

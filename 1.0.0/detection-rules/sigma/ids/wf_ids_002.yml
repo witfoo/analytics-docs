@@ -1,0 +1,35 @@
+title: Suricata ATT&CK Mapped Alert
+id: ce08894a-1962-51b2-8370-da3a61953bb2
+custom_id: wf-ids-002
+status: stable
+level: high
+description: |
+    Detects Suricata alerts that have been enriched with MITRE ATT&CK technique
+    mappings, indicating that the IDS signature corresponds to a known adversary
+    technique. These are higher-confidence detections with tactical context.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.execution
+    - attack.t1059
+references:
+    - https://attack.mitre.org/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        streamName|contains: "suricata"
+        attackTechniqueIds|re: "T\\d{4}"
+    condition: selection
+fields:
+    - clientIP
+    - serverIP
+    - serverPort
+    - ruleName
+    - ruleCategory
+    - attackTechniqueIds
+    - matchedLeadRules
+falsepositives:
+    - Broad ATT&CK mappings on generic signatures
+    - Testing and simulation frameworks (Atomic Red Team)

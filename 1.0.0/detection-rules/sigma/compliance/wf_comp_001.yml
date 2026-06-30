@@ -1,0 +1,35 @@
+title: IDS Event Detection
+id: 79c8f7cf-8a02-5ce5-ac03-d1817c3ae0fc
+custom_id: wf-comp-001
+status: stable
+level: high
+description: |
+    Detects intrusion detection system (IDS) alerts forwarded through WitFoo's
+    artifact pipeline. These are network-based or host-based IDS signatures
+    that matched suspicious or malicious traffic patterns.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.initial_access
+    - attack.t1190
+references:
+    - https://attack.mitre.org/techniques/T1190/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "ids_event"
+    condition: selection
+fields:
+    - clientIP
+    - serverIP
+    - serverPort
+    - ruleName
+    - ruleCategory
+    - severityLabel
+    - matchedLeadRules
+falsepositives:
+    - Noisy IDS signatures with high false positive rates
+    - Network scanning by authorized security tools
+    - Application vulnerability scanners
