@@ -2,6 +2,49 @@
 
 Version history for WitFoo products.
 
+## v1.0.0 (2026-06-30)
+
+General-availability (GA) release. Builds on the 0.9.8 baseline with two new executive reports, a major step up in AI provider control and cost governance, a real collaboration layer, responsive mobile/tablet support, and a dedicated pre-1.0 full code review. Ships alongside **WitFoo Management Console 1.9.0**, **Conductor 1.8.0**, and **WFA 2.4.2**. **Upgrade recommended.**
+
+### Reporting & Compliance
+
+- **Vulnerability Management report** — hosts ranked by severity-weighted exposure, with host↔CVE drill-down, all server-paginated for large estates
+- **Threat Model report** — your security controls mapped against the MITRE ATT&CK matrix from real audit findings, with per-cell drill-down and an optional AI narrative
+- **Reporter improvements** — correct dark-theme charts, interactive drill-down and paging on the threat and vulnerability views, and a reorganized Reporter navigation
+
+### AI & Automation
+
+- **AI Provider Enhancement** — per-provider model catalogs with best-practice defaults and an economy tier; pre-save live model interrogation (your key is validated, never logged); and a `best`/`economy` AI profile that auto-routes each purpose to an appropriate model, preserving operator pins
+- **Improved AI tooling** — the assistant can use read-only platform tools to ground answers in your live data
+- **MCP Authentication** — optional per-organization bearer/API-key auth for the Model Context Protocol integration (default off; keys hashed at rest, shown once)
+- **AI summary caching** — on-demand summaries (including Auditor findings) cached per organization to cut cost and latency
+
+### Collaboration & Profile
+
+- **User Profile** — self-hosted avatar upload, self-service password and locale, presence and author cards, and one-click "message a user"
+- **Chat Upgrade** — file attachments, emoji reactions, and a more robust realtime connection
+- **CyberGrid community** — share Work Units and Work Collections to the community directory, a within- and cross-cluster User Directory, and a durable, self-healing directory-submission pipeline that reports its true status
+
+### Detection & Pipeline
+
+- **Azure Email Security** — Microsoft Defender for Office 365 phishing email and phishing-click signals now produce Work Units
+- **VMware NSX-T parsing** — NSX-T operational and degraded-service events classified and actionable instead of landing in unknown
+- **Conductor visibility** — per-agent up/down/health for Beats agents, expanded Integration Health detail, the Conductor link hidden on non-Conductor nodes, and corrected Cisco Umbrella configuration fields
+- **Search & collections** — Work Unit search on client IP across source and destination addresses; Work Collections on hostnames, URLs, file names, and file hashes; plus facet, Client-IP-search, and pagination fixes
+
+### Platform & Operations
+
+- **Mobile & tablet support** — responsive Analytics, Conductor, and Console UIs with drawer navigation and touch-friendly controls below desktop widths
+- **Sign-in** — the login page defaults to SAML single sign-on when enabled (local login always reachable); Azure/SAML SSO reliability fixes
+- **Health dashboard** — a Data Retention card showing the actually-enforced retention, a corrected host Total Memory gauge, and a per-node Cassandra health view
+- **Improved automated monitoring** — telemetry redacted at the source under a configurable policy (`off`/`standard`/`strict`); opt-in, PII-free cluster-problem reporting
+- **Console node management** — Analytics nodes managed from the Console with an accurate last-seen-based online/offline indicator
+
+### Infrastructure & Hardening
+
+- **Pre-1.0 full code review** — external-dependency and vulnerability verification, Cassandra optimization (including a 5.0.8 upgrade with a per-node health monitor), an adversarial re-review of the entire 0.9.8→1.0.0 change set, deeper test and docker-log coverage, documentation accuracy, and an expanded certification curriculum
+- Continued supply-chain and CI security-gate hardening (secret scanning, static analysis, dependency and image scanning, log-injection and SSRF call-site gates)
+
 ## v0.9.8 (2026-06-23)
 
 Operational-resilience, AI-cost, and pipeline-coverage release with broad security hardening. Ships alongside **WitFoo Management Console 1.8.0**, **Conductor 1.7.0**, and **WFA 2.3.0**. **Upgrade recommended.**
