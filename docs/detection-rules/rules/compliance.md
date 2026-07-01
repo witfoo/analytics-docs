@@ -4,6 +4,8 @@ Detect compliance policy violations including unencrypted traffic, retention iss
 
 **5 rules** in this category.
 
+[:material-download: Download all Sigma rules (.zip)](../sigma_rules.zip){ .md-button download="sigma_rules.zip" }
+
 ## Rule Summary
 
 | ID | Title | Level | ATT&CK |
@@ -19,6 +21,7 @@ Detect compliance policy violations including unencrypted traffic, retention iss
 ### IDS Event Detection
 
 **ID:** `wf-comp-001`  
+**Source:** [`wf_comp_001.yml`](../sigma/compliance/wf_comp_001.yml){ download="wf_comp_001.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -38,6 +41,7 @@ that matched suspicious or malicious traffic patterns.
 ### IPS Action Taken
 
 **ID:** `wf-comp-002`  
+**Source:** [`wf_comp_002.yml`](../sigma/compliance/wf_comp_002.yml){ download="wf_comp_002.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -57,6 +61,7 @@ a detected attack from succeeding.
 ### Content Filter Match
 
 **ID:** `wf-comp-003`  
+**Source:** [`wf_comp_003.yml`](../sigma/compliance/wf_comp_003.yml){ download="wf_comp_003.yml" }  
 **Level:** medium  
 **Status:** stable  
 **Author:** WitFoo
@@ -76,6 +81,7 @@ sensitive data exposure or policy violations.
 ### Indicator of Compromise Match
 
 **ID:** `wf-comp-004`  
+**Source:** [`wf_comp_004.yml`](../sigma/compliance/wf_comp_004.yml){ download="wf_comp_004.yml" }  
 **Level:** critical  
 **Status:** stable  
 **Author:** WitFoo
@@ -95,6 +101,7 @@ and URLs associated with known threat actors or malware campaigns.
 ### Indicator of Misconfiguration Match
 
 **ID:** `wf-comp-005`  
+**Source:** [`wf_comp_005.yml`](../sigma/compliance/wf_comp_005.yml){ download="wf_comp_005.yml" }  
 **Level:** medium  
 **Status:** stable  
 **Author:** WitFoo

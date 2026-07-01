@@ -4,6 +4,8 @@ Detect network-level threats including traffic anomalies, tunneling, beaconing, 
 
 **12 rules** in this category.
 
+[:material-download: Download all Sigma rules (.zip)](../sigma_rules.zip){ .md-button download="sigma_rules.zip" }
+
 ## Rule Summary
 
 | ID | Title | Level | ATT&CK |
@@ -26,6 +28,7 @@ Detect network-level threats including traffic anomalies, tunneling, beaconing, 
 ### DNS Tunneling Detection
 
 **ID:** `wf-net-001`  
+**Source:** [`wf_net_001.yml`](../sigma/network/wf_net_001.yml){ download="wf_net_001.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -45,6 +48,7 @@ communication via DNS protocol.
 ### C2 Beaconing Activity
 
 **ID:** `wf-net-002`  
+**Source:** [`wf_net_002.yml`](../sigma/network/wf_net_002.yml){ download="wf_net_002.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -64,6 +68,7 @@ Regular-interval check-ins are a hallmark of malware C2 communication.
 ### Unusual Port Activity
 
 **ID:** `wf-net-003`  
+**Source:** [`wf_net_003.yml`](../sigma/network/wf_net_003.yml){ download="wf_net_003.yml" }  
 **Level:** medium  
 **Status:** stable  
 **Author:** WitFoo
@@ -83,6 +88,7 @@ high-numbered ephemeral ports used as server-side listeners.
 ### Large Data Transfer
 
 **ID:** `wf-net-004`  
+**Source:** [`wf_net_004.yml`](../sigma/network/wf_net_004.yml){ download="wf_net_004.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -102,6 +108,7 @@ single connection/session.
 ### Port Scan Detection
 
 **ID:** `wf-net-005`  
+**Source:** [`wf_net_005.yml`](../sigma/network/wf_net_005.yml){ download="wf_net_005.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -117,6 +124,7 @@ systematic port probing.
 ### ICMP Anomaly Detection
 
 **ID:** `wf-net-006`  
+**Source:** [`wf_net_006.yml`](../sigma/network/wf_net_006.yml){ download="wf_net_006.yml" }  
 **Level:** medium  
 **Status:** stable  
 **Author:** WitFoo
@@ -136,6 +144,7 @@ ICMP types can signify data exfiltration or C2 communication.
 ### Non-Standard HTTP/HTTPS Port Usage
 
 **ID:** `wf-net-007`  
+**Source:** [`wf_net_007.yml`](../sigma/network/wf_net_007.yml){ download="wf_net_007.yml" }  
 **Level:** medium  
 **Status:** stable  
 **Author:** WitFoo
@@ -151,6 +160,7 @@ unauthorized web services.
 ### Long-Lived Network Connection
 
 **ID:** `wf-net-008`  
+**Source:** [`wf_net_008.yml`](../sigma/network/wf_net_008.yml){ download="wf_net_008.yml" }  
 **Level:** medium  
 **Status:** stable  
 **Author:** WitFoo
@@ -172,6 +182,7 @@ behavior by WitFoo enrichment.
 ### Suspicious SSL/TLS Certificate
 
 **ID:** `wf-net-009`  
+**Source:** [`wf_net_009.yml`](../sigma/network/wf_net_009.yml){ download="wf_net_009.yml" }  
 **Level:** medium  
 **Status:** stable  
 **Author:** WitFoo
@@ -188,6 +199,7 @@ or compromised certificate authorities.
 ### Executable File Transfer Over Network
 
 **ID:** `wf-net-010`  
+**Source:** [`wf_net_010.yml`](../sigma/network/wf_net_010.yml){ download="wf_net_010.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -203,6 +215,7 @@ distribution. Matches common executable extensions and binary content types.
 ### NXDOMAIN/DGA Detection
 
 **ID:** `wf-net-011`  
+**Source:** [`wf_net_011.yml`](../sigma/network/wf_net_011.yml){ download="wf_net_011.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -223,6 +236,7 @@ DGA malware generates pseudo-random domain names, most of which fail to resolve.
 ### SMB Lateral Movement
 
 **ID:** `wf-net-012`  
+**Source:** [`wf_net_012.yml`](../sigma/network/wf_net_012.yml){ download="wf_net_012.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo

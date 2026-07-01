@@ -4,6 +4,8 @@ Multi-event behavioral detections using Sigma v2 correlation syntax for event co
 
 **8 rules** in this category.
 
+[:material-download: Download all Sigma rules (.zip)](../sigma_rules.zip){ .md-button download="sigma_rules.zip" }
+
 ## Rule Summary
 
 | ID | Title | Level | ATT&CK |
@@ -22,6 +24,7 @@ Multi-event behavioral detections using Sigma v2 correlation syntax for event co
 ### Brute Force Attack Sequence
 
 **ID:** `wf-corr-001`  
+**Source:** [`wf_corr_001.yml`](../sigma/correlations/wf_corr_001.yml){ download="wf_corr_001.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -41,6 +44,7 @@ force attack requiring investigation and potential IP blocking.
 ### Credential Spraying Attack
 
 **ID:** `wf-corr-002`  
+**Source:** [`wf_corr_002.yml`](../sigma/correlations/wf_corr_002.yml){ download="wf_corr_002.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -62,6 +66,7 @@ across many accounts.
 ### Lateral Movement Chain
 
 **ID:** `wf-corr-003`  
+**Source:** [`wf_corr_003.yml`](../sigma/correlations/wf_corr_003.yml){ download="wf_corr_003.yml" }  
 **Level:** critical  
 **Status:** stable  
 **Author:** WitFoo
@@ -81,6 +86,7 @@ through the network after initial compromise.
 ### Data Exfiltration After Reconnaissance
 
 **ID:** `wf-corr-004`  
+**Source:** [`wf_corr_004.yml`](../sigma/correlations/wf_corr_004.yml){ download="wf_corr_004.yml" }  
 **Level:** critical  
 **Status:** stable  
 **Author:** WitFoo
@@ -100,6 +106,7 @@ and is actively extracting data.
 ### Ransomware Kill Chain
 
 **ID:** `wf-corr-005`  
+**Source:** [`wf_corr_005.yml`](../sigma/correlations/wf_corr_005.yml){ download="wf_corr_005.yml" }  
 **Level:** critical  
 **Status:** stable  
 **Author:** WitFoo
@@ -119,6 +126,7 @@ delivery to impact phase.
 ### Phishing to Account Compromise
 
 **ID:** `wf-corr-006`  
+**Source:** [`wf_corr_006.yml`](../sigma/correlations/wf_corr_006.yml){ download="wf_corr_006.yml" }  
 **Level:** critical  
 **Status:** stable  
 **Author:** WitFoo
@@ -138,6 +146,7 @@ compromise.
 ### Multi-Source C2 Beaconing
 
 **ID:** `wf-corr-007`  
+**Source:** [`wf_corr_007.yml`](../sigma/correlations/wf_corr_007.yml){ download="wf_corr_007.yml" }  
 **Level:** critical  
 **Status:** stable  
 **Author:** WitFoo
@@ -159,6 +168,7 @@ coordinated response.
 ### Repeated Policy Violations
 
 **ID:** `wf-corr-008`  
+**Source:** [`wf_corr_008.yml`](../sigma/correlations/wf_corr_008.yml){ download="wf_corr_008.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo

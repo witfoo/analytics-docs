@@ -3,6 +3,16 @@
 Deploy WitFoo detection rules and dashboards to Microsoft Sentinel using ARM
 templates.
 
+## Downloads
+
+[:material-download: Sentinel KQL rules (.kql)](../sentinel/all_rules.kql){ .md-button .md-button--primary download="all_rules.kql" }
+
+All **55** detection rules as KQL. Also available:
+
+- **Analytics rules (ARM)** — [`analytics_rules.json`](../sentinel/analytics_rules.json){ download="analytics_rules.json" }: deploy all 55 as scheduled analytics rules.
+- **Workbooks** — the `sentinel/workbooks/` directory (3 ARM workbook templates).
+- **Sigma source** — [`sigma_rules.zip`](../sigma_rules.zip){ download="sigma_rules.zip" }: all **68** platform-agnostic Sigma rules.
+
 ## Prerequisites
 
 - Microsoft Sentinel workspace (Log Analytics)

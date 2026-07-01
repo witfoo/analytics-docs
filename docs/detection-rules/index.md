@@ -94,6 +94,28 @@ python convert.py --target all --validate-only
 make test
 ```
 
+## Download Rules
+
+Download the detection rules directly — no build step required.
+
+[:material-download: Download all Sigma rules (.zip)](sigma_rules.zip){ .md-button .md-button--primary download="sigma_rules.zip" }
+
+The bundle contains all **68** Sigma source rules (55 detection + 8 correlation +
+5 filter), organized as `sigma/<category>/<rule>.yml`.
+
+### Compiled Platform Bundles
+
+Each bundle holds the **55** converted detection rules for that platform
+(correlation and filter rules are not part of the platform conversion):
+
+- **Splunk SPL** — [`all_rules.spl`](splunk/all_rules.spl){ download="all_rules.spl" }
+- **OpenSearch DQL** — [`all_rules.dql`](opensearch/all_rules.dql){ download="all_rules.dql" } and [`index_template.json`](opensearch/index_template.json){ download="index_template.json" }
+- **Sentinel KQL** — [`all_rules.kql`](sentinel/all_rules.kql){ download="all_rules.kql" } and [`analytics_rules.json`](sentinel/analytics_rules.json){ download="analytics_rules.json" }
+
+Import steps are on each platform Quick-start:
+[Splunk](platforms/splunk.md), [OpenSearch](platforms/opensearch.md), and
+[Sentinel](platforms/sentinel.md).
+
 ## Testing
 
 The rule library includes comprehensive automated tests:

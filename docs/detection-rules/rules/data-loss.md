@@ -4,6 +4,8 @@ Detect data exfiltration attempts, unusually large transfers, and policy violati
 
 **6 rules** in this category.
 
+[:material-download: Download all Sigma rules (.zip)](../sigma_rules.zip){ .md-button download="sigma_rules.zip" }
+
 ## Rule Summary
 
 | ID | Title | Level | ATT&CK |
@@ -20,6 +22,7 @@ Detect data exfiltration attempts, unusually large transfers, and policy violati
 ### Data Staging Activity
 
 **ID:** `wf-dlp-001`  
+**Source:** [`wf_dlp_001.yml`](../sigma/data-loss/wf_dlp_001.yml){ download="wf_dlp_001.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -39,6 +42,7 @@ central location, archiving data, or staging data on network shares.
 ### Data Exfiltration
 
 **ID:** `wf-dlp-002`  
+**Source:** [`wf_dlp_002.yml`](../sigma/data-loss/wf_dlp_002.yml){ download="wf_dlp_002.yml" }  
 **Level:** critical  
 **Status:** stable  
 **Author:** WitFoo
@@ -58,6 +62,7 @@ immediate investigation and response.
 ### Data Destruction
 
 **ID:** `wf-dlp-003`  
+**Source:** [`wf_dlp_003.yml`](../sigma/data-loss/wf_dlp_003.yml){ download="wf_dlp_003.yml" }  
 **Level:** critical  
 **Status:** stable  
 **Author:** WitFoo
@@ -77,6 +82,7 @@ ransomware cleanup phase, or adversary covering tracks.
 ### Large Outbound Data Transfer
 
 **ID:** `wf-dlp-004`  
+**Source:** [`wf_dlp_004.yml`](../sigma/data-loss/wf_dlp_004.yml){ download="wf_dlp_004.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -96,6 +102,7 @@ on client-originated bytes to external destinations.
 ### Suspicious HTTP POST Exfiltration
 
 **ID:** `wf-dlp-005`  
+**Source:** [`wf_dlp_005.yml`](../sigma/data-loss/wf_dlp_005.yml){ download="wf_dlp_005.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -116,6 +123,7 @@ POST to exfiltrate data as it blends with normal web traffic.
 ### Unauthorized File Transfer
 
 **ID:** `wf-dlp-006`  
+**Source:** [`wf_dlp_006.yml`](../sigma/data-loss/wf_dlp_006.yml){ download="wf_dlp_006.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo

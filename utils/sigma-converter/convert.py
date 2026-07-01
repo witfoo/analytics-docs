@@ -16,22 +16,22 @@ Usage:
 import argparse
 import os
 import sys
+import zipfile
 from pathlib import Path
 
 import yaml
-from sigma.collection import SigmaCollection
-from sigma.backends.splunk import SplunkBackend
-from sigma.backends.opensearch import OpensearchLuceneBackend
-from sigma.backends.microsoft365defender import KustoBackend
 
-from witfoo_pipeline import (
-    witfoo_splunk_pipeline,
-    witfoo_opensearch_pipeline,
-    witfoo_sentinel_pipeline,
-)
+# NOTE: the pySigma collection/backends and the witfoo_pipeline module (which
+# also imports pySigma) are imported lazily inside convert_rules(). They are only
+# needed for the platform conversions — keeping them out of module scope lets the
+# stdlib-only bundle path (generate_sigma_bundle) and the load_* helpers run
+# without the heavy SIEM backend dependencies installed.
 
 
 SIGMA_DIR = Path(__file__).parent.parent.parent / "docs" / "detection-rules" / "sigma"
+
+# Default destination for the aggregate one-click Sigma download bundle.
+SIGMA_BUNDLE_PATH = SIGMA_DIR.parent / "sigma_rules.zip"
 
 DETECTION_CATEGORIES = [
     "network",
@@ -72,6 +72,55 @@ def is_detection_rule(rule_path: Path) -> bool:
     return data.get("type") not in ("correlation", "filter")
 
 
+def generate_sigma_bundle(output_path: Path | None = None) -> int:
+    """
+    Package every Sigma source rule into a single, deterministic zip archive for
+    one-click download from the docs site.
+
+    Every ``*.yml`` under ``docs/detection-rules/sigma/<category>/`` is included —
+    all categories, including correlations and filters — under arcnames
+    ``sigma/<category>/<file>.yml``.
+
+    The archive is byte-for-byte reproducible so the committed binary only changes
+    when a rule's *content* changes (never from build-time mtime or zlib-version
+    drift):
+      * categories and files are iterated in sorted order;
+      * every entry uses a fixed ``date_time`` of 1980-01-01 (the zip epoch);
+      * entries are stored uncompressed (``ZIP_STORED``) with pinned
+        ``create_system``/``external_attr`` — independent of the host OS and any
+        deflate implementation.
+
+    Args:
+        output_path: Destination zip path. Defaults to
+            ``docs/detection-rules/sigma_rules.zip`` (``SIGMA_BUNDLE_PATH``).
+
+    Returns:
+        Number of rule entries written to the archive.
+    """
+    if output_path is None:
+        output_path = SIGMA_BUNDLE_PATH
+
+    # Collect (arcname, source) for every rule, sorted for a stable entry order.
+    entries: list[tuple[str, Path]] = []
+    for category in sorted(p.name for p in SIGMA_DIR.iterdir() if p.is_dir()):
+        cat_dir = SIGMA_DIR / category
+        for rule_path in sorted(cat_dir.glob("*.yml")):
+            arcname = f"sigma/{category}/{rule_path.name}"
+            entries.append((arcname, rule_path))
+
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    with zipfile.ZipFile(output_path, "w", compression=zipfile.ZIP_STORED) as zf:
+        for arcname, rule_path in entries:
+            info = zipfile.ZipInfo(arcname, date_time=(1980, 1, 1, 0, 0, 0))
+            info.compress_type = zipfile.ZIP_STORED
+            info.create_system = 3  # Unix — pin for cross-platform reproducibility
+            info.external_attr = 0o644 << 16  # regular file, rw-r--r--
+            zf.writestr(info, rule_path.read_bytes())
+
+    print(f"Wrote Sigma bundle: {output_path} ({len(entries)} rules)")
+    return len(entries)
+
+
 def convert_rules(target: str, output_dir: Path | None, validate_only: bool) -> bool:
     """
     Convert Sigma rules to the specified platform target.
@@ -84,6 +133,19 @@ def convert_rules(target: str, output_dir: Path | None, validate_only: bool) -> 
     Returns:
         True if conversion succeeded, False otherwise
     """
+    # Lazy import (see module-level note): only the platform conversions need the
+    # pySigma backends, so importing here keeps the module usable without them.
+    from sigma.collection import SigmaCollection
+    from sigma.backends.splunk import SplunkBackend
+    from sigma.backends.opensearch import OpensearchLuceneBackend
+    from sigma.backends.microsoft365defender import KustoBackend
+
+    from witfoo_pipeline import (
+        witfoo_splunk_pipeline,
+        witfoo_opensearch_pipeline,
+        witfoo_sentinel_pipeline,
+    )
+
     detection_rules = load_detection_rules()
     if not detection_rules:
         print(f"ERROR: No detection rules found in {SIGMA_DIR}")
@@ -230,7 +292,6 @@ def main():
     parser.add_argument(
         "--target",
         choices=["splunk", "opensearch", "sentinel", "all"],
-        required=True,
         help="Target SIEM platform",
     )
     parser.add_argument(
@@ -243,25 +304,43 @@ def main():
         action="store_true",
         help="Only validate conversion succeeds (no file output)",
     )
+    parser.add_argument(
+        "--bundle",
+        action="store_true",
+        help="Generate the aggregate Sigma rules zip (all source rules)",
+    )
+    parser.add_argument(
+        "--bundle-output",
+        type=Path,
+        help="Destination for --bundle (default: docs/detection-rules/sigma_rules.zip)",
+    )
     args = parser.parse_args()
 
-    targets = (
-        ["splunk", "opensearch", "sentinel"] if args.target == "all" else [args.target]
-    )
+    if not args.target and not args.bundle:
+        parser.error("one of --target or --bundle is required")
 
     all_ok = True
 
-    for target in targets:
-        output = args.output if args.target != "all" else None
-        ok = convert_rules(target, output, args.validate_only or args.target == "all")
-        if not ok:
+    if args.target:
+        targets = (
+            ["splunk", "opensearch", "sentinel"]
+            if args.target == "all"
+            else [args.target]
+        )
+        for target in targets:
+            output = args.output if args.target != "all" else None
+            ok = convert_rules(target, output, args.validate_only or args.target == "all")
+            if not ok:
+                all_ok = False
+
+        # Always validate correlation and filter rules
+        if not validate_correlation_rules():
+            all_ok = False
+        if not validate_filter_rules():
             all_ok = False
 
-    # Always validate correlation and filter rules
-    if not validate_correlation_rules():
-        all_ok = False
-    if not validate_filter_rules():
-        all_ok = False
+    if args.bundle:
+        generate_sigma_bundle(args.bundle_output)
 
     if all_ok:
         print(f"\n{'='*60}")

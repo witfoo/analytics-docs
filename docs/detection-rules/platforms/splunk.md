@@ -2,6 +2,15 @@
 
 Deploy WitFoo detection rules and dashboards to Splunk Enterprise or Splunk Cloud.
 
+## Downloads
+
+[:material-download: Splunk SPL rules (.spl)](../splunk/all_rules.spl){ .md-button .md-button--primary download="all_rules.spl" }
+
+All **55** detection rules as saved-search SPL. Also available:
+
+- **WitFoo SIEM app** — the `splunk/witfoo_siem_app/` directory (5 dashboards + per-rule saved searches); install it as shown in *Install the WitFoo SIEM App* below.
+- **Sigma source** — [`sigma_rules.zip`](../sigma_rules.zip){ download="sigma_rules.zip" }: all **68** platform-agnostic Sigma rules.
+
 ## Prerequisites
 
 - Splunk Enterprise 8.x+ or Splunk Cloud

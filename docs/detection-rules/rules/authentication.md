@@ -4,6 +4,8 @@ Detect authentication-based attacks including brute force, credential stuffing, 
 
 **8 rules** in this category.
 
+[:material-download: Download all Sigma rules (.zip)](../sigma_rules.zip){ .md-button download="sigma_rules.zip" }
+
 ## Rule Summary
 
 | ID | Title | Level | ATT&CK |
@@ -22,6 +24,7 @@ Detect authentication-based attacks including brute force, credential stuffing, 
 ### Authentication Failure
 
 **ID:** `wf-auth-001`  
+**Source:** [`wf_auth_001.yml`](../sigma/authentication/wf_auth_001.yml){ download="wf_auth_001.yml" }  
 **Level:** medium  
 **Status:** stable  
 **Author:** WitFoo
@@ -41,6 +44,7 @@ credential spray correlation rules.
 ### Brute Force Indicator
 
 **ID:** `wf-auth-002`  
+**Source:** [`wf_auth_002.yml`](../sigma/authentication/wf_auth_002.yml){ download="wf_auth_002.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -61,6 +65,7 @@ WitFoo's lead rule engine to flag repeated failures.
 ### Credential Access Attempt
 
 **ID:** `wf-auth-003`  
+**Source:** [`wf_auth_003.yml`](../sigma/authentication/wf_auth_003.yml){ download="wf_auth_003.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -79,6 +84,7 @@ and keystroke logging indicators classified by WitFoo's artifact enrichment.
 ### Privilege Escalation
 
 **ID:** `wf-auth-004`  
+**Source:** [`wf_auth_004.yml`](../sigma/authentication/wf_auth_004.yml){ download="wf_auth_004.yml" }  
 **Level:** critical  
 **Status:** stable  
 **Author:** WitFoo
@@ -98,6 +104,7 @@ that may indicate exploitation of vulnerabilities or misconfigurations.
 ### Administrative Account Activity
 
 **ID:** `wf-auth-005`  
+**Source:** [`wf_auth_005.yml`](../sigma/authentication/wf_auth_005.yml){ download="wf_auth_005.yml" }  
 **Level:** medium  
 **Status:** stable  
 **Author:** WitFoo
@@ -118,6 +125,7 @@ compliance and helps identify compromised privileged accounts.
 ### Malicious Session Detection
 
 **ID:** `wf-auth-006`  
+**Source:** [`wf_auth_006.yml`](../sigma/authentication/wf_auth_006.yml){ download="wf_auth_006.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -137,6 +145,7 @@ session hijacking, or unauthorized access after credential compromise.
 ### Defense Evasion Activity
 
 **ID:** `wf-auth-007`  
+**Source:** [`wf_auth_007.yml`](../sigma/authentication/wf_auth_007.yml){ download="wf_auth_007.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -156,6 +165,7 @@ by security monitoring systems.
 ### Service Discovery Activity
 
 **ID:** `wf-auth-008`  
+**Source:** [`wf_auth_008.yml`](../sigma/authentication/wf_auth_008.yml){ download="wf_auth_008.yml" }  
 **Level:** medium  
 **Status:** stable  
 **Author:** WitFoo

@@ -4,6 +4,8 @@ Detect cloud infrastructure threats including misconfiguration, privilege escala
 
 **6 rules** in this category.
 
+[:material-download: Download all Sigma rules (.zip)](../sigma_rules.zip){ .md-button download="sigma_rules.zip" }
+
 ## Rule Summary
 
 | ID | Title | Level | ATT&CK |
@@ -20,6 +22,7 @@ Detect cloud infrastructure threats including misconfiguration, privilege escala
 ### Cloud Privilege Escalation
 
 **ID:** `wf-cloud-001`  
+**Source:** [`wf_cloud_001.yml`](../sigma/cloud/wf_cloud_001.yml){ download="wf_cloud_001.yml" }  
 **Level:** critical  
 **Status:** stable  
 **Author:** WitFoo
@@ -40,6 +43,7 @@ boundary modifications.
 ### Cloud Configuration Change
 
 **ID:** `wf-cloud-002`  
+**Source:** [`wf_cloud_002.yml`](../sigma/cloud/wf_cloud_002.yml){ download="wf_cloud_002.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -60,6 +64,7 @@ firewall rule changes, and logging configuration alterations.
 ### Cloud API Abuse
 
 **ID:** `wf-cloud-003`  
+**Source:** [`wf_cloud_003.yml`](../sigma/cloud/wf_cloud_003.yml){ download="wf_cloud_003.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -80,6 +85,7 @@ cloud infrastructure.
 ### Phishing Email Detection
 
 **ID:** `wf-cloud-004`  
+**Source:** [`wf_cloud_004.yml`](../sigma/cloud/wf_cloud_004.yml){ download="wf_cloud_004.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -99,6 +105,7 @@ common initial access vectors for cyber attacks.
 ### Phishing Link Click
 
 **ID:** `wf-cloud-005`  
+**Source:** [`wf_cloud_005.yml`](../sigma/cloud/wf_cloud_005.yml){ download="wf_cloud_005.yml" }  
 **Level:** critical  
 **Status:** stable  
 **Author:** WitFoo
@@ -118,6 +125,7 @@ requiring immediate user notification and credential reset evaluation.
 ### Policy Violation
 
 **ID:** `wf-cloud-006`  
+**Source:** [`wf_cloud_006.yml`](../sigma/cloud/wf_cloud_006.yml){ download="wf_cloud_006.yml" }  
 **Level:** medium  
 **Status:** stable  
 **Author:** WitFoo

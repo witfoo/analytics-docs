@@ -2,6 +2,16 @@
 
 Deploy WitFoo detection rules and dashboards to OpenSearch or OpenSearch Dashboards.
 
+## Downloads
+
+[:material-download: OpenSearch DQL rules (.dql)](../opensearch/all_rules.dql){ .md-button .md-button--primary download="all_rules.dql" }
+
+All **55** detection rules as DQL/Lucene queries. Also available:
+
+- **Index template** — [`index_template.json`](../opensearch/index_template.json){ download="index_template.json" }: field mappings for the `witfoo-*` indices.
+- **Dashboards** — the `opensearch/dashboards/` directory (5 NDJSON saved-object files).
+- **Sigma source** — [`sigma_rules.zip`](../sigma_rules.zip){ download="sigma_rules.zip" }: all **68** platform-agnostic Sigma rules.
+
 ## Prerequisites
 
 - OpenSearch 2.x+ with OpenSearch Dashboards

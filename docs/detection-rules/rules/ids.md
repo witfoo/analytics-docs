@@ -4,6 +4,8 @@ Detect intrusion attempts using signature-based alert analysis and evasion detec
 
 **5 rules** in this category.
 
+[:material-download: Download all Sigma rules (.zip)](../sigma_rules.zip){ .md-button download="sigma_rules.zip" }
+
 ## Rule Summary
 
 | ID | Title | Level | ATT&CK |
@@ -19,6 +21,7 @@ Detect intrusion attempts using signature-based alert analysis and evasion detec
 ### Suricata High Severity Alert
 
 **ID:** `wf-ids-001`  
+**Source:** [`wf_ids_001.yml`](../sigma/ids/wf_ids_001.yml){ download="wf_ids_001.yml" }  
 **Level:** critical  
 **Status:** stable  
 **Author:** WitFoo
@@ -39,6 +42,7 @@ threat detections requiring immediate investigation.
 ### Suricata ATT&CK Mapped Alert
 
 **ID:** `wf-ids-002`  
+**Source:** [`wf_ids_002.yml`](../sigma/ids/wf_ids_002.yml){ download="wf_ids_002.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -59,6 +63,7 @@ technique. These are higher-confidence detections with tactical context.
 ### Zeek Notice Event
 
 **ID:** `wf-ids-003`  
+**Source:** [`wf_ids_003.yml`](../sigma/ids/wf_ids_003.yml){ download="wf_ids_003.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -78,6 +83,7 @@ and behavioral detections from Zeek's scripting engine.
 ### Deprecated TLS Version Usage
 
 **ID:** `wf-ids-004`  
+**Source:** [`wf_ids_004.yml`](../sigma/ids/wf_ids_004.yml){ download="wf_ids_004.yml" }  
 **Level:** medium  
 **Status:** stable  
 **Author:** WitFoo
@@ -93,6 +99,7 @@ downgrade attacks and violate modern compliance requirements.
 ### Anomalous Network Behavior
 
 **ID:** `wf-ids-005`  
+**Source:** [`wf_ids_005.yml`](../sigma/ids/wf_ids_005.yml){ download="wf_ids_005.yml" }  
 **Level:** medium  
 **Status:** stable  
 **Author:** WitFoo

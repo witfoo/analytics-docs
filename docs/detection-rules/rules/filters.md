@@ -4,6 +4,8 @@ Noise reduction rules that suppress known benign activity to reduce false positi
 
 **5 rules** in this category.
 
+[:material-download: Download all Sigma rules (.zip)](../sigma_rules.zip){ .md-button download="sigma_rules.zip" }
+
 ## Rule Summary
 
 | ID | Title | Level | ATT&CK |
@@ -19,6 +21,7 @@ Noise reduction rules that suppress known benign activity to reduce false positi
 ### Internal Scanner False Positive Filter
 
 **ID:** `wf-filter-001`  
+**Source:** [`wf_filter_001.yml`](../sigma/filters/wf_filter_001.yml){ download="wf_filter_001.yml" }  
 **Level:** medium  
 **Status:** stable  
 **Author:** WitFoo
@@ -38,6 +41,7 @@ scanner IP list to match your environment.
 ### Backup Transfer False Positive Filter
 
 **ID:** `wf-filter-002`  
+**Source:** [`wf_filter_002.yml`](../sigma/filters/wf_filter_002.yml){ download="wf_filter_002.yml" }  
 **Level:** medium  
 **Status:** stable  
 **Author:** WitFoo
@@ -57,6 +61,7 @@ to match your backup infrastructure.
 ### Service Account Auth False Positive Filter
 
 **ID:** `wf-filter-003`  
+**Source:** [`wf_filter_003.yml`](../sigma/filters/wf_filter_003.yml){ download="wf_filter_003.yml" }  
 **Level:** medium  
 **Status:** stable  
 **Author:** WitFoo
@@ -77,6 +82,7 @@ to match your environment.
 ### CDN/Health Check DNS False Positive Filter
 
 **ID:** `wf-filter-004`  
+**Source:** [`wf_filter_004.yml`](../sigma/filters/wf_filter_004.yml){ download="wf_filter_004.yml" }  
 **Level:** medium  
 **Status:** stable  
 **Author:** WitFoo
@@ -96,6 +102,7 @@ DNS names. Customize domain patterns to match your environment.
 ### Monitoring Agent Connection False Positive Filter
 
 **ID:** `wf-filter-005`  
+**Source:** [`wf_filter_005.yml`](../sigma/filters/wf_filter_005.yml){ download="wf_filter_005.yml" }  
 **Level:** medium  
 **Status:** stable  
 **Author:** WitFoo

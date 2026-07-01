@@ -4,6 +4,8 @@ Detect infrastructure health issues including service degradation, certificate p
 
 **5 rules** in this category.
 
+[:material-download: Download all Sigma rules (.zip)](../sigma_rules.zip){ .md-button download="sigma_rules.zip" }
+
 ## Rule Summary
 
 | ID | Title | Level | ATT&CK |
@@ -19,6 +21,7 @@ Detect infrastructure health issues including service degradation, certificate p
 ### Service Disruption
 
 **ID:** `wf-infra-001`  
+**Source:** [`wf_infra_001.yml`](../sigma/infrastructure/wf_infra_001.yml){ download="wf_infra_001.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -38,6 +41,7 @@ attacks, resource exhaustion, or infrastructure failures.
 ### Degraded Hardware Alert
 
 **ID:** `wf-infra-002`  
+**Source:** [`wf_infra_002.yml`](../sigma/infrastructure/wf_infra_002.yml){ download="wf_infra_002.yml" }  
 **Level:** medium  
 **Status:** stable  
 **Author:** WitFoo
@@ -57,6 +61,7 @@ power supply issues that may affect system availability.
 ### Degraded Service Alert
 
 **ID:** `wf-infra-003`  
+**Source:** [`wf_infra_003.yml`](../sigma/infrastructure/wf_infra_003.yml){ download="wf_infra_003.yml" }  
 **Level:** medium  
 **Status:** stable  
 **Author:** WitFoo
@@ -76,6 +81,7 @@ reported by application performance monitoring tools.
 ### Financial System Anomaly
 
 **ID:** `wf-infra-004`  
+**Source:** [`wf_infra_004.yml`](../sigma/infrastructure/wf_infra_004.yml){ download="wf_infra_004.yml" }  
 **Level:** high  
 **Status:** stable  
 **Author:** WitFoo
@@ -95,6 +101,7 @@ processing irregularities that may indicate fraud or data manipulation.
 ### Infrastructure Exploit Attempt
 
 **ID:** `wf-infra-005`  
+**Source:** [`wf_infra_005.yml`](../sigma/infrastructure/wf_infra_005.yml){ download="wf_infra_005.yml" }  
 **Level:** critical  
 **Status:** stable  
 **Author:** WitFoo
