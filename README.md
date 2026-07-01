@@ -40,7 +40,7 @@ Documentation is deployed via [mike](https://github.com/jimporter/mike) with ver
 
 ## Structure
 
-```
+```text
 docs/
   getting-started/    # Installation, first login, architecture
   user-guide/         # Signals, Graph, Observer, Reporter, CyberGrid, Health

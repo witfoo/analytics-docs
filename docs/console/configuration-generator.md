@@ -38,6 +38,7 @@ Establish the foundation for your appliance.
 | Deployment Type | Select | On-Premises / Cloud / Bare Metal | No |
 
 **Guidance:**
+
 - Use descriptive appliance names that reflect the node's purpose and environment
 - Node role selection determines which services are installed and configured
 - Appliance names must be unique within your organization
@@ -49,6 +50,7 @@ Choose your licensing model.
 **Options:**
 
 **Trial License (15-day):**
+
 - No license key required
 - Automatically generated during configuration
 - Expires after 15 days
@@ -56,12 +58,14 @@ Choose your licensing model.
 - Use case: Evaluation, proof of concept, testing
 
 **Existing License:**
+
 - Paste your organization's WitFoo license key
 - Validates key format and expiration
 - Required for production deployments
 - Multiple keys can be imported for different appliances
 
 **Selection Process:**
+
 1. Choose **Trial** or **Existing License**
 2. For existing licenses, paste the full license key (including `-----BEGIN LICENSE-----` markers)
 3. Console validates the key and displays license details: organization, expiration date, feature entitlements
@@ -99,6 +103,7 @@ Configure role-specific features and integrations.
 | Backup Integration | Enable / Disable |
 
 **Selection Process:**
+
 1. Review the available options for your selected node role
 2. Enable or disable optional features based on your deployment
 3. For integrations, select the relevant platforms you plan to use
@@ -130,6 +135,7 @@ Define network configuration and optional features.
 | High Availability | Configure cluster mode (for Console) | Redundancy, failover |
 
 **Configuration:**
+
 1. Enter your network details
 2. For security-critical deployments, upload custom TLS certificates
 3. Enable monitoring and logging features as needed
@@ -141,6 +147,7 @@ Define network configuration and optional features.
 Verify all configuration details before generation.
 
 **Review Checklist:**
+
 - Confirm organization and appliance names
 - Verify node role and role-specific features
 - Check all network parameters (hostname, IP, gateway, DNS)
@@ -148,6 +155,7 @@ Verify all configuration details before generation.
 - Ensure license is correctly selected
 
 **Actions:**
+
 - **Back:** Return to previous steps to make changes
 - **Edit [Step]:** Jump to a specific step to modify details
 - **Generate:** Proceed to configuration generation
@@ -165,6 +173,7 @@ Verify all configuration details before generation.
 Generate and deliver the configuration via a secure URL.
 
 **Generation Process:**
+
 1. Configuration is encrypted at rest using AES-256-GCM
 2. A single-use URL is generated with 72-hour expiration
 3. The token is hashed before storage (plaintext not retained)
@@ -174,6 +183,7 @@ Generate and deliver the configuration via a secure URL.
 **Output:**
 
 You receive:
+
 - **Configuration URL:** A secure, single-use link
 - **Token Expiration:** Exact time when the URL expires (72 hours)
 - **QR Code:** For easy sharing to the target appliance
@@ -235,31 +245,33 @@ Customers who receive a Configuration Generator URL can deploy it using the `wfa
 
 ### Step-by-Step Deployment
 
-**1. Receive Configuration URL from Administrator**
+#### 1. Receive Configuration URL from Administrator
 
 The administrator provides:
+
 - Secure configuration URL (valid for 72 hours)
 - QR code (optional, for mobile use)
 - Configuration checksum (for verification)
 
 Example URL:
-```
+
+```text
 https://console.example.com/api/config/download/abc123xyz789
 ```
 
-**2. SSH to the Appliance**
+#### 2. SSH to the Appliance
 
 ```bash
 ssh witfooadmin@<appliance-ip>
 ```
 
-**3. Run wfa fetch**
+#### 3. Run wfa fetch
 
 ```bash
 sudo wfa fetch https://console.example.com/api/config/download/abc123xyz789
 ```
 
-**4. Respond to Prompts**
+#### 4. Respond to Prompts
 
 The `wfa fetch` command prompts for:
 
@@ -270,9 +282,10 @@ The `wfa fetch` command prompts for:
 | Confirm Network Settings | `yes/no` | Review auto-detected network config |
 | Confirm Role & Features | `yes/no` | Verify services to be installed |
 
-**5. Configuration Validation**
+#### 5. Configuration Validation
 
 The appliance:
+
 - Downloads the configuration file over HTTPS
 - Verifies the checksum (SHA-256) matches
 - Validates syntax and references
@@ -281,7 +294,7 @@ The appliance:
 
 **Sample Output:**
 
-```
+```text
 $ sudo wfa fetch https://console.example.com/api/config/download/abc123xyz789
 Downloading configuration...
 Verifying checksum...
@@ -295,9 +308,10 @@ Starting services...
 Configuration applied successfully. Access UI at https://10.20.30.40/
 ```
 
-**6. Complete Web UI Onboarding**
+#### 6. Complete Web UI Onboarding
 
 Once `wfa fetch` completes:
+
 1. Navigate to `https://<appliance-ip>`
 2. Log in with the admin email and password from step 4
 3. Complete the 12-step onboarding wizard
@@ -356,7 +370,7 @@ Once `wfa fetch` completes:
 ## Security Admonition
 
 !!! warning "Configuration Generator Security Considerations"
-    
+
     - **URL Expiration:** Shared URLs expire after 72 hours. Keep administrative contact information current to ensure timely re-generation if needed.
     
     - **Admin Password:** The appliance collects and stores the admin password locally during `wfa fetch`. The password is never transmitted to the Console. Change this password immediately after first login to the web UI.
@@ -376,6 +390,7 @@ Once `wfa fetch` completes:
 **Problem:** "This configuration URL has expired"
 
 **Solution:**
+
 1. Contact your administrator
 2. Request a new configuration be generated
 3. Use the new URL within 72 hours
@@ -386,6 +401,7 @@ Once `wfa fetch` completes:
 **Problem:** "Configuration checksum verification failed"
 
 **Solution:**
+
 1. Verify the configuration URL is correct (copy-paste carefully)
 2. Check for network interruptions during download
 3. Retry the `wfa fetch` command
@@ -396,6 +412,7 @@ Once `wfa fetch` completes:
 **Problem:** "Network configuration invalid: gateway not reachable"
 
 **Solution:**
+
 1. Verify appliance network connectivity: `ping <gateway-ip>`
 2. Confirm IP address is not already in use: `arp-scan -l`
 3. Check DNS resolution: `nslookup <hostname>`
@@ -406,6 +423,7 @@ Once `wfa fetch` completes:
 **Problem:** "Cannot download configuration: certificate validation failed"
 
 **Solution:**
+
 1. Verify Console's TLS certificate is valid and not expired
 2. Ensure appliance can reach Console's hostname (DNS resolution)
 3. For self-signed certificates, configure appliance to trust the certificate
