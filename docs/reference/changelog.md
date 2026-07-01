@@ -152,7 +152,7 @@ Security-hardening and operational-resilience release. Consolidates the hardenin
 - Attachment and user-rendered content hardened against script-injection (XSS)
 - Input encoding and bounded query limits; log sanitization and on-disk path containment
 
-### Operational Resilience
+### Operational Resilience & Self-Healing
 
 - Startup-race sweep — service initialization moved to a level-triggered readiness model, eliminating a class of startup deadlocks
 - Container environment-drift self-heal — a running container missing a newly required environment variable after a WFA upgrade is recreated automatically within ~60 seconds
