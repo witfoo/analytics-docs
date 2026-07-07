@@ -258,6 +258,7 @@ nav:
           - SIEM:
               - Splunk: conductor/integrations/splunk.md
               - Rapid7 InsightIDR: conductor/integrations/rapid7-insightidr.md
+              - LevelBlue USM Anywhere: conductor/integrations/usm-anywhere.md
           - Infrastructure:
               - DNS Zone Transfer: conductor/integrations/dns-zone-transfer.md
               - Druva: conductor/integrations/druva.md

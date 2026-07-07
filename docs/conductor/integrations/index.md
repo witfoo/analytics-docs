@@ -84,6 +84,7 @@ processing pipeline.
 |---|---|---|
 | Splunk | Token / Username + Password | [Enable →](splunk.md) |
 | Rapid7 InsightIDR | API Key | [Enable →](rapid7-insightidr.md) |
+| LevelBlue USM Anywhere | OAuth2 Client Credentials | [Enable →](usm-anywhere.md) |
 
 ### Infrastructure
 

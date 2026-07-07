@@ -10,7 +10,8 @@ Signal Server handles push-based log ingestion from network sources. It listens 
 | Syslog TCP | 514 | Standard syslog over TCP |
 | Beats/Logstash | 5044–5045 | Elastic Beats and Logstash Lumberjack protocol |
 | Secure Syslog TLS | 6514 | Encrypted syslog over TLS |
-| HTTP | 7514 | HTTP-based log ingestion |
+| Syslog TCP (RFC6587) | 7514 | Octet-counted framed syslog over TCP (RFC6587) |
+| HTTP / WebSocket | 8008 | HTTP-based log ingestion (WebSocket endpoint `/ws`) |
 
 Each listener runs as an independent connector following the **Source → Flow → Sink** pattern:
 
