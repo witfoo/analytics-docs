@@ -2,6 +2,57 @@
 
 Version history for WitFoo products.
 
+## v1.1.0 (2026-07-14)
+
+Feature release on the 1.0.0 GA line — *from signal to evidence and decisive action*. Sharper investigations, the new **Certify** compliance-certification capability, scheduled report delivery, broader data onboarding, and a hardened, verified multi-tenant foundation. A recommended, drop-in upgrade for all 1.0.x deployments. **[Watch the 1.1.0 tour.](https://vimeo.com/1209183185)**
+
+### Investigation
+
+- **One-click CVE explanations** — click any CVE in a report or on a host for a plain-language explanation (severity, description, weakness type), served offline from a committed CVE library with no internet calls
+- **Exploitability-aware threat scoring** — a live vulnerability on a host connected to an outside asset now raises incident suspicion and flags attacker and victim, with a new "Weak Edge" view (CVE × technique × attacker × victim) alongside Attack Chain
+- **Verdict-first entity detail** — the node/entity panel leads with a clear verdict ("Suspicious · 39% · Medium") then why-flagged / where-who / related / activity, values humanized, raw JSON and schema behind an Advanced disclosure
+- **In-panel relationship pivoting** — search all of an entity's relationships from its panel with a "Top relationships" shortlist (internal users first)
+- **The true target of an attack is always visible** — the internal host under attack is no longer missing from a work unit's evidence and graph; attacker→victim is correctly linked
+
+### Asset & Identity
+
+- **Accurate internal-user classification** — a user counts as internal/managed only when sourced from a real identity system (Entra ID, AD, Okta, Ping…); log noise and failed logins no longer inflate the count
+- **Open-port visibility on assets** — assets carry the observed network services (open ports), searchable and filterable from asset search
+- **Full-scope range filtering** — min/max filters for an asset's port, vulnerability, and product counts now narrow the entire dataset, not just the rows on screen
+
+### Compliance & Certify
+
+- **Certify — audit certification packages (SOC 2 / ISO 27001 / CMMC)** — build an audit submission inside WitFoo with guided questions, malware-scanned attachments, and live-data auto-population, exported as one integrity-hashed package (report + attachments + manifest) streamed on demand (Pro/Max tiers)
+- **One Auditor, many frameworks** — adds PCI DSS v4.0 and Essential Eight mappings beyond CIS Controls
+- **ISO 27001 updated to the 2022 standard** — built-in ISO 27001 moves to the current :2022 Annex A (93 controls)
+- **Honest compliance-readiness score** — partial control coverage now counts as partial, so the readiness percentage reflects reality
+
+### Reporting & Data
+
+- **Scheduled report delivery** — schedule reports and dashboards as offline PDFs delivered on a cadence to notification channels (email attaches the PDF; Slack and webhook get a link and summary)
+- **Retention-ceiling visibility** — the health dashboard charts the oldest record's age against the enforced retention limit, per data type
+
+### Integrations
+
+- **LevelBlue / USM Anywhere ingest** — pull LevelBlue (AlienVault) USM Anywhere alarms and events via one API credential per tenant, with no endpoint or agent changes
+- **VMware NSX-T log coverage** — recognizes and classifies NSX-T log sources that had been flooding the unknowns bucket
+- **Accurate Integration Health** — a raw log-server listener is no longer shown as an API-pull integration; only genuine integrations appear
+- **Self-monitoring of ingestion quality** — automated monitoring flags data-classification anomalies and opens a tracked issue on its own
+- **vCenter Broker telemetry parser** — added, queued for human sign-off before activation
+
+### Reliability & Demo
+
+- **Dependable operations dashboard** — the Conductor dashboard no longer hangs on endless spinners; it shows data fast, fills charts from the last known-good view, marks stale data, and offers Retry on failure
+- **Realistic, story-driven demo** — a coherent scenario around a believable regional-healthcare organization facing technique-mapped attacks replaces random demo noise
+
+### Trust & Quality
+
+- **Tamper-proof cross-cluster threat intel** — shared threat-intel messages between clusters are cryptographically sealed end to end (body, not just labels), rolled out to keep mixed-version clusters working during upgrades
+- **Verified access-control enforcement** — automated safeguards confirm every part of the platform enforces the correct permissions; remaining gaps were closed
+- **New permissions reach upgraded customers** — new permissions (Certify, graph, automation) converge to already-deployed environments on upgrade, with no admin hand-editing of roles
+- **Quality & multi-tenant isolation hardening** — a structured program closed test-suite blind spots (notably one-tenant-cannot-see-another isolation) plus coverage, mobile, accessibility, and resilience checks
+- **Delivery-pipeline hardening** — recurring release-process risks turned into automated guardrails (git-enforced pre-commit hooks, static guards, contract tests), with the release test suite rescoped to run reliably in CI while exhaustive validation continues on live lab and beta appliances
+
 ## v1.0.0 (2026-06-30)
 
 General-availability (GA) release. Builds on the 0.9.8 baseline with two new executive reports, a major step up in AI provider control and cost governance, a real collaboration layer, responsive mobile/tablet support, and a dedicated pre-1.0 full code review. Ships alongside **WitFoo Management Console 1.9.0**, **Conductor 1.8.0**, and **WFA 2.4.2**. **Upgrade recommended.**
