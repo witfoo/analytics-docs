@@ -1,0 +1,32 @@
+title: CDN/Health Check DNS False Positive Filter
+id: 5d1fff40-36a3-5143-9156-64cb9f8f7007
+custom_id: wf-filter-004
+status: stable
+logsource:
+    product: witfoo
+    service: artifact-exporter
+description: |
+    Filters out DNS tunneling false positives caused by CDN health check
+    domains, cloud service discovery domains, and other legitimate long
+    DNS names. Customize domain patterns to match your environment.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.command_and_control
+    - attack.t1071.004
+detection:
+    selection:
+        protocol: "DNS"
+    filter_cdn:
+        fqdn|contains:
+            - ".amazonaws.com"
+            - ".cloudfront.net"
+            - ".akamaiedge.net"
+            - ".azurewebsites.net"
+            - ".googleapis.com"
+            - "._domainkey."
+            - "._dmarc."
+            - "._spf."
+    condition: selection and filter_cdn
+falsepositives:
+    - None expected when CDN domain patterns are correctly configured
