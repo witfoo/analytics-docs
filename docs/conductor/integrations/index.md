@@ -47,6 +47,7 @@ processing pipeline.
 | Integration | Auth Method | Guide |
 |---|---|---|
 | Azure Security | OAuth2 (Azure AD) | [Enable →](azure-security.md) |
+| Microsoft Sentinel | OAuth2 (Azure AD) + Sentinel Reader RBAC | [Enable →](ms-sentinel.md) |
 | AWS GuardDuty | IAM Access Key | [Enable →](aws-guardduty.md) |
 | AWS Security Hub | IAM Access Key | [Enable →](aws-securityhub.md) |
 | Google Cloud SCC | Service Account JSON | [Enable →](gcp-scc.md) |

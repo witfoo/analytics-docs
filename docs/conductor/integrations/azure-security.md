@@ -222,6 +222,12 @@ detecting Microsoft product:
 - Verify the **Tenant ID**, **Client ID**, and **Client Secret** are correct
 - Ensure the client secret has not expired
 - Check that the app registration exists in the correct Azure AD tenant
+- **`AADSTS7000215: Invalid client secret provided`** — the configured secret
+  is the **Secret ID** (a GUID), not the secret **Value**. Create a new client
+  secret and paste the **Value** column; it is only visible at creation time.
+  On Conductor releases before 1.8.2 this mistake produced **no visible
+  error** (the connector silently retried every 5 seconds) — upgrade and the
+  failure surfaces in integration health with this exact hint.
 
 ### Forbidden (403) on one or more checks
 

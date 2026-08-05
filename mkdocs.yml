@@ -244,6 +244,7 @@ nav:
               - Halcyon: conductor/integrations/halcyon.md
           - Cloud Security:
               - Azure Security: conductor/integrations/azure-security.md
+              - Microsoft Sentinel: conductor/integrations/ms-sentinel.md
               - AWS GuardDuty: conductor/integrations/aws-guardduty.md
               - AWS Security Hub: conductor/integrations/aws-securityhub.md
               - Google Cloud SCC: conductor/integrations/gcp-scc.md
