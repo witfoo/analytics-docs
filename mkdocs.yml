@@ -315,6 +315,7 @@ nav:
       - Node Management: console/node-management.md
   - Reference:
       - reference/index.md
+      - Product Tiers: reference/product-tiers.md
       - Permissions: reference/permissions.md
       - Roles: reference/roles.md
       - Environment Variables: reference/environment-variables.md
