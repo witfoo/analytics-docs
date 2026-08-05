@@ -105,6 +105,7 @@ nav:
       - Deployment Roles: getting-started/deployment-roles.md
   - User Guide:
       - user-guide/index.md
+      - Monitor: user-guide/monitor.md
       - Signals:
           - user-guide/signals/index.md
           - Search: user-guide/signals/search.md

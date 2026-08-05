@@ -4,6 +4,12 @@ WitFoo Analytics provides a unified interface for security operations — from a
 
 ## Modules
 
+### [Monitor](monitor.md)
+
+IT-operations monitoring — network, application and device health, plus the ITSM ticket desk. The
+paid tiers add outage detection, a knowledge base, community forums, AI assistance, an in-product
+help chatbot and training. See [Product Tiers](../reference/product-tiers.md) for the per-SKU grid.
+
 ### [Signals](signals/index.md)
 
 Search, filter, and investigate security artifacts. Configure lead rules for automatic incident creation and classification rules for severity assignment.
