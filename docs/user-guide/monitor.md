@@ -34,8 +34,7 @@ works out of day to day.
 **Outage detection (Pro, Max).** Confirmed outages are raised from your own telemetry — an
 interface held down across consecutive polls, or a device whose uptime counter went backwards
 (an inferred reboot) — and become work units rather than another dashboard to watch. Two further
-detectors ship switched off by default and can be enabled per organization; see
-[Configuration](../deployment/configuration.md).
+detectors ship switched off by default and can be enabled per organization.
 
 **Knowledge base and forums (Pro, Max).** A KB for your own runbooks and a discussion forum for
 your team, both inside the appliance. They are deliberately separate surfaces: a forum thread is
