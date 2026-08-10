@@ -1,0 +1,33 @@
+title: Policy Violation
+id: 0eeb4864-956e-5a11-8cd4-20e3176fe7ae
+custom_id: wf-cloud-006
+status: stable
+level: medium
+description: |
+    Detects security policy violations including acceptable use violations,
+    data handling policy breaches, and compliance control failures detected
+    by DLP, CASB, or policy enforcement tools.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.defense_evasion
+    - attack.t1078
+references:
+    - https://attack.mitre.org/techniques/T1078/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "policy_violation"
+    condition: selection
+fields:
+    - clientIP
+    - userName
+    - application
+    - action
+    - ruleName
+    - matchedLeadRules
+falsepositives:
+    - First-time policy violation by new employees
+    - Policy configuration updates causing transient violations

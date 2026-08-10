@@ -1,0 +1,35 @@
+title: Data Destruction
+id: 0310bb40-a034-52b0-a7c1-8ebc25af5328
+custom_id: wf-dlp-003
+status: stable
+level: critical
+description: |
+    Detects data destruction events including unauthorized file deletion,
+    disk wiping, and database truncation. May indicate a disgruntled insider,
+    ransomware cleanup phase, or adversary covering tracks.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.impact
+    - attack.t1485
+references:
+    - https://attack.mitre.org/techniques/T1485/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "data_destruction"
+    condition: selection
+fields:
+    - clientIP
+    - serverIP
+    - userName
+    - fileName
+    - filePath
+    - matchedLeadRules
+    - severityLabel
+falsepositives:
+    - Authorized data retention policy enforcement
+    - Scheduled database maintenance and purging
+    - Decommissioning of end-of-life systems
