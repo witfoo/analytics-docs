@@ -2,6 +2,49 @@
 
 Version history for WitFoo products.
 
+## v1.1.1 (2026-08-10)
+
+Maintenance release covering everything since 1.1.0 — appliance reliability, broader VMware and Azure onboarding coverage, reporter and demo-data corrections, the WitFoo Console deployment option, and a security pass. Drop-in upgrade from 1.1.0; ships alongside **WFA 2.4.13**. [Full release notes.](https://github.com/witfoo/release-notes/blob/main/releases/1.1.1.md)
+
+### Appliance reliability
+
+- **Role changes complete cleanly** — reconfiguring an appliance from one role to another (e.g. Conductor → All-in-One) previously left the old role's containers running and holding their ports, so the new role's web front end could not start ("port is already allocated"). The agent now reclaims the previous role's containers before starting the new stack and on each reconcile pass, matching only WitFoo's own container names so anything else on the host is untouched. Requires WFA 2.4.13
+- **Shutdown attempts every container** and reports all failures together, instead of abandoning the remainder at the first problem
+- **Unused images and orphaned broker data reclaimed** automatically after upgrades or re-identification
+- **Support packages** now capture the Conductor UI and both message brokers, and no longer include configuration secrets
+- **All-in-One + Conductor appliances report pipeline health** — that role previously emitted no pipeline metrics in status reports
+- **Disk-capacity enforcement clamped to warnings** while the measurement basis is corrected; alerts still fire
+- **`wfa user-reset`** heals an older-install schema difference
+
+### Data onboarding
+
+- Widened **VMware ESXi / vCenter / NSX / vSAN** and **Dell VxRail** coverage from live unrecognized-traffic analysis
+- New coverage for **Arista flow control**, **Stealthbits Activity Monitor**, and **CalPrivate**
+- Corrected stream and event classifications for the 2026-08 device batch
+- **Azure / Microsoft connector resilience** — Sentinel, Graph, Defender for Vulnerability Management and LimaCharlie now decode authentication token responses robustly
+- **Log framing corruption fixed** for newline-delimited TCP; byte-window framing corruption is now classified as a transport problem rather than an unknown device type
+
+### Deployment
+
+- **WitFoo Console deployment option** — selectable as a node role during appliance configuration, licensed as its own no-cost option
+
+### Reporter
+
+- Report generation and date-range queries no longer hit the short request timeout that returned errors or empty pages; generation is restricted to administrators
+- Demo cost-savings report no longer shows all zeros
+
+### Security
+
+- **Report access enforces role permissions** — the reporting endpoints checked authentication and organization but not the caller's role, so any signed-in organization member could read report snapshots and export CSV, including roles intended to have no reporting access. Every reporting route now requires the appropriate read or export permission, with an automated check preventing recurrence. Organization scoping was always enforced, so no cross-organization exposure was possible. **Upgrade recommended**
+- **gRPC dependency updated** to its patched release (high-severity advisory)
+- **Container build no longer fetches a CLI tool over the network** during the image build
+- All open code-scanning findings reviewed — fixed or documented with a specific justification, with residual items owned rather than untriaged
+
+### Monitoring
+
+- Fleet-outage detection no longer depends on the telemetry an outage suppresses; alert thresholds count unbroken failure streaks; probes blocked by an intermediary report as unverified rather than healthy
+- Approved device parsers propagate to customer-production images automatically
+
 ## v1.1.0 (2026-07-14)
 
 Feature release on the 1.0.0 GA line — *from signal to evidence and decisive action*. Sharper investigations, the new **Certify** compliance-certification capability, scheduled report delivery, broader data onboarding, and a hardened, verified multi-tenant foundation. A recommended, drop-in upgrade for all 1.0.x deployments. **[Watch the 1.1.0 tour.](https://vimeo.com/1209183185)**
