@@ -43,3 +43,17 @@ Click **Delete** on a user row. Deleted users cannot log in but their historical
 
 !!! danger "Change Default Password"
     Change the default admin password immediately after first login.
+
+### Locked out?
+
+If nobody can sign in — a forgotten password, a mistyped email at setup, or a deactivated
+account — reset the initial admin account from the appliance command line:
+
+```bash
+sudo wfa user-reset
+```
+
+It shows the existing account, optionally changes the login email, and sets a new password.
+The change takes effect at the next login with no service restart. Run it on an Analytics
+appliance (`aio`, `aio-conductor`, `processing`, or `data`); see
+[`wfa user-reset`](../conductor/wfa-cli.md#wfa-user-reset) for the full reference.

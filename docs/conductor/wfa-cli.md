@@ -25,6 +25,62 @@ Interactive setup wizard that generates `/witfoo/configs/node.json`. The wizard 
 sudo wfa configure
 ```
 
+## `wfa user-reset`
+
+Resets the initial administrator account for the **Analytics web UI** from the appliance
+command line. Use it when nobody can sign in — a forgotten password, a mistyped email at
+setup, or an account that was deactivated.
+
+```bash
+sudo wfa user-reset
+```
+
+The command is interactive. It shows the existing initial admin account (email, username,
+name, organization, active state, and last login), offers to change the email address, then
+prompts twice for a new password with masked input:
+
+| Prompt | Rules |
+|------|--------|
+| **Change the admin email address?** | Optional. The email is the login username. Must contain `@` and `.` and no spaces. An address already used by a **different** account is refused — the database does not enforce email uniqueness, and a duplicate would silently shadow one account at login |
+| **New admin password** | Required. Minimum 8 characters, entered twice. Same rules as step 9 of `wfa configure` |
+
+If the account was deactivated, a successful reset also re-activates it.
+
+The change is written directly to the Analytics database and **takes effect at the next
+login — no service restart is required**.
+
+!!! note "Which account this resets"
+    It resets the *initial* admin account created when the appliance was provisioned — the
+    one seeded as `admin@witfoo.com`. The account is identified by its fixed internal id
+    rather than its email, so the reset still works if the email was changed earlier. Other
+    user accounts are managed from **Admin → Users** in the web UI; see
+    [User Management](../admin-guide/users.md).
+
+### Requirements
+
+- Analytics roles only — `aio`, `aio-conductor`, `processing`, or `data`. On any other role
+  the command exits with an explanation, because the Analytics web UI admin account does not
+  exist there.
+- The Analytics stack must be running, since the command connects to the Analytics database
+  using the credentials in `/witfoo/configs/node.json`. If the database has never been
+  seeded, start the stack once with `sudo wfa start` and retry.
+- An interactive terminal, because the password prompt is masked. It cannot be scripted or
+  piped.
+
+### Troubleshooting
+
+| Message | Cause and fix |
+|------|--------|
+| `user-reset manages the Analytics web UI admin account, which does not exist on the "<role>" role` | You are on a Conductor, Console, or other non-Analytics node. Run it on the Analytics appliance |
+| `error connecting to the Analytics database (is the analytics stack running?)` | The database is unreachable. Check `sudo wfa status` and start the stack with `sudo wfa start` |
+| `Cassandra authentication failed` | The `cassandra_password` in `/witfoo/configs/node.json` no longer matches the database |
+| `initial admin account not found — the Analytics database has not been seeded yet` | First-time appliance whose stack has not completed its first start. Run `sudo wfa start`, wait for the services to come up, and retry |
+| `failed to read password (user-reset requires an interactive terminal)` | The command was run without a TTY — for example over a non-interactive SSH command. Use an interactive session |
+
+*Added in WFA 2.4.8. WFA 2.4.9 fixed a failure (`Undefined column name theme`) on appliances
+whose Analytics stack predates the per-user theme column — upgrade to 2.4.9 or later if you
+hit it.*
+
 ## `wfa status`
 
 Displays WFA version, `wfad` systemd service state, error count since start, and the last 10 error log entries from the journal.
