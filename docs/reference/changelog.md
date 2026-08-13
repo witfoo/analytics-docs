@@ -2,6 +2,29 @@
 
 Version history for WitFoo products.
 
+## v1.1.2 (2026-08-13)
+
+Maintenance release focused on **event-time search correctness** and a broad data-onboarding expansion. Drop-in upgrade from any 1.1.x; no configuration or schema changes. [Full release notes.](https://github.com/witfoo/release-notes/blob/main/releases/1.1.2.md)
+
+### Search timing
+
+- **Artifacts are searched by event time** — when a parser reads the event's own timestamp, timelines, windows and drill-downs use it, so telemetry arriving minutes or hours late (relayed Zeek/Corelight sensors, store-and-forward syslog, pull connectors) lands in the window where an analyst will look. Timestamps are sanity-bounded (≤30 days late, ≤1 hour skew); out-of-bounds values and pre-1.1.2 records fall back to arrival time
+- **Fixed: timeline showed records but filters returned no rows** for lagging sources (observed live on a relayed Corelight feed ~3.5h behind)
+- **"Filter for" pivots use exact matching**, mirroring the facet panel and running faster server-side
+
+### Data onboarding
+
+- **Zeek / Corelight full extraction** — ISO 8601 timestamps (Corelight default) previously fell to a generic classification with no client/server addresses; all timestamp forms now handled, log types routed by `_path`, Corelight extensions (L2 addresses, VLAN, app tags, shunt counters) captured
+- **Cisco Secure Network Analytics (Stealthwatch) 7.x** CEF alarms fully parsed as security signal; legacy format unchanged
+- **Palo Alto PAN-OS SYSTEM logs** (device telemetry, URL-database updates and other operational subtypes) recognized on current PAN-OS releases
+- **Microsoft Graph**: alerts from all Defender workloads (was Office 365 only) + Secure Score posture snapshots
+- **VMware**: vCenter SSO auth failures (expired/locked accounts), NSX-T DFW packet logs on ESXi 8, NSX network-operations agent, ESXi 8 system services, VxRail manager services, ESXi Envoy proxy
+- **New sources**: Lantronix (Uplogix) Local Manager, Cisco AP watchdog telemetry, HPE ProLiant Management Agent storage events
+
+### Pipeline reliability
+
+- Automated parser-coverage pipeline correctly recognizes already-handled formats; appliance-internal service chatter classified as diagnostics (never false security signal); advisory-scan and release-tag CI hardening
+
 ## v1.1.1 (2026-08-10)
 
 Maintenance release covering everything since 1.1.0 — appliance reliability, broader VMware and Azure onboarding coverage, reporter and demo-data corrections, the WitFoo Console deployment option, and a security pass. Drop-in upgrade from 1.1.0; ships alongside **WFA 2.4.13**. [Full release notes.](https://github.com/witfoo/release-notes/blob/main/releases/1.1.1.md)
