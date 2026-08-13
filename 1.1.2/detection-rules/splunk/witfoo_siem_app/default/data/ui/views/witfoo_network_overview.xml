@@ -1,0 +1,134 @@
+<dashboard version="1.1" theme="dark">
+  <label>WitFoo Network Overview</label>
+  <description>Network traffic analysis from WitFoo artifact exports. Displays traffic volume, top sources/destinations, protocol breakdown, and anomaly indicators.</description>
+
+  <row>
+    <panel>
+      <title>Traffic Volume (24h)</title>
+      <chart>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| timechart span=1h count as Events</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">area</option>
+        <option name="charting.chart.nullValueMode">zero</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Total Connections</title>
+      <single>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| stats dc(clientIP) as "Unique Sources" dc(serverIP) as "Unique Destinations" count as "Total Events"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+      </single>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>Top Source IPs</title>
+      <table>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| stats count by clientIP
+| sort -count
+| head 20
+| rename clientIP as "Source IP" count as "Events"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">20</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Top Destination IPs</title>
+      <table>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| stats count by serverIP
+| sort -count
+| head 20
+| rename serverIP as "Destination IP" count as "Events"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">20</option>
+      </table>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>Protocol Distribution</title>
+      <chart>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| stats count by protocol
+| sort -count</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Bytes Transferred (Timechart)</title>
+      <chart>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| eval tb=if(isnotnull(totalBytes),totalBytes,0)
+| timechart span=1h sum(tb) as "Total Bytes"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">column</option>
+      </chart>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>Top Destination Ports</title>
+      <chart>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| stats count by serverPort
+| sort -count
+| head 15</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">bar</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Geographic Regions</title>
+      <chart>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| where isnotnull(geoRegion)
+| stats count by geoRegion
+| sort -count
+| head 20</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">bar</option>
+      </chart>
+    </panel>
+  </row>
+
+</dashboard>
