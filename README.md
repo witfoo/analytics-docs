@@ -4,7 +4,7 @@
 
 User-facing documentation for [WitFoo Analytics](https://github.com/witfoo-dev/analytics), auto-generated and versioned on every release.
 
-**Live site**: [witfoo.github.io/analytics-docs](https://witfoo.github.io/analytics-docs/)
+**Live site**: [docs.witfoo.com](https://docs.witfoo.com/)
 
 ## Local Development
 

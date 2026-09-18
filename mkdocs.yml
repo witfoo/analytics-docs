@@ -1,5 +1,10 @@
 site_name: WitFoo Analytics Documentation
-site_url: https://witfoo.github.io/analytics-docs/
+# The docs are served at docs.witfoo.com, which Cloudflare rewrites onto the
+# gh-pages `latest` alias that mike publishes. site_url must name the host readers
+# and search engines actually use: it is what MkDocs writes into every canonical
+# link and into sitemap.xml. Pointing it at github.io told Google the whole site
+# lived on URLs that 404 on this host, and split ranking signal across two domains.
+site_url: https://docs.witfoo.com/
 site_description: Documentation for WitFoo Analytics — Security Operations Platform
 repo_url: https://github.com/witfoo/analytics-docs
 repo_name: witfoo/analytics-docs
