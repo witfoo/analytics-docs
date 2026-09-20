@@ -1,0 +1,25 @@
+title: Repeated Policy Violations
+id: bf0e14c9-60ec-5b7a-b1f2-d0e160d4ecab
+custom_id: wf-corr-008
+status: stable
+type: event_count
+rules:
+    - wf-cloud-006
+group-by:
+    - userName
+timespan: 24h
+condition:
+    gte: 5
+description: |
+    Detects users who trigger 5 or more security policy violations within a
+    24-hour period. Repeated violations may indicate a compromised account,
+    insider threat activity, or a user systematically circumventing controls.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.defense_evasion
+    - attack.t1078
+level: high
+falsepositives:
+    - Users unfamiliar with new policies
+    - Policy changes creating transient violation spikes

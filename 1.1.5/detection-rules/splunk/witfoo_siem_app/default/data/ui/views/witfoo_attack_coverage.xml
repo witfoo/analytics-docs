@@ -1,0 +1,131 @@
+<dashboard version="1.1" theme="dark">
+  <label>WitFoo ATT&amp;CK Coverage</label>
+  <description>MITRE ATT&amp;CK framework coverage analysis from WitFoo artifact data. Shows technique distribution, tactic coverage, and detection gaps.</description>
+
+  <row>
+    <panel>
+      <title>Unique ATT&amp;CK Techniques Observed</title>
+      <single>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| where isnotnull(attackTechniqueIds)
+| mvexpand attackTechniqueIds
+| stats dc(attackTechniqueIds) as "Unique Techniques" count as "Total Mappings"</query>
+          <earliest>-7d@d</earliest>
+          <latest>now</latest>
+        </search>
+      </single>
+    </panel>
+    <panel>
+      <title>ATT&amp;CK Coverage Summary</title>
+      <single>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| where isnotnull(attackTechniqueIds)
+| mvexpand attackTechniqueIds
+| eval tactic=case(
+    match(attackTechniqueIds,"^T1595|^T1592|^T1589|^T1590|^T1591|^T1598"),"Reconnaissance",
+    match(attackTechniqueIds,"^T1583|^T1584|^T1585|^T1586|^T1587|^T1588|^T1608"),"Resource Development",
+    match(attackTechniqueIds,"^T1189|^T1190|^T1133|^T1200|^T1566"),"Initial Access",
+    match(attackTechniqueIds,"^T1059|^T1203|^T1047|^T1053|^T1129"),"Execution",
+    1=1,"Other")
+| stats dc(attackTechniqueIds) as techniques by tactic
+| sort -techniques</query>
+          <earliest>-7d@d</earliest>
+          <latest>now</latest>
+        </search>
+      </single>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>Tactic Distribution</title>
+      <chart>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| where isnotnull(attackTechniqueIds)
+| mvexpand attackTechniqueIds
+| eval tactic=case(
+    match(attackTechniqueIds,"^T1595|^T1592|^T1589|^T1590|^T1591|^T1598"),"Reconnaissance",
+    match(attackTechniqueIds,"^T1189|^T1190|^T1133|^T1200|^T1566"),"Initial Access",
+    match(attackTechniqueIds,"^T1059|^T1203|^T1047|^T1053|^T1129"),"Execution",
+    match(attackTechniqueIds,"^T1078|^T1098|^T1136|^T1556"),"Persistence",
+    match(attackTechniqueIds,"^T1548|^T1134|^T1068"),"Privilege Escalation",
+    match(attackTechniqueIds,"^T1562|^T1070|^T1027|^T1036"),"Defense Evasion",
+    match(attackTechniqueIds,"^T1003|^T1110|^T1555|^T1558"),"Credential Access",
+    match(attackTechniqueIds,"^T1046|^T1135|^T1087|^T1482"),"Discovery",
+    match(attackTechniqueIds,"^T1021|^T1570|^T1534"),"Lateral Movement",
+    match(attackTechniqueIds,"^T1560|^T1074|^T1119"),"Collection",
+    match(attackTechniqueIds,"^T1071|^T1095|^T1573|^T1571"),"Command and Control",
+    match(attackTechniqueIds,"^T1041|^T1048|^T1567|^T1029"),"Exfiltration",
+    match(attackTechniqueIds,"^T1485|^T1486|^T1499|^T1565"),"Impact",
+    1=1,"Unmapped")
+| stats count by tactic
+| sort -count</query>
+          <earliest>-7d@d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">bar</option>
+      </chart>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>Top 25 ATT&amp;CK Techniques</title>
+      <table>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| where isnotnull(attackTechniqueIds)
+| mvexpand attackTechniqueIds
+| stats count dc(clientIP) as "Unique Sources" by attackTechniqueIds
+| sort -count
+| head 25
+| rename attackTechniqueIds as "Technique" count as "Events"</query>
+          <earliest>-7d@d</earliest>
+          <latest>now</latest>
+        </search>
+      </table>
+    </panel>
+    <panel>
+      <title>Technique Trend (7d)</title>
+      <chart>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| where isnotnull(attackTechniqueIds)
+| mvexpand attackTechniqueIds
+| timechart span=1d count by attackTechniqueIds limit=10</query>
+          <earliest>-7d@d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">line</option>
+      </chart>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>Stream Coverage by ATT&amp;CK</title>
+      <table>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| where isnotnull(attackTechniqueIds) AND isnotnull(streamName)
+| mvexpand attackTechniqueIds
+| stats dc(attackTechniqueIds) as "Technique Count" count as "Events" by streamName
+| sort -"Technique Count"
+| head 20</query>
+          <earliest>-7d@d</earliest>
+          <latest>now</latest>
+        </search>
+      </table>
+    </panel>
+  </row>
+
+</dashboard>

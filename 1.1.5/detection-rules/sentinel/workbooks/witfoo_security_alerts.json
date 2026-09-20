@@ -1,0 +1,41 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "workbookDisplayName": {
+      "type": "string",
+      "defaultValue": "WitFoo Security Alerts",
+      "metadata": {
+        "description": "Display name for the workbook"
+      }
+    },
+    "workbookType": {
+      "type": "string",
+      "defaultValue": "workbook",
+      "metadata": {
+        "description": "The gallery type of the workbook"
+      }
+    },
+    "workspaceResourceId": {
+      "type": "string",
+      "metadata": {
+        "description": "Log Analytics workspace resource ID"
+      }
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Insights/workbooks",
+      "apiVersion": "2022-04-01",
+      "name": "[guid('witfoo-security-alerts')]",
+      "location": "[resourceGroup().location]",
+      "kind": "shared",
+      "properties": {
+        "category": "[parameters('workbookType')]",
+        "displayName": "[parameters('workbookDisplayName')]",
+        "serializedData": "[string(createObject('version', 'Notebook/1.0', 'items', createArray(createObject('type', 1, 'content', createObject('json', '## WitFoo Security Alerts\\n\\nSecurity alert analysis from WitFoo artifact exports. Shows alerts triggered by lead rules, ATT&CK technique mappings, and severity trends.'), 'name', 'header'), createObject('type', 3, 'content', createObject('version', 'KqlParameterItem/1.0', 'parameters', createArray(createObject('id', 'timeRange', 'name', 'TimeRange', 'type', 4, 'isRequired', true, 'value', createObject('durationMs', 86400000), 'typeSettings', createObject('selectableValues', createArray(createObject('durationMs', 3600000), createObject('durationMs', 14400000), createObject('durationMs', 43200000), createObject('durationMs', 86400000), createObject('durationMs', 604800000)))))), 'name', 'parameters'), createObject('type', 3, 'content', createObject('version', 'KqlItem/1.0', 'query', 'WitFoo_CL\\n| where TimeGenerated {TimeRange}\\n| where isnotempty(leadRuleIDs_s)\\n| summarize AlertCount=count() by bin(TimeGenerated, 1h), severity_s\\n| order by TimeGenerated asc\\n| render timechart', 'size', 0, 'title', 'Alert Timeline by Severity', 'queryType', 0, 'resourceType', 'microsoft.operationalinsights/workspaces'), 'name', 'alertTimeline'), createObject('type', 3, 'content', createObject('version', 'KqlItem/1.0', 'query', 'WitFoo_CL\\n| where TimeGenerated {TimeRange}\\n| where isnotempty(leadRuleIDs_s)\\n| summarize Count=count() by severity_s\\n| order by Count desc\\n| render piechart', 'size', 0, 'title', 'Severity Distribution', 'queryType', 0, 'resourceType', 'microsoft.operationalinsights/workspaces'), 'name', 'severityDist'), createObject('type', 3, 'content', createObject('version', 'KqlItem/1.0', 'query', 'WitFoo_CL\\n| where TimeGenerated {TimeRange}\\n| where isnotempty(attackTechniqueIDs_s)\\n| mv-expand TechniqueID = split(attackTechniqueIDs_s, \",\")\\n| summarize Count=count() by tostring(TechniqueID)\\n| top 25 by Count\\n| render barchart', 'size', 0, 'title', 'Top ATT&CK Techniques', 'queryType', 0, 'resourceType', 'microsoft.operationalinsights/workspaces'), 'name', 'attackTechniques'), createObject('type', 3, 'content', createObject('version', 'KqlItem/1.0', 'query', 'WitFoo_CL\\n| where TimeGenerated {TimeRange}\\n| where isnotempty(leadRuleIDs_s)\\n| mv-expand RuleID = split(leadRuleIDs_s, \",\")\\n| summarize Count=count() by tostring(RuleID)\\n| top 20 by Count\\n| render barchart', 'size', 0, 'title', 'Lead Rule Triggers', 'queryType', 0, 'resourceType', 'microsoft.operationalinsights/workspaces'), 'name', 'leadRuleTriggers'), createObject('type', 3, 'content', createObject('version', 'KqlItem/1.0', 'query', 'WitFoo_CL\\n| where TimeGenerated {TimeRange}\\n| where isnotempty(leadRuleIDs_s)\\n| summarize Count=count() by streamName_s\\n| top 15 by Count\\n| render piechart', 'size', 0, 'title', 'Alert Categories by Stream', 'queryType', 0, 'resourceType', 'microsoft.operationalinsights/workspaces'), 'name', 'alertCategories'), createObject('type', 3, 'content', createObject('version', 'KqlItem/1.0', 'query', 'WitFoo_CL\\n| where TimeGenerated {TimeRange}\\n| where isnotempty(leadRuleIDs_s)\\n| summarize Count=count() by bin(TimeGenerated, 1d), severity_s\\n| order by TimeGenerated asc\\n| render timechart', 'size', 0, 'title', 'Severity Trend (Daily)', 'queryType', 0, 'resourceType', 'microsoft.operationalinsights/workspaces'), 'name', 'severityTrend'), createObject('type', 3, 'content', createObject('version', 'KqlItem/1.0', 'query', 'WitFoo_CL\\n| where TimeGenerated {TimeRange}\\n| where isnotempty(leadRuleIDs_s)\\n| top 50 by TimeGenerated desc\\n| project TimeGenerated, artifactName_s, severity_s, streamName_s, leadRuleIDs_s', 'size', 0, 'title', 'Recent Alerts', 'queryType', 0, 'resourceType', 'microsoft.operationalinsights/workspaces'), 'name', 'recentAlerts'))))]",
+        "sourceId": "[parameters('workspaceResourceId')]"
+      }
+    }
+  ]
+}

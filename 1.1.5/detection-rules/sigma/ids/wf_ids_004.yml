@@ -1,0 +1,42 @@
+title: Deprecated TLS Version Usage
+id: 67a095d3-2652-56e8-95af-19e63ba1f20c
+custom_id: wf-ids-004
+status: stable
+level: medium
+description: |
+    Detects usage of deprecated TLS versions (TLS 1.0 and TLS 1.1) that are
+    no longer considered secure. These connections may be targeted for
+    downgrade attacks and violate modern compliance requirements.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.command_and_control
+    - attack.t1573
+references:
+    - https://attack.mitre.org/techniques/T1573/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection_stream:
+        streamName|contains:
+            - "zeek_ssl"
+            - "tls"
+    selection_version:
+        message|contains:
+            - "TLSv1.0"
+            - "TLSv1.1"
+            - "SSLv3"
+            - "SSLv2"
+    condition: selection_stream and selection_version
+fields:
+    - clientIP
+    - serverIP
+    - serverPort
+    - fqdn
+    - message
+    - streamName
+falsepositives:
+    - Legacy systems that cannot be upgraded
+    - IoT devices with limited TLS support
+    - Internal applications pending TLS upgrade

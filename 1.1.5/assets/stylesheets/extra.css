@@ -1,0 +1,70 @@
+/* WitFoo Analytics Brand Theme
+ *
+ * Brand palette:
+ *   Almost Black:    #030C20 (page background)
+ *   Medium Blue:     #0F3BA2 (primary interactive)
+ *   Lighter Blue:    #0075F0 (secondary blue)
+ *   Beacon Yellow:   #E1FF00 (accent/active indicator)
+ *   Dark Gray:       #252A36 (container backgrounds)
+ *   Medium Gray:     #AEB4BA (secondary text)
+ *   Light Gray:      #DADFE3 (primary text on dark)
+ *   Vibrant Green:   #8AE81E (success)
+ *   Vibrant Orange:  #FD7217 (warning)
+ *   Vibrant Pink:    #FE2E90 (danger)
+ *   Vibrant Aqua:    #09D9AF (info)
+ *   Vibrant Purple:  #7D59FF (extended)
+ */
+
+/* Dark mode (slate) — WitFoo default */
+[data-md-color-scheme="slate"] {
+  --md-primary-fg-color: #0F3BA2;
+  --md-primary-fg-color--light: #0075F0;
+  --md-primary-fg-color--dark: #030C20;
+  --md-accent-fg-color: #E1FF00;
+  --md-default-bg-color: #0d1117;
+  --md-default-fg-color: #DADFE3;
+  --md-default-fg-color--light: #AEB4BA;
+  --md-code-bg-color: #252A36;
+  --md-code-fg-color: #DADFE3;
+  --md-typeset-a-color: #0075F0;
+}
+
+/* Light mode */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color: #0F3BA2;
+  --md-primary-fg-color--light: #0075F0;
+  --md-primary-fg-color--dark: #030C20;
+  --md-accent-fg-color: #0F3BA2;
+  --md-typeset-a-color: #0F3BA2;
+}
+
+/* Header and navigation */
+.md-header {
+  background-color: #030C20;
+}
+
+/* Admonition accent colors */
+.md-typeset .admonition.tip,
+.md-typeset details.tip {
+  border-color: #8AE81E;
+}
+
+.md-typeset .admonition.warning,
+.md-typeset details.warning {
+  border-color: #FD7217;
+}
+
+.md-typeset .admonition.danger,
+.md-typeset details.danger {
+  border-color: #FE2E90;
+}
+
+.md-typeset .admonition.info,
+.md-typeset details.info {
+  border-color: #09D9AF;
+}
+
+.md-typeset .admonition.note,
+.md-typeset details.note {
+  border-color: #7D59FF;
+}

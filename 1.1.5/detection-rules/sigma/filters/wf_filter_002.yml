@@ -1,0 +1,33 @@
+title: Backup Transfer False Positive Filter
+id: 914aef16-d348-5a19-9b10-1b6f0924539d
+custom_id: wf-filter-002
+status: stable
+logsource:
+    product: witfoo
+    service: artifact-exporter
+description: |
+    Filters out large data transfer alerts caused by authorized backup
+    operations. Customize the backup server IPs and schedule windows
+    to match your backup infrastructure.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.exfiltration
+    - attack.t1048
+detection:
+    selection:
+        totalBytes|gte: 104857600
+    filter_backup:
+        serverIP|cidr:
+            - "10.0.10.0/24"
+            - "172.16.200.0/24"
+        application|contains:
+            - "veeam"
+            - "commvault"
+            - "bareos"
+            - "bacula"
+            - "rsync"
+            - "robocopy"
+    condition: selection and filter_backup
+falsepositives:
+    - None expected when backup IPs are correctly configured

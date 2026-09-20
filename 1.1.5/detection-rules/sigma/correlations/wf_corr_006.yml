@@ -1,0 +1,26 @@
+title: Phishing to Account Compromise
+id: df93feba-c300-5ea8-9f41-bb12f4a9fad6
+custom_id: wf-corr-006
+status: stable
+type: temporal_ordered
+rules:
+    - wf-cloud-005
+    - wf-auth-006
+group-by:
+    - userName
+timespan: 30m
+description: |
+    Detects the phishing attack chain where a user clicks a phishing link
+    followed by a malicious session from the same user within 30 minutes.
+    This indicates successful credential harvesting leading to account
+    compromise.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.initial_access
+    - attack.t1566
+    - attack.t1078
+level: critical
+falsepositives:
+    - Phishing awareness training exercises where users report after clicking
+    - Coincidental timing of unrelated events

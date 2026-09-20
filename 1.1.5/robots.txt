@@ -1,0 +1,8 @@
+# Documentation for WitFoo Analytics — https://docs.witfoo.com/
+# Everything here is public reference material and is welcome in search
+# indexes and in AI answer engines.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://docs.witfoo.com/sitemap.xml

@@ -1,0 +1,37 @@
+title: Port Scan Detection
+id: 94e00767-bc73-54ee-891c-0d1133d0ae12
+custom_id: wf-net-005
+status: stable
+level: high
+description: |
+    Detects network reconnaissance through port scanning activity. Identified
+    by WitFoo's service discovery classification or IDS rule matches indicating
+    systematic port probing.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.discovery
+    - attack.t1046
+references:
+    - https://attack.mitre.org/techniques/T1046/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection_type:
+        messageType: "service_discovery"
+    selection_ids:
+        messageType: "ids_event"
+        ruleCategory|contains: "scan"
+    condition: selection_type or selection_ids
+fields:
+    - clientIP
+    - serverIP
+    - serverPort
+    - protocol
+    - ruleName
+    - matchedLeadRules
+falsepositives:
+    - Authorized vulnerability scanners (Nessus, Qualys, etc.)
+    - Network monitoring and inventory tools
+    - Load balancer health checks

@@ -1,0 +1,39 @@
+title: Suricata High Severity Alert
+id: 13044d28-8b43-5eb6-9dab-11cd610bfb7e
+custom_id: wf-ids-001
+status: stable
+level: critical
+description: |
+    Detects high-severity Suricata IDS alerts (severity 1-2) forwarded through
+    WitFoo's artifact pipeline. These represent the most critical network-based
+    threat detections requiring immediate investigation.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.initial_access
+    - attack.t1190
+references:
+    - https://attack.mitre.org/techniques/T1190/
+    - https://suricata.io/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        streamName|contains: "suricata"
+        severityCode:
+            - "1"
+            - "2"
+    condition: selection
+fields:
+    - clientIP
+    - serverIP
+    - serverPort
+    - protocol
+    - ruleName
+    - ruleCategory
+    - severityLabel
+    - matchedLeadRules
+falsepositives:
+    - Suricata signatures with known false positive patterns
+    - Network security testing generating IDS alerts

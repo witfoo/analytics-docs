@@ -1,0 +1,34 @@
+title: Monitoring Agent Connection False Positive Filter
+id: 2a23b63c-89cb-599a-ac9a-34dfded83f2a
+custom_id: wf-filter-005
+status: stable
+logsource:
+    product: witfoo
+    service: artifact-exporter
+description: |
+    Filters out long-lived connection alerts from known monitoring agents
+    and management tools that maintain persistent connections by design.
+    Customize agent patterns to match your monitoring infrastructure.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.command_and_control
+    - attack.t1071
+detection:
+    selection:
+        messageType: "anomalous_behavior"
+    filter_monitoring:
+        program|contains:
+            - "zabbix"
+            - "nagios"
+            - "prometheus"
+            - "telegraf"
+            - "datadog"
+            - "splunkd"
+            - "filebeat"
+            - "fluentd"
+            - "ossec"
+            - "wazuh"
+    condition: selection and filter_monitoring
+falsepositives:
+    - None expected when monitoring agent patterns are correctly configured

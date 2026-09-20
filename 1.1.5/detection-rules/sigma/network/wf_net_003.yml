@@ -1,0 +1,47 @@
+title: Unusual Port Activity
+id: 38f913d0-eb55-5d2e-8aa7-61eefe219d6a
+custom_id: wf-net-003
+status: stable
+level: medium
+description: |
+    Detects network connections on non-standard ports that may indicate evasion
+    techniques, backdoor communication, or misconfigurations. Focuses on
+    high-numbered ephemeral ports used as server-side listeners.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.command_and_control
+    - attack.t1571
+references:
+    - https://attack.mitre.org/techniques/T1571/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        protocol|contains:
+            - "TCP"
+            - "UDP"
+    filter_high_port:
+        serverPort|re: "^(4[0-9]{4}|[5-9][0-9]{4}|[0-9]{6})$"
+    filter_known_ports:
+        serverPort:
+            - "443"
+            - "8443"
+            - "8080"
+            - "3389"
+            - "5432"
+            - "3306"
+            - "27017"
+            - "6379"
+    condition: selection and filter_high_port and not filter_known_ports
+fields:
+    - clientIP
+    - serverIP
+    - serverPort
+    - protocol
+    - application
+falsepositives:
+    - Development and testing environments using high ports
+    - Peer-to-peer applications
+    - Custom application servers on non-standard ports

@@ -1,0 +1,35 @@
+title: Suspicious HTTP POST Exfiltration
+id: e71fe11b-3ac4-5762-9689-f129d2ae9207
+custom_id: wf-dlp-005
+status: stable
+level: high
+description: |
+    Detects large HTTP POST requests to external servers that may indicate
+    data exfiltration via web protocols. Attackers commonly use HTTP/HTTPS
+    POST to exfiltrate data as it blends with normal web traffic.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.exfiltration
+    - attack.t1048.003
+references:
+    - https://attack.mitre.org/techniques/T1048/003/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        action|contains: "POST"
+        clientBytes|gte: 10485760
+    condition: selection
+fields:
+    - clientIP
+    - serverIP
+    - uri
+    - clientBytes
+    - application
+    - userName
+falsepositives:
+    - Large file uploads to approved web applications
+    - Cloud storage sync (Dropbox, Google Drive)
+    - CI/CD artifact publishing

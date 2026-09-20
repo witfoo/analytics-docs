@@ -1,0 +1,25 @@
+title: Brute Force Attack Sequence
+id: 2e04b62f-42b6-54f1-8a08-df650f7592eb
+custom_id: wf-corr-001
+status: stable
+type: event_count
+rules:
+    - wf-auth-001
+group-by:
+    - clientIP
+timespan: 5m
+condition:
+    gte: 5
+description: |
+    Correlates multiple authentication failure events from the same source IP
+    within a 5-minute window. Five or more failures indicate a likely brute
+    force attack requiring investigation and potential IP blocking.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.credential_access
+    - attack.t1110
+level: high
+falsepositives:
+    - User repeatedly entering wrong password
+    - Automated scripts with expired credentials
