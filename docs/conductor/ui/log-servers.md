@@ -10,7 +10,8 @@ The Log Server Configuration page manages push-based log ingestion listeners for
 |-----------|------|----------|-------------|
 | Syslog UDP | 514 | UDP | Standard syslog over UDP. Lightweight, no delivery guarantee. |
 | Syslog TCP | 514 | TCP | Standard syslog over TCP. Reliable delivery with connection tracking. |
-| Secure Syslog TLS | 6514 | TCP+TLS | Encrypted syslog using TLS certificates. Required for compliance environments. |
+| Secure Syslog TLS | 6514 | TCP or TLS | Syslog over TLS when TLS is enabled on the Conductor node (the configuration wizard's default); plain TCP otherwise. Required for compliance environments. |
+| Syslog RFC6587 | 7514 | TCP or TLS | Syslog with RFC 6587 octet counting: each message is sent as its length in bytes, a space, then the message, with nothing between messages. Uses TLS when TLS is enabled on the node, as 6514 does. |
 | Beats/Logstash | 5044–5045 | TCP | Elastic Beats and Logstash Lumberjack protocol for agent-based collection. |
 
 ## Features
@@ -32,7 +33,7 @@ Log server connectors support protocol masquerading, which allows a listener to 
 Changes are saved to the NATS KV `SERVERS` bucket and propagate to the Signal Server service within seconds. No container restart is required.
 
 !!! tip
-    For most deployments, enable **Syslog UDP** (port 514) for general syslog collection and **Secure Syslog TLS** (port 6514) for devices that support encrypted transport. Use **Beats/Logstash** (ports 5044–5045) for environments with Elastic Beats agents deployed on endpoints.
+    For most deployments, enable **Syslog UDP** (port 514) for general syslog collection and **Secure Syslog TLS** (port 6514) for devices that support encrypted transport. Port 6514 uses TLS when TLS is enabled on the Conductor node (the configuration wizard's default); plain TCP otherwise. Use **Beats/Logstash** (ports 5044–5045) for environments with Elastic Beats agents deployed on endpoints.
 
 ## Sending from Elastic Beats
 

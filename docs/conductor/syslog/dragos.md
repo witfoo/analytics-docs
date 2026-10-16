@@ -30,7 +30,7 @@ alongside the rest of your security data.
     integrations and notification rules.
 
 - [ ] Access to the Dragos Platform **Admin** and **Notification** pages
-- [ ] Network: the Dragos Platform can reach Conductor on TCP 514 (or TLS 6514).
+- [ ] Network: the Dragos Platform can reach Conductor on TCP 514 (or 6514).
       OT and IT networks are often separated by firewalls, so check the path first
 - [ ] The matching listener is enabled on the Conductor
       [Log Server page](../ui/log-servers.md)
@@ -39,7 +39,9 @@ alongside the rest of your security data.
 
 1. Open the **Conductor UI** at `https://<conductor-ip>/admin/settings/log-servers`
 2. Make sure **Syslog TCP** (port 514) is enabled. For encrypted transport,
-   enable **Secure Syslog TLS** (port 6514)
+   enable **Secure Syslog TLS** (port 6514). Port 6514 uses TLS when TLS is
+   enabled on the Conductor node (the configuration wizard's default); plain
+   TCP otherwise
 
 ## Step 2: Add Conductor as a Syslog Server in Dragos
 
@@ -48,7 +50,7 @@ alongside the rest of your security data.
 3. Select **ADD NEW SERVER**, then enter Conductor's IP address or host name,
    the port of the listener you enabled in Step 1 and its protocol
 4. For TCP and TLS, set the message delimiter to **newline**. Conductor's TCP
-   514 and TLS 6514 listeners read one record per line
+   514 and 6514 listeners read one record per line
 5. Select **NEXT**
 6. For the **Message Template**, use a CEF template whose header names Dragos
    and Platform as the vendor and product (`CEF:0|Dragos|Platform|...`), as in

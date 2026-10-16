@@ -10,7 +10,8 @@ tags:
 Some security platforms push their events to WitFoo Conductor as syslog
 instead of being polled through an API. They send to the Conductor
 [Signal Server](../signal-server.md), which listens for syslog on TCP and UDP
-514 and for encrypted syslog on TLS 6514 (see
+514 and on port 6514. Port 6514 uses TLS when TLS is enabled on the Conductor
+node (the configuration wizard's default); plain TCP otherwise (see
 [Log Server Configuration](../ui/log-servers.md)).
 
 This is different from the [pull-based API integrations](../integrations/index.md),
@@ -19,7 +20,7 @@ connects to Conductor and pushes events as they happen.
 
 ```mermaid
 flowchart LR
-    A["OT security platform<br/>(Nozomi Networks, Dragos)"] -->|"CEF over syslog · TCP/UDP 514, TLS 6514"| B["Conductor<br/>Signal Server"]
+    A["OT security platform<br/>(Nozomi Networks, Dragos)"] -->|"CEF over syslog · TCP/UDP 514, 6514"| B["Conductor<br/>Signal Server"]
     B -->|"artifacts.raw"| C["NATS JetStream"]
     C --> D["Signal Parser → WitFoo Analytics"]
 ```
@@ -33,7 +34,7 @@ flowchart LR
 
 !!! tip "Prefer TCP or TLS"
     UDP syslog can drop messages under load because it has no delivery
-    guarantee. Use TCP 514 or TLS 6514 for alerts you need to keep.
+    guarantee. Use TCP 514 or 6514 for alerts you need to keep.
 
 ---
 
