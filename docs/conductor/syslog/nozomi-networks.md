@@ -103,6 +103,10 @@ security data.
 - Check that your Conductor has the parser update that includes `nozomi_n2os`
 - If the messages pass through a relay or log forwarder, send them straight
   from the sensor instead (see Step 2)
+- If the messages that reach Conductor start with a number and a space (for
+  example `123 <134>`), the sender is framing records by length. Set it to end
+  each record with a newline instead, or ask WitFoo support which listener to
+  use
 
 !!! info "Unrecognized log lines"
     By default, WitFoo appliances send log lines they cannot parse to WitFoo,

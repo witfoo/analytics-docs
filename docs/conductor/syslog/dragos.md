@@ -45,13 +45,15 @@ alongside the rest of your security data.
 
 1. In the Dragos Platform, navigate to **Admin → Integrations**
 2. In the **Syslog** section, select **LAUNCH**
-3. Select **ADD NEW SERVER**, enter Conductor's IP address or host name, the
-   port of the listener you enabled in Step 1 and its protocol, then select
-   **NEXT**
-4. For the **Message Template**, use a CEF template whose header names Dragos
+3. Select **ADD NEW SERVER**, then enter Conductor's IP address or host name,
+   the port of the listener you enabled in Step 1 and its protocol
+4. For TCP and TLS, set the message delimiter to **newline**. Conductor's TCP
+   514 and TLS 6514 listeners read one record per line
+5. Select **NEXT**
+6. For the **Message Template**, use a CEF template whose header names Dragos
    and Platform as the vendor and product (`CEF:0|Dragos|Platform|...`), as in
    Dragos's own CEF examples. WitFoo recognizes Dragos messages by that header
-5. Select **SAVE**
+7. Select **SAVE**
 
 ## Step 3: Create a Notification Rule
 
@@ -94,6 +96,10 @@ alongside the rest of your security data.
   Platform parser
 - Check that the message template keeps the CEF header
   `CEF:0|Dragos|Platform|...` (see Step 2)
+- If the messages that reach Conductor start with a number and a space (for
+  example `123 <134>`), the sender is framing records by length. Set it to end
+  each record with a newline instead, or ask WitFoo support which listener to
+  use
 - If the messages pass through a relay or log forwarder, send them straight
   from the Dragos Platform instead
 
