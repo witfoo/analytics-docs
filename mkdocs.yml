@@ -293,6 +293,10 @@ nav:
           - Filebeat (OSS): conductor/beats/filebeat.md
           - Winlogbeat (OSS): conductor/beats/winlogbeat.md
           - Packetbeat (OSS): conductor/beats/packetbeat.md
+      - Syslog Sources:
+          - conductor/syslog/index.md
+          - Nozomi Networks: conductor/syslog/nozomi-networks.md
+          - Dragos: conductor/syslog/dragos.md
       - Configuration: conductor/configuration.md
       - Deployment: conductor/deployment.md
       - WFA Integration: conductor/wfa-integration.md

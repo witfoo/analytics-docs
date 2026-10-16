@@ -18,6 +18,9 @@ processing pipeline.
     [Signal Server](../signal-server.md) over TCP 5044/5045 rather than being
     polled by the Signal Client.
 
+    Security platforms that push **syslog**, such as Nozomi Networks and
+    Dragos, have their own [Syslog Sources](../syslog/index.md) guides.
+
 ## Quick Start
 
 1. Ensure you have the required vendor license and API access (see each guide's

@@ -69,7 +69,6 @@ absent from a SKU's column is not merely unadvertised, it is gated off.
 | `tool_efficiency` | · | · | · | · | ● | ● | ● | ● | · | · | · | · |
 | `unlimited_data` | ● | ● | ● | · | · | · | · | · | · | · | · | · |
 
-
 ## What the matrix means for Monitor
 
 **Monitor is included with Analytics.** Every feature carried by `monitor:<tier>` is also carried
