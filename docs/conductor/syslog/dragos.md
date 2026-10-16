@@ -109,6 +109,9 @@ alongside the rest of your security data.
     parsers. Until the Dragos Platform parser is on your Conductor, Dragos
     messages are such lines. If you do not want them sent, contact WitFoo
     support before you point the Dragos Platform at Conductor.
+    A licensed appliance that is not in Offline mode also asks WitFoo for
+    queued support jobs every 60 seconds; the released version has no setting
+    specific to that channel. See WitFoo's diagnostic and telemetry disclosure.
 
 ---
 
