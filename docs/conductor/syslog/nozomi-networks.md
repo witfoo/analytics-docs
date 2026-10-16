@@ -32,7 +32,7 @@ security data.
     account on it.
 
 - [ ] Administrator access to the Guardian or CMC web console
-- [ ] Network: the Guardian or CMC can reach Conductor on TCP 514 (or TLS 6514).
+- [ ] Network: the Guardian or CMC can reach Conductor on TCP 514 (or 6514).
       OT and IT networks are often separated by firewalls, so check the path first
 - [ ] The matching listener is enabled on the Conductor
       [Log Server page](../ui/log-servers.md)
@@ -41,10 +41,12 @@ security data.
 
 1. Open the **Conductor UI** at `https://<conductor-ip>/admin/settings/log-servers`
 2. Make sure **Syslog TCP** (port 514) is enabled. For encrypted transport,
-   enable **Secure Syslog TLS** (port 6514)
+   enable **Secure Syslog TLS** (port 6514). Port 6514 uses TLS when TLS is
+   enabled on the Conductor node (the configuration wizard's default); plain
+   TCP otherwise
 
 !!! tip "Prefer TCP or TLS"
-    UDP syslog can drop messages under load. Use TCP 514 or TLS 6514 for alerts
+    UDP syslog can drop messages under load. Use TCP 514 or 6514 for alerts
     you need to keep.
 
 ## Step 2: Add a CEF Endpoint in Nozomi

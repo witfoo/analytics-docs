@@ -9,8 +9,8 @@ Signal Server handles push-based log ingestion from network sources. It listens 
 | Syslog UDP | 514 | Standard syslog over UDP (RFC3164/RFC5424) |
 | Syslog TCP | 514 | Standard syslog over TCP |
 | Beats/Logstash | 5044–5045 | Elastic Beats and Logstash Lumberjack protocol |
-| Secure Syslog TLS | 6514 | Encrypted syslog over TLS |
-| HTTP | 7514 | HTTP-based log ingestion |
+| Secure Syslog TLS | 6514 | Syslog over TLS when TLS is enabled on the Conductor node (the configuration wizard's default); plain TCP otherwise |
+| TCP | 7514 | Syslog with RFC 6587 octet counting: each message is sent as its length in bytes, a space, then the message, with nothing between messages. Uses TLS when TLS is enabled on the node, as 6514 does. |
 
 Each listener runs as an independent connector following the **Source → Flow → Sink** pattern:
 
