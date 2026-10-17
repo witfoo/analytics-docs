@@ -74,9 +74,10 @@ Runtime configuration for pipeline services is stored in NATS JetStream KV bucke
 | 514 | signal-server | TCP/UDP | Inbound (syslog) |
 | 4223 | broker-edge | NATS | Internal |
 | 4443 | broker-edge | NATS | Inbound (leaf/cluster) |
-| 5044–5045 | signal-server | TCP | Inbound (Beats) |
-| 6514 | signal-server | TCP+TLS | Inbound (secure syslog) |
-| 7514 | signal-server | HTTP | Inbound (HTTP ingestion) |
+| 5044 | signal-server | TCP, or TLS when TLS is enabled on the Conductor node | Inbound (Beats) |
+| 5045 | signal-server | TCP (never TLS) | Inbound (Beats) |
+| 6514 | signal-server | TLS when TLS is enabled on the Conductor node (the configuration wizard's default); plain TCP otherwise | Inbound (syslog) |
+| 7514 | signal-server | TCP; uses TLS when TLS is enabled on the node, as 6514 does | Inbound (syslog with RFC 6587 octet counting: each message is sent as its length in bytes, a space, then the message, with nothing between messages) |
 | 8223 | broker-edge | HTTP | Internal (monitoring) |
 
 ### TLS Certificates

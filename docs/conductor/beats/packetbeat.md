@@ -137,7 +137,8 @@ packetbeat.protocols:
 # Beats Logstash output. Point output.logstash at the Conductor host.
 output.logstash:
   hosts: ["<conductor-host>:5044"]
-  # Spread across both listeners (optional):
+  # Spread across both listeners (optional; plain Beats only.
+  # With TLS enabled on the node use 5044 alone, with ssl):
   # hosts: ["<conductor-host>:5044", "<conductor-host>:5045"]
   # loadbalance: true
 
@@ -219,6 +220,9 @@ Enable the **Beats/Logstash** connector in
 The node has TLS enabled but the output is plain (or vice versa). Add the
 `ssl.*` block above (self-signed → `ssl.verification_mode: none`), or disable
 TLS on the node. See the [TLS note](index.md#step-3-point-the-output-at-conductor).
+
+A Beat with `ssl.enabled: true` cannot use port 5045, which never uses TLS.
+With TLS enabled on the node, send to 5044 only.
 
 ---
 
