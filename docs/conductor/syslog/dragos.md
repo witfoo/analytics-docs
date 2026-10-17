@@ -20,7 +20,8 @@ alongside the rest of your security data.
 | **Vendor Docs** | Dragos Platform Syslog Integration Guide, in the Dragos Customer Portal |
 
 !!! note "Parser availability"
-    The Dragos Platform parser ships in a coming WitFoo parser update. A
+    This guide applies to a Conductor that has the WitFoo parser update which
+    includes the Dragos Platform parser (stream name `dragos_platform`). A
     Conductor without it still receives these messages but does not parse them.
 
 ## Prerequisites
@@ -54,7 +55,10 @@ alongside the rest of your security data.
 5. Select **NEXT**
 6. For the **Message Template**, use a CEF template whose header names Dragos
    and Platform as the vendor and product (`CEF:0|Dragos|Platform|...`), as in
-   Dragos's own CEF examples. WitFoo recognizes Dragos messages by that header
+   Dragos's own CEF examples. WitFoo recognizes Dragos messages by that header.
+   The CEF text must start the message, after at most one standard syslog
+   header, so do not add text of your own in front of it. A key=value or LEEF
+   template is not recognized
 7. Select **SAVE**
 
 ## Step 3: Create a Notification Rule
@@ -71,13 +75,33 @@ alongside the rest of your security data.
 2. In **Admin → Integrations**, check that the syslog server shows as
    **Connected**
 3. In WitFoo Analytics, open **Signals → Search** and search for artifacts from
-   the Dragos Platform's IP address
+   the Dragos Platform's IP address, or for `stream_name=dragos_platform` (use
+   the equals sign: a colon is a text match that can miss a quiet source on a
+   busy system)
 
 ## What You Will See
 
-- Each forwarded notification becomes an artifact. The assets it names appear
-  on the graph with the connection between them, and notifications that match
-  WitFoo's detection rules can open work units.
+- Each forwarded notification becomes an artifact. It records the assets the
+  notification names, with an address, MAC address or host name where the
+  notification gives exactly one value for it, the notification's summary as
+  the rule name, and its severity, detection type and ATT&CK text as tags.
+- When the Conductor's optional deduplication is on, notifications that are
+  alike (same sender, endpoints, type and severity) are combined, so there can
+  be fewer artifacts than notifications.
+- A notification about one asset records that asset on the graph, when the
+  notification gives an address for it. A connection between two assets appears
+  only when the notification names both, each with an address.
+- Indicator, Modeling and Threat Behavior notifications are recorded as
+  intrusion detection events, which WitFoo's detection rules score and can open
+  work units from. A work unit opens only when the notification names both
+  assets, each with an address, and the rule's conditions are met. On a
+  licensed appliance those conditions include a syslog severity of 0 to 4 in
+  the priority the Dragos syslog settings write; the common default (priority
+  134, severity 6) does not qualify. Configuration notifications are recorded
+  as network monitoring events, which no built-in detection rule keys on, and
+  are kept for search.
+- Other notifications, for example the platform's own sign-in notices, are
+  recorded as generic events and kept for search.
 - Asset inventory, vulnerability and zone data from the Dragos Platform are not
   collected over syslog.
 
@@ -97,7 +121,9 @@ alongside the rest of your security data.
 - Check that your Conductor has the parser update that includes the Dragos
   Platform parser
 - Check that the message template keeps the CEF header
-  `CEF:0|Dragos|Platform|...` (see Step 2)
+  `CEF:0|Dragos|Platform|...` (see Step 2) and that nothing but one standard
+  syslog header comes before it. A syslog header written without its
+  structured-data field (RFC 5424 puts a `-` there) is not recognized either
 - If the messages that reach Conductor start with a number and a space (for
   example `123 <134>`), the sender is framing records by length. Set it to end
   each record with a newline instead, or ask WitFoo support which listener to
@@ -108,9 +134,10 @@ alongside the rest of your security data.
 !!! info "Unrecognized log lines"
     By default, WitFoo appliances send log lines they cannot parse to WitFoo,
     redacted according to the appliance's redaction setting, to help build new
-    parsers. Until the Dragos Platform parser is on your Conductor, Dragos
-    messages are such lines. If you do not want them sent, contact WitFoo
-    support before you point the Dragos Platform at Conductor.
+    parsers. Dragos messages that no parser recognizes, including all of them
+    on a Conductor without the Dragos Platform parser, are such lines. If you
+    do not want them sent, contact WitFoo support before you point the Dragos
+    Platform at Conductor.
     A licensed appliance that is not in Offline mode also asks WitFoo for
     queued support jobs every 60 seconds; the released version has no setting
     specific to that channel.

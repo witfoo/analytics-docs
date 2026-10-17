@@ -22,8 +22,9 @@ security data.
 | **Vendor Docs** | [Nozomi Networks: Common Event Format (CEF)](https://technicaldocs.nozominetworks.com/guardian/latest/products/n2os/topics/administration/settings/data-integration/c_n2os_admin_settings_data-integration_cef.html) |
 
 !!! note "Parser availability"
-    The `nozomi_n2os` parser ships in the next WitFoo parser update. A
-    Conductor without it still receives these messages but does not parse them.
+    This guide applies to a Conductor that has the WitFoo parser update which
+    includes the `nozomi_n2os` parser. A Conductor without it still receives
+    these messages but does not parse them.
 
 ## Prerequisites
 
@@ -73,7 +74,9 @@ security data.
 
 1. Wait for the next alert or health event from the sensor
 2. In WitFoo Analytics, open **Signals → Search** and search for artifacts from
-   the Guardian or CMC IP address
+   the Guardian or CMC IP address, or for `stream_name=nozomi_n2os` (use the
+   equals sign: a colon is a text match that can miss a quiet source on a busy
+   system)
 3. Open an alert artifact and check that the source and destination assets,
    the rule name and the severity are filled in
 
@@ -83,8 +86,15 @@ security data.
   address, port, MAC address and host name where Nozomi sends them), the
   protocol, the rule name and a severity derived from Nozomi's risk score.
   Nozomi's MITRE ATT&CK technique and tactic labels are kept as tags.
-- **Audit events** record who made a change and on which appliance.
+- **Audit events** record the user name N2OS sends as the acting user and the
+  appliance; what was changed stays in the message text.
 - **Health events** record the sensor's own status.
+- Alerts that Nozomi marks as security alerts are recorded as intrusion
+  detection events, which WitFoo's detection rules score and can open work
+  units from. Other alerts, such as a learned-behavior change or a link check,
+  are recorded as network monitoring events, which no built-in detection rule
+  keys on, and are kept for search. An alert that names only one node is
+  recorded as that node, with no connection.
 - Audit and health events are kept for search; they do not open work units by
   themselves.
 - Asset inventory and vulnerability data from Nozomi's API are not collected
@@ -105,6 +115,9 @@ security data.
 - Check that your Conductor has the parser update that includes `nozomi_n2os`
 - If the messages pass through a relay or log forwarder, send them straight
   from the sensor instead (see Step 2)
+- Only one standard syslog header may come before the CEF text. A second
+  header, a date written as `YYYY-MM-DD HH:MM:SS`, and a syslog header without
+  its structured-data field (RFC 5424 puts a `-` there) are not recognized
 - If the messages that reach Conductor start with a number and a space (for
   example `123 <134>`), the sender is framing records by length. Set it to end
   each record with a newline instead, or ask WitFoo support which listener to
@@ -113,9 +126,10 @@ security data.
 !!! info "Unrecognized log lines"
     By default, WitFoo appliances send log lines they cannot parse to WitFoo,
     redacted according to the appliance's redaction setting, to help build new
-    parsers. Until the `nozomi_n2os` parser is on your Conductor, Nozomi
-    messages are such lines. If you do not want them sent, contact WitFoo
-    support before you point the sensor at Conductor.
+    parsers. Nozomi messages that no parser recognizes, including all of them
+    on a Conductor without the `nozomi_n2os` parser, are such lines. If you do
+    not want them sent, contact WitFoo support before you point the sensor at
+    Conductor.
     A licensed appliance that is not in Offline mode also asks WitFoo for
     queued support jobs every 60 seconds; the released version has no setting
     specific to that channel.
