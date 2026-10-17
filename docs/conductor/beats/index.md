@@ -57,9 +57,11 @@ agents can connect:
    begins listening within seconds — no container restart required
 
 !!! info "Two ports, one protocol"
-    Ports **5044** and **5045** both run the Lumberjack framer. Use either one,
-    or list both in your Beat output with `loadbalance: true` to spread
-    connections across them.
+    Ports **5044** and **5045** both run the Lumberjack framer. Port 5044 uses
+    TLS when TLS is enabled on the Conductor node; port 5045 never uses TLS.
+    With TLS disabled, use either one, or list both in your Beat output with
+    `loadbalance: true` to spread connections across them. With TLS enabled,
+    use 5044 alone, with ssl.
 
 ## Step 2 — Install the OSS build
 
@@ -120,7 +122,8 @@ protocol, so this is the correct output type:
 ```yaml
 output.logstash:
   hosts: ["<conductor-host>:5044"]
-  # Load-balance across both listeners (optional):
+  # Load-balance across both listeners (optional; plain Beats only.
+  # With TLS enabled on the node use 5044 alone, with ssl):
   # hosts: ["<conductor-host>:5044", "<conductor-host>:5045"]
   # loadbalance: true
 
@@ -131,13 +134,17 @@ setup.dashboards.enabled: false
 ```
 
 !!! note "Transport security (TLS)"
-    The Beats listeners follow the Signal Server's TLS setting:
+    Port 5044 follows the Conductor node's TLS setting. Port 5045 never uses
+    TLS:
 
-    - **TLS disabled** (default on many appliances): the listener accepts plain
-      TCP — use the configuration above with no `ssl` block.
-    - **TLS enabled** (`disable_tls: false` on the node): the listener presents
-      the appliance's server certificate (self-signed by default), so the Beat
-      must connect with SSL:
+    - **TLS disabled**: both listeners accept plain TCP — use the
+      configuration above with no `ssl` block.
+    - **TLS enabled** (`disable_tls: false` on the node; the configuration
+      wizard's default): port 5044 presents the appliance's server certificate
+      (self-signed by default), so the Beat must connect with
+      `ssl.enabled: true`. Port 5045 never uses TLS, so a Beat with
+      `ssl.enabled: true` cannot use it. Do not list 5044 and 5045 in one
+      output when TLS is enabled:
 
     ```yaml
     output.logstash:
@@ -187,6 +194,8 @@ setup.dashboards.enabled: false
 - The node has TLS enabled but the Beat output has no `ssl` block (or vice
   versa). Align them (see the TLS note above). For a self-signed appliance
   certificate, set `ssl.verification_mode: none` or pin the CA.
+- A Beat with `ssl.enabled: true` cannot use port 5045, which never uses TLS.
+  With TLS enabled on the node, send to 5044 only.
 
 ### Confirm you installed the OSS build
 

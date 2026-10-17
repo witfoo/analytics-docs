@@ -12,7 +12,7 @@ The Log Server Configuration page manages push-based log ingestion listeners for
 | Syslog TCP | 514 | TCP | Standard syslog over TCP. Reliable delivery with connection tracking. |
 | Secure Syslog TLS | 6514 | TCP or TLS | Syslog over TLS when TLS is enabled on the Conductor node (the configuration wizard's default); plain TCP otherwise. Required for compliance environments. |
 | Syslog RFC6587 | 7514 | TCP or TLS | Syslog with RFC 6587 octet counting: each message is sent as its length in bytes, a space, then the message, with nothing between messages. Uses TLS when TLS is enabled on the node, as 6514 does. |
-| Beats/Logstash | 5044–5045 | TCP | Elastic Beats and Logstash Lumberjack protocol for agent-based collection. |
+| Beats/Logstash | 5044–5045 | TCP or TLS | Elastic Beats and Logstash Lumberjack protocol for agent-based collection. Port 5044 uses TLS when TLS is enabled on the Conductor node; port 5045 never uses TLS. |
 
 ## Features
 

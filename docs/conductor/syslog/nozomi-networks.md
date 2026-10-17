@@ -118,7 +118,7 @@ security data.
     support before you point the sensor at Conductor.
     A licensed appliance that is not in Offline mode also asks WitFoo for
     queued support jobs every 60 seconds; the released version has no setting
-    specific to that channel. See WitFoo's diagnostic and telemetry disclosure.
+    specific to that channel.
 
 ---
 
