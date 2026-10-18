@@ -15,7 +15,7 @@ endpoint asset data.
 | **Category** | Endpoint Security |
 | **Connector Name** | `signal-client.carbon-black` |
 | **Auth Method** | API Key + API ID (X-Auth-Token) |
-| **Polling Interval** | 5 min (alerts), 1 hr (devices) |
+| **Polling Interval** | 10 min (alerts), 1 hr (devices); built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [Carbon Black Cloud API](https://developer.carbonblack.com/reference/carbon-black-cloud/) |
 
@@ -62,9 +62,8 @@ endpoint asset data.
     | **API Key** | `<your-api-secret-key>` | API secret key from step 1 |
     | **API ID** | `<your-api-id>` | API ID from step 1 |
 
-5. Set the **Polling Interval** (recommended: 5 minutes for alerts)
-6. Toggle **Enabled** to on
-7. Click **Save**
+5. Toggle **Enabled** to on
+6. Click **Save**
 
 !!! tip "Finding Your Org Key"
     The Org Key is displayed at the top of the **Settings → API Access**
@@ -109,7 +108,7 @@ After saving, verify the integration is working:
 ### Rate Limited (429)
 
 - Carbon Black Cloud rate limits vary by subscription tier
-- Increase the **Polling Interval** to 15 minutes
+- The polling interval is built in and cannot be changed
 - Conductor automatically implements exponential backoff
 
 ### No Data Appearing

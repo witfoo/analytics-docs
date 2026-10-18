@@ -14,7 +14,7 @@ including malware detections, web filtering events, and endpoint inventory.
 | **Category** | Endpoint Security |
 | **Connector Name** | `signal-client.sophos-central` |
 | **Auth Method** | OAuth2 Client Credentials |
-| **Polling Interval** | 5 min (alerts), 1 hr (endpoints) |
+| **Polling Interval** | 10 min (alerts, audit), 1 hr (endpoints); built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [Sophos Central API](https://developer.sophos.com/intro) |
 
@@ -56,9 +56,8 @@ including malware detections, web filtering events, and endpoint inventory.
     | **Client ID** | `<your-client-id>` | From step 1 |
     | **Client Secret** | `<your-client-secret>` | From step 1 |
 
-5. Set the **Polling Interval** (recommended: 5 minutes for alerts)
-6. Toggle **Enabled** to on
-7. Click **Save**
+5. Toggle **Enabled** to on
+6. Click **Save**
 
 ## Step 3: Validate Data Flow
 
@@ -97,7 +96,7 @@ After saving, verify the integration is working:
 
 ### Rate Limited (429)
 
-- Increase the **Polling Interval** to 15 minutes
+- The polling interval is built in and cannot be changed
 - Conductor automatically implements exponential backoff
 
 ### No Data Appearing

@@ -14,7 +14,7 @@ providing visibility into endpoint threats, detections, and managed host assets.
 | **Category** | Endpoint Security |
 | **Connector Name** | `signal-client.crowdstrike-falcon` |
 | **Auth Method** | OAuth2 Client Credentials |
-| **Polling Interval** | 10 min (detections), 1 hr (devices) |
+| **Polling Interval** | 10 min (detections), 1 hr (devices); built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [CrowdStrike API Reference](https://developer.crowdstrike.com/docs/openapi/) |
 
@@ -70,9 +70,8 @@ providing visibility into endpoint threats, detections, and managed host assets.
     | **Client ID** | `<your-client-id>` | From step 1 |
     | **Client Secret** | `<your-client-secret>` | From step 1 |
 
-5. Set the **Polling Interval** (recommended: 10 minutes for detections)
-6. Toggle **Enabled** to on
-7. Click **Save**
+5. Toggle **Enabled** to on
+6. Click **Save**
 
 ## Step 3: Validate Data Flow
 
@@ -96,8 +95,9 @@ After saving, verify the integration is working:
    **Signals → Search** page and search for artifacts from this source
 
 !!! tip "First Poll Timing"
-    The first data pull occurs within the configured polling interval after
-    saving. For a 10-minute interval, expect data within 10 minutes.
+    The connector polls on a built-in schedule that cannot be changed (see
+    **Polling Interval** above). Expect the first data within one interval
+    of saving.
 
 ### Data Collection Details
 
@@ -145,7 +145,7 @@ FedRAMP-compliant authentication.
 
 - CrowdStrike rate limits are per-customer and shown in response headers
   (`X-RateLimit-Limit`, `X-RateLimit-Remaining`)
-- Increase the **Polling Interval** to 15 minutes if rate limiting occurs frequently
+- The polling interval is built in and cannot be changed
 - Conductor automatically implements exponential backoff on 429 responses
 
 ### No Data Appearing

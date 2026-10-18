@@ -97,7 +97,10 @@ Some vendors restrict API access by source IP address:
 Signal Client implements automatic exponential backoff on 429 responses.
 If you see persistent rate limiting:
 
-1. **Increase the polling interval** — reduces the frequency of API calls
+1. **Let the backoff work** — polling intervals are built into each
+   connector and cannot be changed (Splunk's excepted). After a 429, Signal
+   Client waits as long as the vendor's `Retry-After` header asks (up to 15
+   minutes), or up to 10 minutes when there is none
 2. **Reduce concurrent integrations** — if many integrations poll the same
    vendor simultaneously
 3. **Check vendor rate limits** — each vendor has different quotas:
@@ -142,10 +145,9 @@ If you see persistent rate limiting:
 WitFoo's ProtoGraph deduplication in the Artifact Filter service automatically
 reduces duplicate events. If you see excessive duplicates:
 
-1. Reduce the polling interval to avoid overlapping time windows
-2. Check if multiple integration instances are configured for the same
+1. Check if multiple integration instances are configured for the same
    vendor account
-3. Verify checkpoint tracking is working (Signal Client resumes from the
+2. Verify checkpoint tracking is working (Signal Client resumes from the
    last successful position)
 
 ### Missing Events
@@ -156,7 +158,8 @@ If some events appear but others are missing:
    data
 2. Verify the API credentials have permissions for all required data types
 3. Some integrations collect multiple data types on different schedules
-   (e.g., alerts every 5min, assets every 1hr)
+   (for example alerts every 10 minutes and assets every hour; each guide
+   lists its connector's schedule)
 
 ## Performance
 
@@ -165,7 +168,6 @@ If some events appear but others are missing:
 If Signal Client shows elevated memory usage:
 
 - Reduce the number of concurrent polling integrations
-- Increase polling intervals for less critical sources
 - Check for vendors that return large batch responses (thousands of records
   per page)
 

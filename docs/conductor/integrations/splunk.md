@@ -15,7 +15,7 @@ analysis alongside other security data sources.
 | **Category** | SIEM |
 | **Connector Name** | `signal-client.splunk` |
 | **Auth Method** | Token or Username + Password |
-| **Polling Interval** | 15 min (search-based) |
+| **Polling Interval** | 5 min by default (set in seconds in the form) |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [Splunk REST API Reference](https://docs.splunk.com/Documentation/Splunk/latest/RESTREF/RESTprolog) |
 
@@ -71,7 +71,7 @@ analysis alongside other security data sources.
     | **Password** | `<password>` | Password (if using basic auth) |
     | **Auth Token** | `<token>` | Bearer token (if using token auth) |
     | **Custom Search** | `index=main earliest=-15m` | Optional: custom SPL query |
-    | **Poll Interval** | `15` | Minutes between searches |
+    | **Poll Interval** | `300` | Seconds between searches (default 300; a value that is not a positive number falls back to 300) |
 
 5. Toggle **Enabled** to on
 6. Click **Save**
@@ -102,8 +102,8 @@ After saving, verify the integration is working:
    **Signals → Search** page and search for artifacts from this source
 
 !!! tip "First Poll Timing"
-    The first search runs within the configured polling interval after saving.
-    For a 15-minute interval, expect results within 15 minutes.
+    The first search runs within the configured poll interval after saving.
+    With the default of 300 seconds, expect results within 5 minutes.
 
 ## Troubleshooting
 
@@ -120,7 +120,7 @@ After saving, verify the integration is working:
 
 ### Rate Limited (429)
 
-- Increase the **Polling Interval** to 30 minutes
+- Increase the **Poll Interval** (for example to `1800` seconds, 30 minutes)
 - Conductor automatically implements exponential backoff on 429 responses
 
 ### No Data Appearing

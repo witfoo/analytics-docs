@@ -14,7 +14,9 @@ Each integration runs as an independent connector with its own polling schedule,
 
 ## Key Features
 
-- **Scheduled Polling** — Configurable intervals per integration (typically 1–15 minutes)
+- **Scheduled Polling** — Each connector polls on its own built-in schedule
+  (from about once a minute to every few hours); only the Splunk connector
+  has an interval you can set
 - **Credential Management** — Supports OAuth2, API keys, client ID/secret, and tenant-specific authentication
 - **Checkpoint Tracking** — Resumes from the last successful position to avoid duplicate collection
 - **Rate Limiting** — Respects API quotas and implements backoff on rate limit responses
@@ -27,7 +29,6 @@ Signal Client is configured via the NATS KV `INTEGRATIONS` bucket. Each integrat
 {
   "enabled": true,
   "integration_type": "microsoft_graph",
-  "poll_interval_minutes": 5,
   "credentials": {
     "client_id": "...",
     "client_secret": "...",

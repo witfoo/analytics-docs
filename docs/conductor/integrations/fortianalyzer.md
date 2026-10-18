@@ -14,7 +14,7 @@ logging and analytics platform for Fortinet security fabric devices.
 | **Category** | Network Security |
 | **Connector Name** | `signal-client.fortianalyzer` |
 | **Auth Method** | Session Token (JSON-RPC) |
-| **Polling Interval** | 5 min |
+| **Polling Interval** | 10 min (traffic logs), 1 hr (event logs); built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [FortiAnalyzer REST API](https://docs.fortinet.com/document/fortianalyzer/7.4.0/administration-guide/) |
 
@@ -60,9 +60,8 @@ logging and analytics platform for Fortinet security fabric devices.
     | **Password** | `<your-password>` | API admin password |
     | **ADOM** | `root` | Administrative Domain (default: `root`) |
 
-5. Set the **Polling Interval** (recommended: 5 minutes)
-6. Toggle **Enabled** to on
-7. Click **Save**
+5. Toggle **Enabled** to on
+6. Click **Save**
 
 ## Step 3: Validate Data Flow
 

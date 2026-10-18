@@ -17,7 +17,7 @@ pipeline.
 | **Connector Name** | `signal-client.ms-sentinel` |
 | **Auth Method** | OAuth2 client credentials (Azure AD — Tenant ID + Client ID + Client Secret) |
 | **Token Scope** | `https://management.azure.com/.default` |
-| **Polling Interval** | 5 min default (configurable) |
+| **Polling Interval** | 1 min; built in, not configurable |
 | **Multi-Instance** | Yes (up to 5) |
 | **Vendor Docs** | [Microsoft Sentinel Incidents REST API](https://learn.microsoft.com/en-us/rest/api/securityinsights/incidents) |
 
@@ -150,7 +150,7 @@ The token was issued but the service principal cannot read Sentinel incidents:
 
 - The Azure Management API throttles per-principal and per-subscription
 - The connector cools down for 10 minutes and resumes automatically
-- Increase the **Polling Interval** if throttling recurs
+- The polling interval is built in and cannot be changed
 
 ### No Data Appearing
 

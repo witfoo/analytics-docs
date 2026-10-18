@@ -15,7 +15,7 @@ self-learning AI platform.
 | **Category** | Network Security |
 | **Connector Name** | `signal-client.darktrace` |
 | **Auth Method** | HMAC Token (Public + Private) |
-| **Polling Interval** | 5 min |
+| **Polling Interval** | 5 min (breaches, AI Analyst), 30 min (devices); built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [Darktrace API Documentation](https://customerportal.darktrace.com/product-guides/main/api-overview) |
 
@@ -53,9 +53,8 @@ self-learning AI platform.
     | **Public Token** | `<your-public-token>` | Public API token from step 1 |
     | **Private Token** | `<your-private-token>` | Private API token from step 1 |
 
-5. Set the **Polling Interval** (recommended: 5 minutes)
-6. Toggle **Enabled** to on
-7. Click **Save**
+5. Toggle **Enabled** to on
+6. Click **Save**
 
 !!! info "HMAC Authentication"
     Darktrace uses HMAC-SHA1 request signing for API authentication.

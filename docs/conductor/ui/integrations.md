@@ -36,7 +36,9 @@ Each integration has a dedicated settings form with vendor-specific fields:
 | Field | Description |
 |-------|-------------|
 | Enable/Disable Toggle | Activate or deactivate the integration |
-| Polling Interval | How frequently to collect data (minutes) |
+
+Polling intervals are built into each connector and cannot be changed. The
+Splunk form is the exception: it has a **Poll Interval** field (seconds).
 
 ### Authentication Fields (varies by vendor)
 

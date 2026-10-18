@@ -15,7 +15,7 @@ attempts, and admin audit logs.
 | **Category** | Identity & Access |
 | **Connector Name** | `signal-client.auth0` |
 | **Auth Method** | OAuth2 Client Credentials |
-| **Polling Interval** | 5 min |
+| **Polling Interval** | 5 min (logs); built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [Auth0 Management API](https://auth0.com/docs/api/management/v2) |
 
@@ -59,9 +59,8 @@ attempts, and admin audit logs.
     | **Client ID** | `<your-client-id>` | Machine-to-Machine app Client ID |
     | **Client Secret** | `<your-client-secret>` | Machine-to-Machine app secret |
 
-5. Set the **Polling Interval** (recommended: 5 minutes)
-6. Toggle **Enabled** to on
-7. Click **Save**
+5. Toggle **Enabled** to on
+6. Click **Save**
 
 ## Step 3: Validate Data Flow
 
@@ -101,7 +100,7 @@ After saving, verify the integration is working:
 ### Rate Limited (429)
 
 - Auth0 rate limits vary by plan tier (50 req/sec on free plan)
-- Increase the **Polling Interval** to 15 minutes
+- The polling interval is built in and cannot be changed
 - Conductor automatically implements exponential backoff
 
 ### Log Retention

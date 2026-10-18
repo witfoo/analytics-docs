@@ -14,7 +14,7 @@ Google's centralized security and risk management platform for GCP resources.
 | **Category** | Cloud Security |
 | **Connector Name** | `signal-client.gcp-scc` |
 | **Auth Method** | Service Account JSON Key |
-| **Polling Interval** | 5 min |
+| **Polling Interval** | 10 min (findings), 1 hr (source list); built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [SCC API Documentation](https://cloud.google.com/security-command-center/docs/reference/rest) |
 
@@ -69,9 +69,8 @@ Google's centralized security and risk management platform for GCP resources.
     | **Organization ID** | `<your-org-id>` | GCP organization numeric ID |
     | **API Key** | *(paste full JSON key)* | Service account JSON key content |
 
-5. Set the **Polling Interval** (recommended: 5 minutes)
-6. Toggle **Enabled** to on
-7. Click **Save**
+5. Toggle **Enabled** to on
+6. Click **Save**
 
 !!! tip "Finding Your Organization ID"
     Navigate to **Cloud Identity** → **Account** → **Account Settings** or

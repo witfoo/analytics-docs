@@ -14,7 +14,7 @@ cloud SIEM and XDR platform for threat detection, investigation, and response.
 | **Category** | SIEM |
 | **Connector Name** | `signal-client.rapid7-insightidr` |
 | **Auth Method** | API Key |
-| **Polling Interval** | 5 min |
+| **Polling Interval** | 5 min (alerts), 10 min (investigations); built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [InsightIDR API](https://docs.rapid7.com/insightidr/api-overview/) |
 
@@ -65,9 +65,8 @@ cloud SIEM and XDR platform for threat detection, investigation, and response.
     | **Region** | `us` | Regional identifier (see table above) |
     | **API Key** | `<your-api-key>` | API key from step 1 |
 
-5. Set the **Polling Interval** (recommended: 5 minutes)
-6. Toggle **Enabled** to on
-7. Click **Save**
+5. Toggle **Enabled** to on
+6. Click **Save**
 
 ## Step 3: Validate Data Flow
 
@@ -119,7 +118,7 @@ After saving, verify the integration is working:
 
 ### Rate Limited (429)
 
-- Increase the **Polling Interval** to 15 minutes
+- The polling interval is built in and cannot be changed
 - Conductor automatically implements exponential backoff
 
 ### No Data Appearing

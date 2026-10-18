@@ -14,7 +14,7 @@ detections, activity logs, and agent/device inventory.
 | **Category** | Endpoint Security |
 | **Connector Name** | `signal-client.sentinelone` |
 | **Auth Method** | API Token |
-| **Polling Interval** | 5 min (threats), 10 min (activities), 1 hr (agents) |
+| **Polling Interval** | 10 min (threats), 1 hr (agents); built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [SentinelOne API Documentation](https://usea1-partners.sentinelone.net/api-doc/overview) |
 
@@ -58,9 +58,8 @@ detections, activity logs, and agent/device inventory.
     | **Host** | `<your-instance>.sentinelone.net` | Management console URL |
     | **API Key** | `<your-api-token>` | API token from step 1 |
 
-5. Set the **Polling Interval** (recommended: 5 minutes for threats)
-6. Toggle **Enabled** to on
-7. Click **Save**
+5. Toggle **Enabled** to on
+6. Click **Save**
 
 ## Step 3: Validate Data Flow
 
@@ -99,7 +98,7 @@ After saving, verify the integration is working:
 ### Rate Limited (429)
 
 - SentinelOne enforces a rate limit of approximately 1000 requests per minute
-- Increase the **Polling Interval** to 15 minutes
+- The polling interval is built in and cannot be changed
 - Conductor automatically implements exponential backoff
 
 ### No Data Appearing

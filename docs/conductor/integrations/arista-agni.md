@@ -15,7 +15,7 @@ and network access events.
 | **Category** | Identity & Access |
 | **Connector Name** | `signal-client.arista-agni` |
 | **Auth Method** | API Key (Bearer) |
-| **Polling Interval** | 10 min (events), 1 hr (assets) |
+| **Polling Interval** | 5 min (audit), 10 min (sessions), 15 min (clients); built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [Arista CloudVision API](https://www.arista.com/en/support/product-documentation) |
 
@@ -53,9 +53,8 @@ and network access events.
     | **API Key** | `<your-api-key>` | API key from step 1 |
     | **API Value** | `<your-api-value>` | API secret from step 1 |
 
-5. Set the **Polling Interval** (recommended: 10 minutes)
-6. Toggle **Enabled** to on
-7. Click **Save**
+5. Toggle **Enabled** to on
+6. Click **Save**
 
 ## Step 3: Validate Data Flow
 
@@ -86,7 +85,7 @@ After saving, verify the integration is working:
 
 ### Rate Limited (429)
 
-- Increase the **Polling Interval** to 30 minutes
+- The polling interval is built in and cannot be changed
 - Conductor automatically implements exponential backoff
 
 ### No Data Appearing

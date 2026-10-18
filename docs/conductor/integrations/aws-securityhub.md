@@ -16,7 +16,7 @@ Firewall Manager, and third-party tools into the AWS Security Finding Format
 | **Category** | Cloud Security |
 | **Connector Name** | `signal-client.aws-securityhub` |
 | **Auth Method** | IAM Access Key + Secret Key |
-| **Polling Interval** | 5 min |
+| **Polling Interval** | 10 min; built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [AWS Security Hub API](https://docs.aws.amazon.com/securityhub/latest/APIReference/) |
 
@@ -69,9 +69,8 @@ can reuse the same IAM user — just add the Security Hub policy.
     | **Access Key ID** | `<your-access-key>` | IAM access key from step 1 |
     | **Secret Access Key** | `<your-secret-key>` | IAM secret key from step 1 |
 
-5. Set the **Polling Interval** (recommended: 5 minutes)
-6. Toggle **Enabled** to on
-7. Click **Save**
+5. Toggle **Enabled** to on
+6. Click **Save**
 
 ## Step 3: Validate Data Flow
 

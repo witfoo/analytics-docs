@@ -117,8 +117,9 @@ processing pipeline.
 
 All integrations share these common behaviors:
 
-- **Polling Interval** — Configurable per integration (default varies by vendor).
-  Lower intervals mean fresher data but higher API usage
+- **Polling Interval** — Built into each connector and not configurable; each
+  guide lists its connector's interval. Splunk is the exception: its form has a
+  **Poll Interval** field (seconds)
 - **Checkpoint Tracking** — Signal Client resumes from the last successful
   position after restarts, avoiding duplicate collection
 - **Rate Limiting** — Built-in respect for vendor API quotas with exponential

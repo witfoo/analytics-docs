@@ -15,7 +15,7 @@ Cortex platform.
 | **Category** | Network Security |
 | **Connector Name** | `signal-client.pan-cortex` |
 | **Auth Method** | API Key (x-xdr-auth-id + Authorization) |
-| **Polling Interval** | 5 min (incidents), 10 min (alerts) |
+| **Polling Interval** | 10 min (alerts), 1 hr (endpoints); built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [Cortex XDR API Reference](https://docs-cortex.paloaltonetworks.com/r/Cortex-XDR/Cortex-XDR-API-Reference) |
 
@@ -58,9 +58,8 @@ Cortex platform.
     | **Client ID** | `<api-key-id>` | Numeric API key ID |
     | **Secret** | `<api-key>` | API key value from step 1 |
 
-5. Set the **Polling Interval** (recommended: 5 minutes)
-6. Toggle **Enabled** to on
-7. Click **Save**
+5. Toggle **Enabled** to on
+6. Click **Save**
 
 ## Step 3: Validate Data Flow
 
@@ -84,8 +83,9 @@ After saving, verify the integration is working:
    **Signals → Search** page and search for artifacts from this source
 
 !!! tip "First Poll Timing"
-    The first data pull occurs within the configured polling interval after
-    saving. For a 5-minute interval, expect data within 5 minutes.
+    The connector polls on a built-in schedule that cannot be changed (see
+    **Polling Interval** above). Expect the first data within one interval
+    of saving.
 
 ## Troubleshooting
 
@@ -104,7 +104,7 @@ After saving, verify the integration is working:
 ### Rate Limited (429)
 
 - Cortex XDR API has per-minute rate limits
-- Increase the **Polling Interval** to 10 minutes
+- The polling interval is built in and cannot be changed
 - Conductor automatically implements exponential backoff on 429 responses
 
 ### No Data Appearing

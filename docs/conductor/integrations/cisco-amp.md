@@ -15,7 +15,7 @@ and endpoint threat activity.
 | **Category** | Endpoint Security |
 | **Connector Name** | `signal-client.cisco-amp` |
 | **Auth Method** | Client ID + API Key (Basic Auth) |
-| **Polling Interval** | 5 min (events) |
+| **Polling Interval** | 1 min (events); built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [Cisco AMP API Documentation](https://api-docs.amp.cisco.com/) |
 
@@ -62,9 +62,8 @@ and endpoint threat activity.
     | **Client ID** | `<your-client-id>` | 3rd Party API Client ID |
     | **Client Secret** | `<your-api-key>` | API key from step 1 |
 
-5. Set the **Polling Interval** (recommended: 5 minutes)
-6. Toggle **Enabled** to on
-7. Click **Save**
+5. Toggle **Enabled** to on
+6. Click **Save**
 
 ## Step 3: Validate Data Flow
 
@@ -88,8 +87,9 @@ After saving, verify the integration is working:
    **Signals → Search** page and search for artifacts from this source
 
 !!! tip "First Poll Timing"
-    The first data pull occurs within the configured polling interval after
-    saving. For a 5-minute interval, expect data within 5 minutes.
+    The connector polls on a built-in schedule that cannot be changed (see
+    **Polling Interval** above). Expect the first data within one interval
+    of saving.
 
 ## Troubleshooting
 
@@ -107,7 +107,7 @@ After saving, verify the integration is working:
 ### Rate Limited (429)
 
 - Cisco AMP enforces per-minute API rate limits
-- Increase the **Polling Interval** to 10 minutes if rate limiting occurs
+- The polling interval is built in and cannot be changed
 - Conductor automatically implements exponential backoff on 429 responses
 
 ### No Data Appearing
