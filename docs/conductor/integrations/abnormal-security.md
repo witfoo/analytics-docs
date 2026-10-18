@@ -15,7 +15,7 @@ threats identified by Abnormal's behavioral AI platform.
 | **Category** | Email Security |
 | **Connector Name** | `signal-client.abnormal-security` |
 | **Auth Method** | API Token (Bearer) |
-| **Polling Interval** | 10 min |
+| **Polling Interval** | 10 min (threats), 15 min (cases), 6 hr (posture); built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [Abnormal Security API](https://app.abnormalsecurity.com/docs) |
 
@@ -55,9 +55,8 @@ threats identified by Abnormal's behavioral AI platform.
     | **Host** | `api.abnormalplatform.com` | Abnormal API endpoint |
     | **API Key** | `<your-api-token>` | Bearer token from step 1 |
 
-5. Set the **Polling Interval** (recommended: 10 minutes)
-6. Toggle **Enabled** to on
-7. Click **Save**
+5. Toggle **Enabled** to on
+6. Click **Save**
 
 ## Step 3: Validate Data Flow
 
@@ -96,7 +95,7 @@ After saving, verify the integration is working:
 ### Rate Limited (429)
 
 - Abnormal Security enforces API rate limits based on subscription tier
-- Increase the **Polling Interval** to 30 minutes
+- The polling interval is built in and cannot be changed
 - Conductor automatically implements exponential backoff on 429 responses
 
 ### No Data Appearing

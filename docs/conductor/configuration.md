@@ -59,7 +59,7 @@ Runtime configuration for pipeline services is stored in NATS JetStream KV bucke
 | Bucket | Service | Content |
 |--------|---------|---------|
 | `SERVERS` | signal-server | Listener enable/disable, masquerading options |
-| `INTEGRATIONS` | signal-client | API credentials, polling intervals, enable/disable |
+| `INTEGRATIONS` | signal-client | API credentials and connector settings, enable/disable |
 | `PARSERS` | signal-parser | Per-parser enable/disable state |
 | `FILTERS` | artifact-filter | Deduplication settings, predicate rules, STIX config |
 | `EXPORTERS` | artifact-exporter | Destination URLs, credentials, batch settings |

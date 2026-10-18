@@ -15,7 +15,7 @@ and application control actions.
 | **Category** | Identity & Access |
 | **Connector Name** | `signal-client.cyberark-epm` |
 | **Auth Method** | Username / Password → Session Token |
-| **Polling Interval** | 10 min (events), 30 min (policy audit) |
+| **Polling Interval** | 10 min (policy audit), 15 min (admin audit); built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [CyberArk EPM REST API](https://docs.cyberark.com/epm/latest/en/content/webservices/webservicesintro.htm) |
 
@@ -58,9 +58,8 @@ and application control actions.
     | **Password** | `<your-password>` | API user password |
     | **Set ID** | `<your-set-id>` | EPM set identifier |
 
-5. Set the **Polling Interval** (recommended: 10 minutes)
-6. Toggle **Enabled** to on
-7. Click **Save**
+5. Toggle **Enabled** to on
+6. Click **Save**
 
 ## Step 3: Validate Data Flow
 

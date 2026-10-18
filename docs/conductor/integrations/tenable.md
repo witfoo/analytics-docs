@@ -6,16 +6,16 @@ tags:
 
 # Tenable
 
-Collects vulnerability scan results and asset data from Tenable.io (Tenable
-Vulnerability Management), providing visibility into vulnerability posture,
-scan findings, and asset inventory.
+Collects asset data from Tenable.io (Tenable Vulnerability Management),
+providing visibility into your asset inventory. The connector reads the asset
+list only; it does not pull vulnerability or scan findings.
 
 | | |
 |---|---|
 | **Category** | Vulnerability Management |
 | **Connector Name** | `signal-client.tenable` |
 | **Auth Method** | Access Key + Secret Key |
-| **Polling Interval** | 30 min (vulnerabilities), 1 hr (assets) |
+| **Polling Interval** | 1 hr (assets); built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [Tenable.io API Documentation](https://developer.tenable.com/reference/navigate) |
 
@@ -55,9 +55,8 @@ scan findings, and asset inventory.
     | **Client ID** | `<your-access-key>` | Access key from step 1 |
     | **API Secret** | `<your-secret-key>` | Secret key from step 1 |
 
-5. Set the **Polling Interval** (recommended: 30 minutes)
-6. Toggle **Enabled** to on
-7. Click **Save**
+5. Toggle **Enabled** to on
+6. Click **Save**
 
 ## Step 3: Validate Data Flow
 
@@ -74,15 +73,16 @@ After saving, verify the integration is working:
     Look for successful poll messages:
 
     ```text
-    [INFO] tenable: fetched <N> vulnerabilities
+    [INFO] tenable: fetched <N> assets
     ```
 
 3. **Check artifacts in Analytics** — Navigate to the WitFoo Analytics
    **Signals → Search** page and search for artifacts from this source
 
 !!! tip "First Poll Timing"
-    The first data pull occurs within the configured polling interval after
-    saving. For a 30-minute interval, expect data within 30 minutes.
+    The connector polls on a built-in schedule that cannot be changed (see
+    **Polling Interval** above). Expect the first data within one interval
+    of saving.
 
 ## Troubleshooting
 
@@ -94,14 +94,14 @@ After saving, verify the integration is working:
 
 ### Forbidden (403)
 
-- The API keys may belong to a user without scan result access
+- The API keys may belong to a user without permission to read assets
 - Ensure the user has at least Standard or Admin permissions
 
 ### Rate Limited (429)
 
 - Tenable.io enforces a rate limit of 300-500 requests per minute
   (varies by subscription tier)
-- Increase the **Polling Interval** to 60 minutes
+- The polling interval is built in and cannot be changed
 - Conductor automatically implements exponential backoff on 429 responses
 
 ### No Data Appearing
@@ -109,8 +109,8 @@ After saving, verify the integration is working:
 - Confirm the integration shows **Enabled** in the Conductor UI
 - Check Signal Client logs for errors: `docker logs signal-client-svc --tail=100`
 - Verify network connectivity: `curl -I https://cloud.tenable.com`
-- Confirm vulnerability scans have completed in Tenable.io
-- Ensure scan results exist for the polling time window
+- Confirm assets exist in Tenable.io (the connector reads the asset list,
+  not scan results)
 
 ---
 

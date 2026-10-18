@@ -14,7 +14,7 @@ sign-in attempts, item usage events, and audit log entries.
 | **Category** | Identity & Access |
 | **Connector Name** | `signal-client.1password-events` |
 | **Auth Method** | API Token (Bearer) |
-| **Polling Interval** | 5 min |
+| **Polling Interval** | 5 min (sign-ins), 15 min (items, audit); built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [1Password Events API](https://developer.1password.com/docs/events-api/) |
 
@@ -54,9 +54,8 @@ sign-in attempts, item usage events, and audit log entries.
     | **Host** | `events.1password.com` | 1Password Events API endpoint |
     | **API Token** | `<your-bearer-token>` | Token from step 1 |
 
-5. Set the **Polling Interval** (recommended: 5 minutes)
-6. Toggle **Enabled** to on
-7. Click **Save**
+5. Toggle **Enabled** to on
+6. Click **Save**
 
 ## Step 3: Validate Data Flow
 
@@ -102,7 +101,7 @@ After saving, verify the integration is working:
 ### Rate Limited (429)
 
 - 1Password Events API has rate limits based on plan tier
-- Increase the **Polling Interval** to 15 minutes
+- The polling interval is built in and cannot be changed
 - Conductor automatically implements exponential backoff
 
 ### No Data Appearing

@@ -15,7 +15,7 @@ across your infrastructure.
 | **Category** | Vulnerability Management |
 | **Connector Name** | `signal-client.qualys` |
 | **Auth Method** | Basic Auth (Username + Password) |
-| **Polling Interval** | 30 min |
+| **Polling Interval** | 30 min (detections), 1 hr (assets); built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [Qualys API Documentation](https://qualysguard.qualys.com/qwebhelp/fo_portal/api_doc/) |
 
@@ -66,9 +66,8 @@ across your infrastructure.
     | **Username** | `<your-username>` | API user from step 1 |
     | **Password** | `<your-password>` | API user password |
 
-5. Set the **Polling Interval** (recommended: 30 minutes)
-6. Toggle **Enabled** to on
-7. Click **Save**
+5. Toggle **Enabled** to on
+6. Click **Save**
 
 ## Step 3: Validate Data Flow
 
@@ -108,7 +107,7 @@ After saving, verify the integration is working:
 ### Rate Limited (429)
 
 - Qualys enforces a rate limit of approximately 300 requests per hour
-- Increase the **Polling Interval** to 60 minutes
+- The polling interval is built in and cannot be changed
 - Conductor automatically implements exponential backoff on 429 responses
 
 ### Wrong Platform URL

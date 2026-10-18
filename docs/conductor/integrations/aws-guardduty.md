@@ -15,7 +15,7 @@ behavior across AWS accounts and workloads.
 | **Category** | Cloud Security |
 | **Connector Name** | `signal-client.aws-guardduty` |
 | **Auth Method** | IAM Access Key + Secret Key |
-| **Polling Interval** | 5 min |
+| **Polling Interval** | 10 min; built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [AWS GuardDuty API](https://docs.aws.amazon.com/guardduty/latest/APIReference/) |
 
@@ -65,9 +65,8 @@ behavior across AWS accounts and workloads.
     | **Secret Access Key** | `<your-secret-key>` | IAM secret key from step 1 |
     | **Detector ID** | *(optional)* | Leave blank for auto-discovery |
 
-5. Set the **Polling Interval** (recommended: 5 minutes)
-6. Toggle **Enabled** to on
-7. Click **Save**
+5. Toggle **Enabled** to on
+6. Click **Save**
 
 !!! info "Detector ID Auto-Discovery"
     If the **Detector ID** field is left blank, Conductor will automatically

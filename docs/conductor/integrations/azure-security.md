@@ -17,7 +17,7 @@ threats.
 | **Category** | Cloud Security |
 | **Connector Name** | `signal-client.azure-security` |
 | **Auth Method** | OAuth2 (Azure AD — Client ID + Client Secret + Tenant ID) |
-| **Polling Interval** | 5 min default (configurable) |
+| **Polling Interval** | 1 min; built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [Microsoft Graph Security API](https://learn.microsoft.com/en-us/graph/api/resources/security-api-overview) |
 
@@ -87,9 +87,8 @@ threats.
     | **Client ID** | `<your-client-id>` | Application (client) ID from app registration |
     | **Client Secret** | `<your-client-secret>` | Secret value from step 1 |
 
-5. Set the **Polling Interval** (recommended: 5 minutes for alerts)
-6. Toggle **Enabled** to on
-7. Click **Save**
+5. Toggle **Enabled** to on
+6. Click **Save**
 
 ## Step 3: Validate Data Flow
 
@@ -113,8 +112,9 @@ After saving, verify the integration is working:
    **Signals → Search** page and search for artifacts from this source
 
 !!! tip "First Poll Timing"
-    The first data pull occurs within the configured polling interval after
-    saving. For a 5-minute interval, expect data within 5 minutes.
+    The connector polls on a built-in schedule that cannot be changed (see
+    **Polling Interval** above). Expect the first data within one interval
+    of saving.
 
 ### Data Collection Details
 
@@ -242,7 +242,7 @@ detecting Microsoft product:
 ### Rate Limited (429)
 
 - Microsoft Graph API has per-app and per-tenant throttling limits
-- Increase the **Polling Interval** to 10 minutes if rate limiting occurs
+- The polling interval is built in and cannot be changed
 - Conductor automatically implements exponential backoff on 429 responses
 
 ### No Data Appearing

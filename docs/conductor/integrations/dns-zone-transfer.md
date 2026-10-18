@@ -14,7 +14,7 @@ visibility into DNS infrastructure, record changes, and domain inventory.
 | **Category** | Infrastructure |
 | **Connector Name** | `signal-client.dns-zone-transfer` |
 | **Auth Method** | None (AXFR protocol) |
-| **Polling Interval** | 60 min (zone transfers) |
+| **Polling Interval** | 1 min; built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [RFC 5936 — DNS Zone Transfer Protocol](https://datatracker.ietf.org/doc/html/rfc5936) |
 
@@ -69,9 +69,8 @@ Conductor host is authorized.
     | **DNS Server IP** | `10.0.1.53` | Primary DNS server address |
     | **Forward Lookup Zones** | `example.com,internal.local` | Comma-separated zone names |
 
-5. Set the **Polling Interval** (recommended: 60 minutes)
-6. Toggle **Enabled** to on
-7. Click **Save**
+5. Toggle **Enabled** to on
+6. Click **Save**
 
 ## Step 3: Validate Data Flow
 
@@ -98,8 +97,9 @@ After saving, verify the integration is working:
     ```
 
 !!! tip "First Poll Timing"
-    The first zone transfer occurs within the configured polling interval
-    after saving. For a 60-minute interval, expect data within 1 hour.
+    The connector runs its zone transfers on a built-in schedule that cannot
+    be changed (see **Polling Interval** above). Expect the first data within
+    one interval of saving.
 
 ## Troubleshooting
 
@@ -118,7 +118,9 @@ After saving, verify the integration is working:
 
 - DNS zone transfers are not rate limited in the traditional sense
 - However, very frequent transfers may impact DNS server performance
-- Keep the polling interval at 60 minutes or longer
+- The connector runs a full zone transfer (AXFR) of each configured domain
+  about once a minute (built in, not configurable); if that load matters for
+  your DNS server, contact WitFoo support
 
 ### No Data Appearing
 

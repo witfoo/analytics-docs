@@ -14,7 +14,7 @@ Collects web security and threat event data from Zscaler Internet Access
 | **Category** | Network Security |
 | **Connector Name** | `signal-client.zscaler-zia` |
 | **Auth Method** | API Key + Admin Credentials |
-| **Polling Interval** | 5 min |
+| **Polling Interval** | 10 min (web), 15 min (firewall); built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [Zscaler ZIA API](https://help.zscaler.com/zia/getting-started-zia-api) |
 
@@ -66,9 +66,8 @@ Collects web security and threat event data from Zscaler Internet Access
     | **Username** | `<admin-email>` | Admin account email |
     | **Password** | `<admin-password>` | Admin account password |
 
-5. Set the **Polling Interval** (recommended: 5 minutes)
-6. Toggle **Enabled** to on
-7. Click **Save**
+5. Toggle **Enabled** to on
+6. Click **Save**
 
 ## Step 3: Validate Data Flow
 
@@ -113,7 +112,7 @@ After saving, verify the integration is working:
 
 ### Rate Limited (429)
 
-- Increase the **Polling Interval** to 15 minutes
+- The polling interval is built in and cannot be changed
 - Conductor automatically implements exponential backoff
 
 ### No Data Appearing

@@ -14,7 +14,7 @@ detections, endpoint protection events, and device inventory.
 | **Category** | Endpoint Security |
 | **Connector Name** | `signal-client.halcyon` |
 | **Auth Method** | Username / Password → JWT |
-| **Polling Interval** | 10 min (events), 1 hr (devices) |
+| **Polling Interval** | 10 min (alerts), 15 min (events), 1 hr (assets); built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [Halcyon Documentation](https://docs.halcyon.ai/) |
 
@@ -56,9 +56,8 @@ Halcyon uses admin login credentials for API access (no separate API key):
     | **Password** | `<your-password>` | Admin account password |
     | **Tenant ID** | `<your-tenant-id>` | From Halcyon account settings |
 
-5. Set the **Polling Interval** (recommended: 10 minutes)
-6. Toggle **Enabled** to on
-7. Click **Save**
+5. Toggle **Enabled** to on
+6. Click **Save**
 
 ## Step 3: Validate Data Flow
 
