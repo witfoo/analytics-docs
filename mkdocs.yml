@@ -328,6 +328,7 @@ nav:
   - Reference:
       - reference/index.md
       - Product Tiers: reference/product-tiers.md
+      - Integration Catalog: reference/integration-catalog.md
       - Permissions: reference/permissions.md
       - Roles: reference/roles.md
       - Environment Variables: reference/environment-variables.md

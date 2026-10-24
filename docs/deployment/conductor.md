@@ -81,6 +81,6 @@ docker network create witfoo-analytics-net
 
 After deployment, configure your data source integrations:
 
-- [Integration Enablement Guides](../conductor/integrations/index.md) — Step-by-step setup for 39 supported integrations
+- [Integration Enablement Guides](../conductor/integrations/index.md) — Step-by-step setup for the supported pull connectors
 - [Signal Client](../conductor/signal-client.md) — API-based signal collection architecture
 - [Conductor Troubleshooting](../conductor/troubleshooting.md) — Common issues and diagnostics

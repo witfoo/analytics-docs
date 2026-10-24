@@ -20,7 +20,7 @@ graph TD
     end
 
     subgraph Processing
-        SP[Signal Parser<br/>200+ parsers]
+        SP[Signal Parser]
         AF[Artifact Filter<br/>Dedup + Enrich + Predicate]
     end
 
@@ -79,7 +79,7 @@ Two services handle data ingestion using complementary models:
 The **Signal Parser** consumes from `artifacts.raw` and runs each message through a three-stage internal pipeline:
 
 1. **Format Detection** — Identifies the log format (RFC3164, RFC5424, CEF, LEEF, JSON, Zeek) and extracts standard headers
-2. **Parser Matching** — Runs the message through 200+ parsers using fingerprint-based early exit optimization. The first parser whose fingerprint matches processes the message.
+2. **Parser Matching** — Runs the message through the parsers (listed in the [Integration Catalog](../reference/integration-catalog.md)) using fingerprint-based early exit optimization. The first parser whose fingerprint matches processes the message.
 3. **Output Routing** — Successfully parsed artifacts publish to `artifacts.parsed`; unmatched messages route to `artifacts.unknown`
 
 !!! info "Throughput Characteristics"
