@@ -1,6 +1,6 @@
 # Parser Catalog
 
-WitFoo Conductor includes 200+ log parsers covering a wide range of security products, network infrastructure, operating systems, and cloud platforms. Parsers follow a `vendor-product` naming convention and are organized by category.
+WitFoo Conductor includes the log parsers listed in the [Integration Catalog](../reference/integration-catalog.md), which is generated for every release and holds the counts. They cover a wide range of security products, network infrastructure, operating systems, and cloud platforms. Parsers follow a `vendor-product` naming convention and are organized by category.
 
 ## Parsers by Category
 

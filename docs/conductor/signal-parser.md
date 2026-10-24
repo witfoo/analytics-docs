@@ -1,6 +1,6 @@
 # Signal Parser Architecture
 
-The Signal Parser transforms raw log messages into structured security artifacts. It consumes from the `artifacts.raw` NATS stream, runs each message through a serial pipeline of 200+ parsers, and publishes results to either `artifacts.parsed` (successful) or `artifacts.unknown` (unmatched).
+The Signal Parser transforms raw log messages into structured security artifacts. It consumes from the `artifacts.raw` NATS stream, runs each message through a serial pipeline of parsers (listed in the [Integration Catalog](../reference/integration-catalog.md)), and publishes results to either `artifacts.parsed` (successful) or `artifacts.unknown` (unmatched).
 
 ## Serial Parser Pipeline
 
@@ -27,7 +27,7 @@ type Parsable interface {
 **Fingerprinting** is the key optimization. Each parser defines a fast check (typically a string match or regex on the program name or message prefix) that determines whether it can handle a given message. The serial pipeline tests fingerprints in sequence and stops at the first match, avoiding unnecessary work.
 
 !!! info "Early Exit Optimization"
-    With 200+ parsers, the serial pipeline with early exit achieves ~99.6% reduction in processing operations compared to running all parsers on every message. Most messages match within the first few fingerprint tests.
+    With several hundred parsers, the serial pipeline with early exit achieves ~99.6% reduction in processing operations compared to running all parsers on every message. Most messages match within the first few fingerprint tests.
 
 ## Worker Pool Configuration
 
