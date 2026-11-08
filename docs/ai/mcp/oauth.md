@@ -32,7 +32,7 @@ App sign-in is available when all of these are true:
 | `mcp_oauth_ui_url` | `MCP_OAUTH_UI_URL` | unset | The `https` address of the analytics UI, normally its origin, where a signed-in user approves an app. A path prefix is accepted and kept, and trailing slashes are removed. The consent page is this URL followed by `/ui/oauth/authorize`. |
 | `mcp_oauth_cimd` | `MCP_OAUTH_CIMD` | `on` | `on` or `off`. `off` means the appliance fetches no client metadata document, so only registered clients can start a new sign-in. Set it to `off` on an appliance whose only egress is a corporate proxy, because that fetch cannot use a proxy. Any other value reads as `off`. |
 
-On a WFA appliance, set the fields in `/witfoo/configs/node.json` (WFA 2.5.1 or later; install WFA 2.5.3), then restart WFA:
+On a WFA appliance, set the fields in `/witfoo/configs/node.json` (WFA 2.5.1 or later; install WFA 2.5.4, the current release), then restart WFA:
 
 ```json
 {

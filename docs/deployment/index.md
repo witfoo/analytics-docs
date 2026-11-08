@@ -18,7 +18,7 @@ WitFoo Analytics is a containerized security analytics platform deployed via Doc
 Release 1.2.0 has steps to take before you upgrade:
 
 - **Docker Compose and standalone stacks** must set `AUTH_CONFIG_ENCRYPTION_KEY`, the key that seals stored secrets. No default ships, and every `docker compose` command refuses to run until it is set.
-- **WFA-managed appliances** update the Analytics images to 1.2.0 first, then install WFA 2.5.3 soon after. On an appliance WFA owns the encryption key, so do not edit it by hand.
+- **WFA-managed appliances** update the Analytics images to 1.2.0 first, then install WFA 2.5.4 (or 2.5.3, which shipped with 1.2.0) soon after. On an appliance WFA owns the encryption key, so do not edit it by hand.
 - **Separate Conductor nodes** are upgraded with Analytics or before it.
 
 See [Upgrading to 1.2.0](../reference/upgrade-1.2.0.md) for every step and the known limitations.

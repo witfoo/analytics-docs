@@ -12,7 +12,7 @@ The AI-connector relay gives an AI marketplace or MCP client an address that rea
 
 ## Requirements
 
-- WFA 2.5.1 or later on the appliance (install WFA 2.5.3), which provides `wfa mcp-relay`.
+- WFA 2.5.1 or later on the appliance (install WFA 2.5.4, the current release), which provides `wfa mcp-relay`.
 - Analytics 1.2.0 images.
 - The MCP HTTP transport turned on: `"mcp_http_enabled": true` in `node.json`. `wfa mcp-relay enable` does not change it, and refuses while it is off, because a tunnel to an appliance whose MCP endpoint answers `404` relays nothing. See [Turning MCP On](configuration.md).
 - A current licence that includes the MCP connector: Analytics Pro, Analytics Max or Reporter Pro. The relay is stricter than the appliance's own MCP endpoint: it refuses a licence it cannot place. See [MCP Licensing](licensing.md).

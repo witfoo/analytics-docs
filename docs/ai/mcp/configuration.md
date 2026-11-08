@@ -46,7 +46,7 @@ Claude Desktop, Cursor and Claude Code use Streamable HTTP, so most clients need
 
 ### WFA appliance
 
-1. Add the field to `/witfoo/configs/node.json` (WFA 2.5.1 or later; install WFA 2.5.3):
+1. Add the field to `/witfoo/configs/node.json` (WFA 2.5.1 or later; install WFA 2.5.4, the current release):
 
     ```json
     {

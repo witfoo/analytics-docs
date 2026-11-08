@@ -152,7 +152,7 @@ When these are empty, Prometheus skips remote write.
 
 ## WFA node.json keys
 
-On a WFA-managed appliance, set these keys in `node.json`, then run `wfa restart`. They need WFA 2.5.1 or later; install WFA 2.5.3.
+On a WFA-managed appliance, set these keys in `node.json`, then run `wfa restart`. They need WFA 2.5.1 or later; install WFA 2.5.4, the current release.
 
 | Key | Default | Description |
 | --- | --- | --- |

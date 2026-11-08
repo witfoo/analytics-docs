@@ -28,7 +28,7 @@ Authentication does not change: `/mcp` needs a personal key or an access token, 
 
 ## Turn it on (WFA appliance)
 
-Requirements: WFA 2.5.1 or later (install WFA 2.5.3) and analytics 1.2.0 images. An older reverse proxy ignores the setting.
+Requirements: WFA 2.5.1 or later (install WFA 2.5.4, the current release) and analytics 1.2.0 images. An older reverse proxy ignores the setting.
 
 1. **Check that host port 8444 is free.** See [Port conflicts](#port-conflicts).
 2. Set both switches in `/witfoo/configs/node.json`:

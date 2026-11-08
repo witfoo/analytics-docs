@@ -66,9 +66,9 @@ The MCP settings in `node.json` (`mcp_http_enabled`, `mcp_exposure_enabled`, `mc
 
 ## Current Version
 
-**WFA 2.5.3** is the WFA release that ships with WitFoo Analytics 1.2.0. Install WFA 2.5.1 or later; we recommend 2.5.3. WFA 2.5.0 was published briefly and withdrawn: it reduced the database's memory on many appliances and could stop it under heavy load. 2.5.1 restores it.
+**WFA 2.5.3** is the WFA release that ships with WitFoo Analytics 1.2.0. Install WFA 2.5.1 or later; we recommend 2.5.4, the current release, which also tightens the file permissions of the appliance's keys and configuration. WFA 2.5.0 was published briefly and withdrawn: it reduced the database's memory on many appliances and could stop it under heavy load. 2.5.1 restores it.
 
-Upgrade the Analytics images to 1.2.0 first, then install WFA 2.5.3 soon after. See [Upgrading to 1.2.0](../reference/upgrade-1.2.0.md) for the full order.
+Upgrade the Analytics images to 1.2.0 first, then install WFA 2.5.4 soon after. See [Upgrading to 1.2.0](../reference/upgrade-1.2.0.md) for the full order.
 
 WFA 2.5.1 and later change the appliance in these ways:
 

@@ -1,6 +1,6 @@
 # WFA CLI Reference
 
-The `wfa` command-line tool manages WitFoo Appliances. All commands require `sudo`. This page describes WFA 2.5.3, the release that ships with WitFoo Analytics 1.2.0.
+The `wfa` command-line tool manages WitFoo Appliances. All commands require `sudo`. This page describes WFA 2.5.3, the release that shipped with WitFoo Analytics 1.2.0, and WFA 2.5.4, which has the same commands.
 
 !!! warning "Never run `wfad --version`"
     `wfad` is the WFA daemon, not a command-line tool. Running `wfad --version` starts a second daemon. To read the installed version, run `sudo wfa version`, `rpm -q wfa` or `dpkg -s wfa`.

@@ -16,12 +16,12 @@ Then read the sections that apply to you.
 ### Upgrade order
 
 1. Update the analytics images to **1.2.0**.
-2. Install **WFA 2.5.3** soon after. If WFA automatic updates are off, note that WFA 2.5.3 is published before the 1.2.0 images: update the images first anyway.
+2. Install **WFA 2.5.4** (the current release; 2.5.3 shipped with 1.2.0) soon after. If WFA automatic updates are off, note that WFA 2.5.3 is published before the 1.2.0 images: update the images first anyway.
 3. Once the images are 1.2.0, run `wfa restart` once. An image update does not restart wfad, and WFA replaces the key that seals stored secrets only at a wfad start whose analytics images are 1.2.0.
 
 - **WFA owns the encryption key.** Do not edit `AUTH_CONFIG_ENCRYPTION_KEY` by hand on an appliance. WFA 2.5.1 and later keep the old key until the images are 1.2.0, then replace it with a random key, so the order of the image and WFA updates does not affect stored secrets.
 - **Why install WFA soon after the images.** Until WFA 2.5.1 or later runs, the broker holds about 30 KB of publish ids in memory for each artifact per second of ingest.
-- **WFA 2.5.0 was withdrawn.** It reduced the database's memory on many appliances and could stop it under heavy load. WFA 2.5.1 restores it. Install WFA 2.5.3.
+- **WFA 2.5.0 was withdrawn.** It reduced the database's memory on many appliances and could stop it under heavy load. WFA 2.5.1 restores it. Install WFA 2.5.4.
 
 ### Plan a quiet period
 
