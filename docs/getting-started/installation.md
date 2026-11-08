@@ -2,6 +2,9 @@
 
 This guide covers deploying a WitFoo Appliance (WFA) — the production deployment method for WitFoo Analytics. The WFA daemon manages containers, configuration, and lifecycle for all node roles.
 
+!!! tip "Upgrading an existing deployment?"
+    Read [Upgrading to 1.2.0](../reference/upgrade-1.2.0.md) before you upgrade. It gives the order for WFA appliances and the steps that need action.
+
 ## Prerequisites
 
 - Network access to the target host via SSH (port 22) and HTTPS (port 443)

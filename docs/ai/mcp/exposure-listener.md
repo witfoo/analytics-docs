@@ -87,7 +87,7 @@ docker compose -f docker-compose.yml -f docker-compose.mcp-exposure.yml up -d
 - **Plain HTTP.** When the appliance is configured for plain HTTP (`disable_tls` or `LB_MODE`), the listener is plain HTTP too, and port 8444 carries personal keys, authorization codes and tokens in cleartext. Let only your load balancer reach it.
 
 !!! warning "Declare your load balancer first"
-    Declare the proxy or load balancer in front of port 8444 before you point clients at it: `trusted_proxies` in `node.json` on a WFA appliance (WFA 2.5.1 or later), or `WF_TRUSTED_PROXIES` on Docker Compose. Until it is declared, every client behind it shares one failed-authentication count on `/mcp`, so 100 failures from one client refuse the others.
+    Declare the proxy or load balancer in front of port 8444 before you point clients at it: `trusted_proxies` in `node.json` on a WFA appliance (WFA 2.5.1 or later), or `WF_TRUSTED_PROXIES` on Docker Compose. List the load balancer's own address, not a private-network range such as `10.0.0.0/8`. Until it is declared that way, every client behind it shares one failed-authentication count on `/mcp`, so 100 failures from one client refuse the others.
 
     A re-run of `wfa configure` or `wfa fetch` keeps the MCP settings but writes `node.json` without `trusted_proxies`. Add it again after each re-run, then run `wfa restart`.
 

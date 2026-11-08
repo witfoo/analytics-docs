@@ -198,7 +198,7 @@ The page, **Connect an app to WitFoo**, shows:
 
 The user clicks **Approve** or **Deny**. A denial returns `access_denied` to the app.
 
-A **trusted** registered client skips the page when the same user approved it in the last 30 days, for the same return addresses and at least the same access, and their sessions have not been ended since. A return address on the user's own computer always shows the page.
+A **trusted** registered client skips the page when the same user approved it in the last 30 days, for the same return addresses, the same connector URL (`MCP_PUBLIC_URL`) and at least the same access, and their sessions have not been ended since. Turning the relay on can change the connector URL, and then the page is shown again. A return address on the user's own computer always shows the page.
 
 ### Scopes
 

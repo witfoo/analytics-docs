@@ -110,7 +110,7 @@ ChatGPT can connect to an appliance's MCP endpoint in 1.2.0. This was verified a
 
 ChatGPT first calls `server/discover`, a method this server does not have. The appliance answers an unknown method with `404` and the JSON-RPC error `-32601` (`Method not found`), and ChatGPT then falls back to `initialize`. Claude clients connect either way.
 
-Reach the appliance from ChatGPT through the [exposure listener](exposure-listener.md) or the [relay](relay.md).
+ChatGPT is a hosted app, so its servers need a route to the appliance that they can reach, such as the [exposure listener](exposure-listener.md). ChatGPT has not been verified through the [relay](relay.md).
 
 ## Long-running tools over HTTP
 

@@ -281,7 +281,7 @@ The api (8080), incident-engine (8082), dispatcher (8003) and UI (3000) ports ar
 
 ### Docker Compose
 
-On Docker Compose, `INTERNAL_LISTEN_IP` (default `127.0.0.1`) publishes the internal services: NATS (4222, 8222), the api (8080), incident-engine (8082), the dispatcher (8003), the UI (3000), Prometheus (9090) and Grafana (3001). `LISTEN_IP` publishes Cassandra (9042), the artifact receiver (8090, 8443) and the edge (443, 8081).
+On Docker Compose, `INTERNAL_LISTEN_IP` (default `127.0.0.1`) publishes the internal services: NATS (4222, 8222), the api (8080), incident-engine (8082), the dispatcher (8003), the UI (3000), Prometheus (9090) and Grafana (3001). `LISTEN_IP` publishes Cassandra (9042, 9160), the artifact receiver (8090, 8443) and the edge (443, 8081).
 
 The compose files do not publish 2055/udp. To receive NetFlow on a compose stack, add `2055:2055/udp` to the signal server's ports.
 

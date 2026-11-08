@@ -223,6 +223,24 @@ Two things do **not** grant `mcp:connect`: the platform-administrator flag on an
 | `certifications:read` | Read Certifications | View certification packages, questions, and exports |
 | `certifications:write` | Write Certifications | Create, edit, and export certification packages |
 
+### Chat
+
+| Permission | Label | Description |
+| --- | --- | --- |
+| `chat:read` | Read Chat | View chat rooms and messages |
+| `chat:write` | Write Chat | Send messages and create chat rooms |
+| `chat:manage` | Manage Chat | Manage room membership, delete rooms (includes read, write) |
+| `chat:ai` | Chat AI | Invoke @AI assistant in chat rooms |
+
+### Attachments
+
+| Permission | Label | Description |
+| --- | --- | --- |
+| `attachments:read` | Read Attachments | View and download file attachments |
+| `attachments:write` | Write Attachments | Upload file attachments |
+| `attachments:delete` | Delete Attachments | Delete file attachments |
+| `attachments:manage` | Manage Attachments | All attachment operations (includes read, write, delete) |
+
 ## AI and MCP permissions
 
 AI configuration and MCP access are separate permissions in 1.2.0:

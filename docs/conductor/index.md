@@ -50,7 +50,7 @@ Conductor consists of 7 core services, each running as an independent Docker con
 | Service | Container Name | Purpose | Ports |
 |---------|---------------|---------|-------|
 | [Broker Edge](broker-edge.md) | `broker-edge-svc` | NATS JetStream message broker | 4223 (on `127.0.0.1` only under WFA 2.5.1 and later) |
-| [Signal Server](signal-server.md) | `signal-server-svc` | Push-based log and flow ingestion | 514/tcp, 514/udp, 5044-5045, 6514, 7514, 2055/udp |
+| [Signal Server](signal-server.md) | `signal-server-svc` | Push-based log and flow ingestion | 514/tcp, 514/udp, 5044-5045, 6514, 7514, 2055/udp, 8008 (2055/udp and 8008 are off on a new node; see [Log Servers](ui/log-servers.md)) |
 | [Signal Client](signal-client.md) | `signal-client-svc` | Pull-based API log collection | — |
 | [Signal Parser](signal-parser.md) | `signal-parser-svc` | Log parsing and normalization | — |
 | [Artifact Filter](artifact-filter.md) | `artifact-filter-svc` | Deduplication and enrichment | — |

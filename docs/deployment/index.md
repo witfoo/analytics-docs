@@ -175,7 +175,7 @@ The reverse-proxy automatically applies 7 OWASP security headers to all response
 
 ### Network Hardening
 
-- [ ] On Docker Compose, `INTERNAL_LISTEN_IP` (default `127.0.0.1`) publishes NATS, the api, incident-engine, the dispatcher, the UI, Prometheus and Grafana. `LISTEN_IP` still publishes Cassandra (9042), the artifact receiver (8090, 8443) and the edge (443, 8081), so restrict Cassandra's ports at the host firewall
+- [ ] On Docker Compose, `INTERNAL_LISTEN_IP` (default `127.0.0.1`) publishes NATS, the api, incident-engine, the dispatcher, the UI, Prometheus and Grafana. `LISTEN_IP` still publishes Cassandra (9042, 9160), the artifact receiver (8090, 8443) and the edge (443, 8081), so restrict Cassandra's ports at the host firewall
 - [ ] Only expose the reverse-proxy port (443) to users, and the artifact receiver (8443) to your Conductors
 - [ ] Configure firewall rules to limit inter-node communication to required ports
 

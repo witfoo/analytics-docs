@@ -38,11 +38,17 @@ Score = (green + yellow nodes) / auto-detectable nodes * 100. Manual-only contro
 | **Focus** | Type (Computer=blue, User=purple, Infra=magenta, Product=green) |
 | **Compliance %** | Calculated percentage |
 | **Detection** | Product + confidence (e.g., "Palo Alto (95%)") |
-| **Status** | Compliant / Partial / Unmet / Manual |
+| **Status** | Compliant / Partial / Unmet / Manual / N/A. **N/A** means no node is in the control's scope. |
+
+### Capability provider
+
+A control that WitFoo Analytics performs for the whole estate lists WitFoo Analytics in the **Detection** column with the note **performs this control**, and no coverage percentage. Hover the note for the full explanation: the Coverage figure on that row counts hosts running a contributing third-party sensor and is not a measure of the platform's own reach. For System Component Inventory, the inventory is a rolling 7-day observation of what has been seen, not a configuration management database.
 
 ## Filtering
 
-Two combinable filter dimensions: Compliance status and Focus type.
+Two combinable filter dimensions: Compliance status and Focus type. An **N/A** status filter appears when at least one control is N/A.
+
+When you change the date range while an earlier request is still loading, the table shows the answer for the range you selected last.
 
 ## Audit Findings
 
@@ -54,4 +60,4 @@ Shows compliance score change across date range snapshots.
 
 ## CSV Export
 
-Exports per-control table with current filters. Filename: `{framework}_compliance_{date}.csv`.
+Exports per-control table with current filters. An N/A control reads `N/A` in the CSV. Filename: `{framework}_Compliance_{date}.csv`, with spaces in the framework name replaced by `_`.

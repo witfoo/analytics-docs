@@ -135,6 +135,8 @@ Save frequently used search criteria for quick access later.
 
 To load a saved search, click the **Folder** icon and select from your list of saved searches.
 
+**Auto-delete after (days)** sets when a saved search ends: the day it was created plus the days you choose. `0` means it never expires. From 1.2.0 this setting is honoured. Before 1.2.0 a saved search could lose its contents 7 days after it was last saved, whatever this setting said, and a search lost before the upgrade cannot be recovered.
+
 ### Sharing Searches
 
 Saved searches can generate a share link. Recipients who have access to the same organization can open the link to load the exact same search criteria in their browser.

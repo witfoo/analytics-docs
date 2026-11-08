@@ -89,7 +89,7 @@ Earlier compose files shipped one default key for every installation, a public v
 
     You do not need to look the old value up. When the launch script generates the new key, it explains what that means for a stack that already holds data, and prints the one command that adds `AUTH_CONFIG_ENCRYPTION_KEY_PREVIOUS` with that value to your `.env`. Run that command before the services start. The compose files' own error message names the value too.
 
-4. Start everything with **one** `docker compose up -d` (for a stack built from the checkout, `./scripts/dev/dev-rebuild.sh all`), so the images, the new key and the previous key change together.
+4. Start everything with **one** `docker compose up -d`, so the images, the new key and the previous key change together.
 
 If a stack starts with a new key and without the previous key, its stored secrets cannot be opened until you add `AUTH_CONFIG_ENCRYPTION_KEY_PREVIOUS` and recreate the api and incident-engine services. A restart is not enough: `docker restart` and `docker compose restart` keep the environment the container was created with, while `docker compose up -d` recreates a container whose environment changed.
 
@@ -112,7 +112,7 @@ If the old key is lost, the values sealed under it cannot be recovered: enter th
 ### Published ports
 
 - `INTERNAL_LISTEN_IP` (default `127.0.0.1`) now publishes NATS, the api, incident-engine, the dispatcher, the UI, Prometheus and Grafana, instead of `LISTEN_IP`.
-- `LISTEN_IP` still publishes Cassandra, the artifact receiver and the reverse proxy. **Restrict Cassandra's port at the host firewall.**
+- `LISTEN_IP` still publishes Cassandra, the artifact receiver and the reverse proxy. **Restrict Cassandra's ports (9042, 9160) at the host firewall.**
 - The compose files do not publish 2055/udp for NetFlow and IPFIX. To use the listener, add `2055:2055/udp` to the signal server's ports.
 
 See [Configuration](../deployment/configuration.md) and the [Docker Compose Reference](../deployment/docker-compose.md).

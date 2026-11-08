@@ -118,7 +118,7 @@ If the relay cannot be reached, the revocation stays pending: the credential is 
 
 Revocation is permanent. A revoked address is never restored, turning the relay on again gives a new address, and every client configured with the old address stops working until it is given the new one. Rotate the personal keys those clients held.
 
-If the appliance can no longer revoke the address, run `wfa mcp-relay off`, or ask WitFoo support (<support@witfoo.com>) to revoke it.
+If your appliance can no longer revoke the address, ask WitFoo support (<support@witfoo.com>) to revoke it. See [Known limitations](#known-limitations).
 
 ## The AI Setup relay card
 

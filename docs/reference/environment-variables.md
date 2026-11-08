@@ -37,7 +37,7 @@ There are no per-service port variables. The compose files publish fixed ports, 
 
 | Variable | Default | What it publishes |
 | --- | --- | --- |
-| `LISTEN_IP` | `0.0.0.0` in the compose files (the example `.env` sets `127.0.0.1`) | The services that must be reachable from outside: the reverse proxy (443, 8081), the artifact receiver (8090, and 8443 with TLS) and Cassandra (9042). Restrict Cassandra's port at the host firewall. |
+| `LISTEN_IP` | `0.0.0.0` in the compose files (the example `.env` sets `127.0.0.1`) | The services that must be reachable from outside: the reverse proxy (443, 8081), the artifact receiver (8090, and 8443 with TLS) and Cassandra (9042, 9160). Restrict Cassandra's ports at the host firewall. |
 | `INTERNAL_LISTEN_IP` | `127.0.0.1` | The internal services: api (8080), incident-engine (8082), dispatcher (8003), UI (3000), NATS (4222, 8222), the Conductor broker edge (4223, 8223), Prometheus (9090) and Grafana (3001) |
 
 Before 1.2.0, `LISTEN_IP` published every service. See [Docker Compose Reference](../deployment/docker-compose.md) for the full port list of each compose file.
@@ -46,7 +46,7 @@ Before 1.2.0, `LISTEN_IP` published every service. See [Docker Compose Reference
 
 | Variable | Service | Default | Description |
 | --- | --- | --- | --- |
-| `WF_TRUSTED_PROXIES` | reverse proxy | (empty) | Comma-separated addresses or CIDRs of the load balancers whose `X-Forwarded-For` the edge believes. With it unset, a TLS edge trusts no forwarder. An edge without TLS, or in LB mode, trusts the private ranges `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16` and `127.0.0.1` for one more release, with a startup WARN. `X-Real-IP` is never read. Entries wider than /8 (IPv4) or /32 (IPv6), and entries that do not parse, are dropped with an ERROR. Behind a load balancer, set it before you enable the MCP exposure listener, or every client behind the load balancer shares one failed-authentication count on `/mcp`. |
+| `WF_TRUSTED_PROXIES` | reverse proxy | (empty) | Comma-separated addresses or CIDRs of the load balancers whose `X-Forwarded-For` the edge believes. With it unset, a TLS edge trusts no forwarder. An edge without TLS, or in LB mode, trusts the private ranges `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16` and `127.0.0.1` for one more release, with a startup WARN. `X-Real-IP` is never read. Entries wider than /8 (IPv4) or /32 (IPv6), and entries that do not parse, are dropped with an ERROR. Behind a load balancer, set it to the load balancer's own address, not a private-network range, before you enable the MCP exposure listener. A list that includes `10.0.0.0/8`, `172.16.0.0/12` or `192.168.0.0/16`, or an entry that overlaps the proxy's own Docker network, is accepted with a WARN, but every client behind the load balancer then shares one failed-authentication count on `/mcp`. |
 | `WF_ALLOWED_ORIGINS` | reverse proxy | (empty = same origin only) | Comma-separated origins allowed to open WebSocket connections through the proxy (`/ws/chat`, `/ws/graph`, `/ws/events` and the Conductor WebSocket routes). A refused origin gets `403` `{"error":"Origin not allowed"}`. |
 | `WF_ALLOWED_ORIGINS` | dispatcher | (empty = same origin only) | Comma-separated origins allowed to call `POST /mcp`. A request that carries an `Origin` header must match, whatever credential it presents. A browser page that calls `/mcp` must be listed even when the appliance serves it. Clients that send no `Origin` need no entry. |
 | `TLS_ENABLED` | reverse proxy | `true` in the compose files | Turns HTTPS on when exactly `true` |
@@ -74,7 +74,7 @@ Before 1.2.0, `LISTEN_IP` published every service. See [Docker Compose Reference
 
 ## MCP
 
-On a WFA appliance these come from `node.json` (WFA 2.5.1 or later). See [MCP Configuration](../ai/mcp/configuration.md).
+On a WFA appliance (WFA 2.5.1 or later), WFA sets the first five from `node.json` fields you set: `mcp_http_enabled`, `mcp_public_url`, `mcp_oauth_ui_url`, `mcp_oauth_cimd`, and `mcp_exposure_enabled` for `MCP_EXPOSURE_PORT`. The `MCP_RELAY_*` variables come from fields that only `wfa mcp-relay` writes. `LICENSE_CHECK_INTERVAL` is not a `node.json` field. See [MCP Configuration](../ai/mcp/configuration.md).
 
 | Variable | Service | Default | Description |
 | --- | --- | --- | --- |

@@ -35,7 +35,7 @@ The compose files publish fixed ports. Two variables choose the host address the
 
 | Variable | Default | Services |
 | --- | --- | --- |
-| `LISTEN_IP` | `0.0.0.0` in the compose files (the example `.env` sets `127.0.0.1`) | Reverse proxy (443, 8081), artifact receiver (8090, 8443), Cassandra (9042) |
+| `LISTEN_IP` | `0.0.0.0` in the compose files (the example `.env` sets `127.0.0.1`) | Reverse proxy (443, 8081), artifact receiver (8090, 8443), Cassandra (9042, 9160) |
 | `INTERNAL_LISTEN_IP` | `127.0.0.1` | api (8080), incident-engine (8082), dispatcher (8003), UI (3000), NATS (4222, 8222), Conductor broker edge (4223, 8223), Prometheus (9090), Grafana (3001) |
 
 !!! warning "Firewall Cassandra"

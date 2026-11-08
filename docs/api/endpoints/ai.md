@@ -97,7 +97,7 @@ See [App Sign-in (OAuth 2.1)](../../ai/mcp/oauth.md).
 
 ## OAuth Endpoints
 
-These are served at the root of the appliance once `MCP_PUBLIC_URL` and `MCP_OAUTH_UI_URL` are both set to valid values.
+These are served at the root of the appliance once `MCP_PUBLIC_URL` and `MCP_OAUTH_UI_URL` are both set to valid values. The two protected-resource paths also need the HTTP transport (`WF_MCP_HTTP_ENABLED`) on; without it they answer `404`, while the authorization-server document and `/oauth/token` are still served.
 
 | Method | Path | Description |
 | --- | --- | --- |

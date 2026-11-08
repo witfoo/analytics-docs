@@ -5,16 +5,20 @@ WitFoo Analytics exposes a RESTful API for all platform operations. The API foll
 ## Base URL
 
 ```text
-http://localhost:8080/api/v1
+https://<appliance>/api/v1
 ```
+
+Call the API through the reverse proxy on port 443. The endpoint tables write paths from `/v1`, so `/v1/artifacts` is `https://<appliance>/api/v1/artifacts`.
 
 ## Request Flow
 
 ```text
-Browser/Client → Reverse Proxy (:8080) → API Gateway (:8090) → Incident Engine (:8082) → Cassandra
+Browser/Client → Reverse Proxy (:443) → API (:8080) → Incident Engine (:8082) → Cassandra
 ```
 
 The API service acts as a gateway adding JWT authentication, permission checks, and request routing. The Incident Engine contains all business logic.
+
+In 1.2.0 the API's own port is not reachable from outside the appliance: a WFA appliance does not publish it, and on Docker Compose it listens on `INTERNAL_LISTEN_IP` (`127.0.0.1` by default). See [Published addresses](../reference/environment-variables.md#published-addresses-docker-compose).
 
 ## Sections
 

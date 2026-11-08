@@ -78,11 +78,11 @@ Access tokens sit outside this throttle. Their volume is limited per app and use
 !!! warning "Clients that share an address share a count"
     These clients arrive with one address, so 100 failures from one of them refuse the others for up to a minute:
 
-    - everyone behind a load balancer that is not declared as a trusted proxy;
+    - everyone behind a load balancer that is not declared as a trusted proxy, or is declared in a list that includes `10.0.0.0/8`, `172.16.0.0/12` or `192.168.0.0/16`, or overlaps the reverse proxy's own Docker network;
     - clients that Docker relays to the reverse proxy, such as IPv6 clients and clients on the appliance host itself;
     - clients behind one NAT, and IPv6 clients in one /64.
 
-    Declare the load balancer in front of the appliance before you enable `/mcp` behind it: `trusted_proxies` in `node.json` on a WFA appliance (WFA 2.5.1 or later), or `WF_TRUSTED_PROXIES` on a Docker Compose stack. A re-run of `wfa configure` or `wfa fetch` writes `node.json` without `trusted_proxies`, so add it again after each re-run, then run `wfa restart`.
+    Declare the load balancer in front of the appliance before you enable `/mcp` behind it: `trusted_proxies` in `node.json` on a WFA appliance (WFA 2.5.1 or later), or `WF_TRUSTED_PROXIES` on a Docker Compose stack. List the load balancer's own address, not a private-network range. A re-run of `wfa configure` or `wfa fetch` writes `node.json` without `trusted_proxies`, so add it again after each re-run, then run `wfa restart`.
 
 ## WebSocket close codes
 
