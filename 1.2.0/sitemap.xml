@@ -85,7 +85,31 @@
          <lastmod>2026-11-08</lastmod>
     </url>
     <url>
+         <loc>https://docs.witfoo.com/latest/ai/mcp/connect-clients/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
          <loc>https://docs.witfoo.com/latest/ai/mcp/errors/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.witfoo.com/latest/ai/mcp/exposure-listener/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.witfoo.com/latest/ai/mcp/licensing/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.witfoo.com/latest/ai/mcp/oauth/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.witfoo.com/latest/ai/mcp/personal-keys/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.witfoo.com/latest/ai/mcp/relay/</loc>
          <lastmod>2026-11-08</lastmod>
     </url>
     <url>
@@ -301,7 +325,15 @@
          <lastmod>2026-11-08</lastmod>
     </url>
     <url>
+         <loc>https://docs.witfoo.com/latest/conductor/integrations/aws-vpc-flow-logs/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
          <loc>https://docs.witfoo.com/latest/conductor/integrations/azure-security/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.witfoo.com/latest/conductor/integrations/azure-vnet-flow-logs/</loc>
          <lastmod>2026-11-08</lastmod>
     </url>
     <url>
@@ -322,6 +354,10 @@
     </url>
     <url>
          <loc>https://docs.witfoo.com/latest/conductor/integrations/cisco-umbrella/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.witfoo.com/latest/conductor/integrations/cloudflare/</loc>
          <lastmod>2026-11-08</lastmod>
     </url>
     <url>
@@ -361,7 +397,15 @@
          <lastmod>2026-11-08</lastmod>
     </url>
     <url>
+         <loc>https://docs.witfoo.com/latest/conductor/integrations/gcp-vpc-flow-logs/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
          <loc>https://docs.witfoo.com/latest/conductor/integrations/halcyon/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.witfoo.com/latest/conductor/integrations/http-poll/</loc>
          <lastmod>2026-11-08</lastmod>
     </url>
     <url>
@@ -382,6 +426,10 @@
     </url>
     <url>
          <loc>https://docs.witfoo.com/latest/conductor/integrations/oci-cloud/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.witfoo.com/latest/conductor/integrations/oci-vcn-flow-logs/</loc>
          <lastmod>2026-11-08</lastmod>
     </url>
     <url>
@@ -414,6 +462,10 @@
     </url>
     <url>
          <loc>https://docs.witfoo.com/latest/conductor/integrations/sentinelone/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.witfoo.com/latest/conductor/integrations/snmp-poll/</loc>
          <lastmod>2026-11-08</lastmod>
     </url>
     <url>
@@ -493,19 +545,7 @@
          <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-         <loc>https://docs.witfoo.com/latest/console/architecture/</loc>
-         <lastmod>2026-11-08</lastmod>
-    </url>
-    <url>
          <loc>https://docs.witfoo.com/latest/console/configuration-generator/</loc>
-         <lastmod>2026-11-08</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.witfoo.com/latest/console/configuration/</loc>
-         <lastmod>2026-11-08</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.witfoo.com/latest/console/deployment/</loc>
          <lastmod>2026-11-08</lastmod>
     </url>
     <url>
@@ -513,23 +553,7 @@
          <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-         <loc>https://docs.witfoo.com/latest/console/nodes/</loc>
-         <lastmod>2026-11-08</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.witfoo.com/latest/console/organizations/</loc>
-         <lastmod>2026-11-08</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.witfoo.com/latest/console/users/</loc>
-         <lastmod>2026-11-08</lastmod>
-    </url>
-    <url>
          <loc>https://docs.witfoo.com/latest/deployment/</loc>
-         <lastmod>2026-11-08</lastmod>
-    </url>
-    <url>
-         <loc>https://docs.witfoo.com/latest/deployment/air-gap/</loc>
          <lastmod>2026-11-08</lastmod>
     </url>
     <url>
@@ -677,11 +701,11 @@
          <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-         <loc>https://docs.witfoo.com/latest/user-guide/</loc>
+         <loc>https://docs.witfoo.com/latest/reference/upgrade-1.2.0/</loc>
          <lastmod>2026-11-08</lastmod>
     </url>
     <url>
-         <loc>https://docs.witfoo.com/latest/user-guide/monitor/</loc>
+         <loc>https://docs.witfoo.com/latest/user-guide/</loc>
          <lastmod>2026-11-08</lastmod>
     </url>
     <url>
@@ -826,6 +850,10 @@
     </url>
     <url>
          <loc>https://docs.witfoo.com/latest/user-guide/signals/search/</loc>
+         <lastmod>2026-11-08</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.witfoo.com/latest/user-guide/signals/vrax/</loc>
          <lastmod>2026-11-08</lastmod>
     </url>
 </urlset>
