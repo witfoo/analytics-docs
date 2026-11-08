@@ -1,6 +1,6 @@
 # Integration Catalog
 
-WitFoo release 1.1.5 includes **312 integrations** that an operator can enable in the Conductor: 256 parsers, 41 pull connectors, 12 exporters and 3 pipeline processors.
+WitFoo release 1.2.0 includes **338 integrations** that an operator can enable in the Conductor: 273 parsers, 48 pull connectors, 13 exporters and 4 pipeline processors.
 
 An integration is any of four kinds:
 
@@ -9,9 +9,9 @@ An integration is any of four kinds:
 - **Exporter**: sends WitFoo's artifacts to another system.
 - **Pipeline processor**: filters or enriches artifacts on their way through the Conductor.
 
-This catalog is generated from the registries of release 1.1.5 itself and lists what an operator can switch on in the Conductor UI. It is regenerated for every release; a count anywhere else in this documentation follows it.
+This catalog is generated from the registries of release 1.2.0 itself and lists what an operator can switch on in the Conductor UI. It is regenerated for every release; a count anywhere else in this documentation follows it.
 
-## Pull connectors (41)
+## Pull connectors (48)
 
 | Connector | What it collects |
 | --- | --- |
@@ -21,13 +21,16 @@ This catalog is generated from the registries of release 1.1.5 itself and lists 
 | Auth0 | The Auth0 connector allows you to fetch authentication and identity management logs. |
 | AWS GuardDuty | The AWS GuardDuty connector allows you to fetch threat detection findings from AWS GuardDuty. |
 | AWS Security Hub | The AWS Security Hub connector allows you to fetch consolidated security findings from AWS Security Hub. |
+| AWS VPC Flow Logs | The AWS VPC Flow Logs connector pulls gzipped VPC flow log objects natively from S3 via SQS event notifications, and summarizes them into network conversations using the same flow engine as on-prem NetFlow. Distinct from the passive awsvpcflow syslog parser, which handles VPC flow lines forwarded by something else. |
 | Azure Security | The Azure Security connector allows you to fetch alerts from Azure. |
+| Azure VNet Flow Logs | The Azure VNet Flow Logs connector pulls Azure Network Watcher flow-log JSON blobs natively from a Storage account and summarizes them into network conversations using the same flow engine as on-prem NetFlow. It also reads legacy NSG Flow Log records, which Microsoft retires on 30 September 2027. Distinct from Azure Security (Microsoft Graph alerts) and Microsoft Sentinel (incidents). |
 | Carbon Black | The Carbon Black connector allows you to fetch endpoint security alerts from VMware Carbon Black Cloud. |
 | Cisco AMP | The Cisco AMP (Secure Endpoint) connector fetches events from the v1 API and, optionally, devices, vulnerabilities and audit logs from the v3 API. |
 | Cisco Duo | The Cisco Duo connector allows you to fetch alerts from Cisco Duo. |
 | Cisco Meraki | The Cisco Meraki connector allows you to fetch alerts from Cisco Meraki. |
 | Cisco Secure Access | The Cisco Secure Access connector pulls Reporting API activity (DNS, web proxy, firewall, intrusion, ZTNA, decryption) and optionally Alerts from api.sse.cisco.com — the replacement feed for tenants migrating off Cisco Umbrella. |
 | Cisco Umbrella | The Cisco Umbrella connector allows you to fetch alerts from Cisco Umbrella. |
+| Cloudflare | The Cloudflare connector pulls account audit logs (Audit Logs v2) and per-zone WAF/firewall events (GraphQL firewallEventsAdaptive) with a scoped API token. Zero Trust Gateway events are not collected: every Gateway dataset Cloudflare documents for the GraphQL Analytics API is an aggregate, and no raw per-event Gateway node was found. |
 | CrowdStrike Falcon | The CrowdStrike Falcon connector allows you to fetch alerts from CrowdStrike Falcon. |
 | CyberArk EPM | The CyberArk EPM connector allows you to fetch endpoint privilege management events. |
 | Darktrace | The Darktrace connector allows you to fetch AI-driven threat detection alerts from Darktrace. |
@@ -35,14 +38,17 @@ This catalog is generated from the registries of release 1.1.5 itself and lists 
 | DNS Zone Transfer | The DNS Zone Transfer connector allows you to transfer DNS zones from a specified DNS server. Ensure that the DNS server supports zone transfers. |
 | Druva | The Druva connector pulls Cyber Resilience (Realize) events from Druva, with an optional Threat Watch IOC Sets feed. |
 | FortiAnalyzer | The FortiAnalyzer connector allows you to fetch security analytics and log data from Fortinet FortiAnalyzer. |
+| GCP VPC Flow Logs | The GCP VPC Flow Logs connector pulls Cloud Logging VPC-flow records from a Pub/Sub subscription and summarizes them into network conversations using the same flow engine as on-prem NetFlow and AWS VPC flow logs. The documented VPC Flow Logs record format carries no TCP control-bit field, so per-side SYN/RST/FIN counters are zero for this source. |
 | Google Cloud SCC | The Google Cloud Security Command Center connector allows you to fetch security findings from Google Cloud. |
 | Halcyon | The Halcyon connector allows you to fetch anti-ransomware protection alerts from Halcyon. |
+| HTTP/HTTPS Monitor | The HTTP monitor connector probes web endpoints for response time, status code and TLS certificate expiry. A confirmed up→down transition raises a Service Disruption. Redirects are recorded, never followed; the target must be an http/https URL. |
 | LevelBlue USM Anywhere | The LevelBlue USM Anywhere connector pulls alarms and events from the USM Anywhere platform API (formerly AT&T Cybersecurity / AlienVault). |
 | LimaCharlie | The LimaCharlie connector allows you to fetch alerts from LimaCharlie. |
 | Microsoft Sentinel | The Microsoft Sentinel connector allows you to fetch security incidents from a Microsoft Sentinel workspace via the Azure Management API. Workspaces onboarded to the Microsoft Defender portal (retiring the Azure portal experience by 2027-03-31) can also be served by the Azure Security integration, Microsoft |
 | Mimecast | The Mimecast connector allows you to fetch alerts from Mimecast. |
 | MS Defender Vulnerability Mgmt | Pulls per-device software vulnerabilities (CVEs) from Microsoft Defender Vulnerability Management (MDE API). Same app registration as Azure Security; additionally requires the WindowsDefenderATP |
 | Netskope | The Netskope connector allows you to fetch alerts from Netskope. |
+| OCI VCN Flow Logs | The OCI VCN Flow Logs connector pulls Oracle Cloud VCN flow records natively from OCI Logging (Search API, OCI request-signed) and summarizes them into network conversations using the same flow engine as on-prem NetFlow and AWS VPC Flow Logs. |
 | Okta | The Okta connector allows you to fetch alerts from Okta. |
 | PAN Cortex | The PAN Cortex connector allows you to fetch alerts from PAN Cortex. |
 | Proofpoint CASB | The Proofpoint CASB connector allows you to fetch alerts from Proofpoint CASB. |
@@ -50,6 +56,7 @@ This catalog is generated from the registries of release 1.1.5 itself and lists 
 | Qualys | The Qualys connector allows you to fetch vulnerability management and compliance data from Qualys. |
 | Rapid7 InsightIDR | The Rapid7 InsightIDR connector allows you to fetch detection and investigation data from Rapid7 InsightIDR. |
 | SentinelOne | The SentinelOne connector allows you to fetch endpoint security threats and alerts from SentinelOne. |
+| SNMP Monitoring Poller | The SNMP connector polls network devices over SNMP v2c or v3 for interface counters, device health and reachability. SNMPv1 is not supported. |
 | Sophos Central | The Sophos Central connector allows you to fetch security alerts, endpoint inventory, and (opt-in) administrative audit events from Sophos Central. |
 | Splunk | The Splunk connector allows you to send data to a Splunk instance. Ensure that the Splunk HTTP Event Collector (HEC) is enabled and configured to accept data. |
 | Stealthwatch | The Stealthwatch connector allows you to send data to a Cisco Stealthwatch instance. Ensure that the Stealthwatch API is enabled and accessible. |
@@ -57,10 +64,11 @@ This catalog is generated from the registries of release 1.1.5 itself and lists 
 | Wiz | The Wiz connector allows you to fetch cloud security findings and issues from Wiz. |
 | Zscaler ZIA | The Zscaler ZIA connector allows you to fetch web security logs and alerts from Zscaler Internet Access. |
 
-## Exporters (12)
+## Exporters (13)
 
 | Exporter | What it does |
 | --- | --- |
+| Analytics Reporter (WebSocket) | Export artifacts to a WitFoo Analytics appliance over a secure WebSocket (TLS) connection. Enter the Analytics host and ingestion port to connect. The HTTP exporter (WitFoo Analytics (HTTP)) is the other way to reach the same appliance: enable one or the other for an appliance unless you intend to deliver every artifact to it twice. |
 | Azure Blob Storage | Export artifacts to Azure Blob Storage. Batches artifacts as compressed NDJSON blobs with time-based partitioning and configurable access tiers. |
 | CrowdStrike Falcon Next-Gen SIEM | Export artifacts to CrowdStrike Falcon Next-Gen SIEM through a HEC / HTTP Event Data Connector. Batches events as HEC JSON and authenticates with the data connector API key. |
 | Google Cloud Storage | Export artifacts to Google Cloud Storage. Batches artifacts as compressed NDJSON objects with time-based partitioning and configurable storage classes. |
@@ -72,17 +80,18 @@ This catalog is generated from the registries of release 1.1.5 itself and lists 
 | Splunk | The Splunk exporter allows you to send data to a Splunk HEC Event Collector endpoint. |
 | UDP Syslog | The UDP Syslog exporter allows you to export data to a UDP syslog server. |
 | USM Anywhere | Export artifacts via webhook to LevelBlue USM Anywhere (formerly AlienVault). Sends batched JSON with gzip compression to the webhook API. |
-| WitFoo Analytics | Export artifacts to a WitFoo Analytics appliance over a secure WebSocket (TLS) connection. Enter the Analytics host and ingestion port to connect. |
+| WitFoo Analytics (HTTP) | Export artifacts over HTTP to the artifact-ingestion service of a WitFoo Analytics appliance, each batch signed with an HMAC-SHA256 secret. On an all-in-one Conductor this exporter is configured automatically; edit it here to point it elsewhere. The WebSocket reporter (Analytics Reporter (WebSocket)) is the other way to reach the same appliance: enable one or the other for an appliance unless you intend to deliver every artifact to it twice. |
 
-## Pipeline processors (3)
+## Pipeline processors (4)
 
 | Processor | What it does |
 | --- | --- |
+| Benign Disposition | Governs benign infrastructure chatter (heartbeats, keepalives, health probes, watchdog ticks) classified as message_type=benign. Default: TAG (send to analytics). Enable to DROP it at the filter before export once the classification is trusted. |
 | ProtoGraph Processor | ProtoGraph filtering samples against a ten-tuple of values to reduce noise and ensure high-quality analytic sampling. |
 | Redaction Processor | Tokenizes PII (credit cards, SSNs, emails, custom regex) before artifacts are exported. Optionally maintains an exportable alias map of the original ↔ redacted values. |
 | STIX Threat Intelligence | Enriches artifacts with threat intelligence from STIX/TAXII feeds. Matched artifacts are tagged with indicator IDs and ATT&CK technique references. |
 
-## Parsers (256)
+## Parsers (273)
 
 | Parser | Identifier | Description |
 | --- | --- | --- |
@@ -94,7 +103,8 @@ This catalog is generated from the registries of release 1.1.5 itself and lists 
 | Apache Access Log | `apacheaccesslog` | Apache Access logs |
 | Apache Authz | `apacheauthz` | Apache Authorization logs |
 | Apache SSL | `apachessl` | Apache SSL logs |
-| Arista WIPS Sensor | `arista_wips_sensor` | Arista WIPS sensor / AP device logs: sensord cloud uplink, CLI audit, and client Wi-Fi session events (AirTight SpectraGuard / Mojo lineage) |
+| Arista EOS | `arista_eos` | Arista EOS switch syslog: LLDP neighbor added / timed-out events (asset discovery) |
+| Arista WIPS Sensor | `arista_wips_sensor` | Arista WIPS sensor / AP device logs: sensord cloud uplink, CLI audit, client Wi-Fi session events, and the AP firmware |
 | Arista Wireless | `arista_wireless` | Arista Wireless logs |
 | Aristaflowcontrol | `aristaflowcontrol` | Aristaflowcontrol logs |
 | Attaris Gateway | `attarrisgateway` | Attaris Gateway logs |
@@ -110,6 +120,7 @@ This catalog is generated from the registries of release 1.1.5 itself and lists 
 | Barracuda ESS | `barracuda_ess` | Barracuda Email Security Service logs |
 | Barracuda WAF | `barracudawaf` | Barracuda Web Application Firewall logs |
 | Barracuda WAF RFC Logs | `barracuda_waf_rfc` | Barracuda Web Application Firewall logs (RFC format) |
+| Benign / Infrastructure Chatter | `benign` | Allowlist-only catch-all for structurally-benign infrastructure chatter — successful heartbeats/keepalives (Keepalived VRRP steady state, wd_keepalive watchdog ticks) and health probes (kube-probe, ELB-HealthChecker, GoogleHC) with a success outcome. Classifies them as message_type=benign so they leave the unknown stream; never claims failures or state transitions. |
 | Beyond Trust | `beyond_trust` | Beyond Trust logs |
 | Beyond Trust LWSMD | `beyond_trust_lwsmd` | Beyond Trust LWSMD logs |
 | BIND | `bind` | BIND DNS server logs |
@@ -149,6 +160,7 @@ This catalog is generated from the registries of release 1.1.5 itself and lists 
 | Cisco VCS | `cisco_vcs` | Cisco VCS logs |
 | Cisco WLAN Controller | `cisco_wireless_lan_controller` | Cisco Wireless LAN Controller logs |
 | Cisco WSA | `cisco_wsa` | Cisco Web Security Appliance logs |
+| Cloudflare | `cloudflare` | Cloudflare account audit logs and WAF/firewall events (API pull records) |
 | CloudInit | `cloud_init` | CloudInit logs |
 | CMAEventD | `cmaeventd` | CMAEventD logs |
 | Connection ID | `connectionid` | Connection ID logs |
@@ -168,7 +180,9 @@ This catalog is generated from the registries of release 1.1.5 itself and lists 
 | Docker Compose | `docker-compose` | Docker Compose logs |
 | Dockerd | `dockerd` | Dockerd logs |
 | DPKG | `dpkg` | Debian Package logs |
+| Dragos Platform | `dragos_platform` | Dragos Platform (OT network monitoring) notifications, CEF over syslog |
 | Drupal | `drupal` | Drupal logs |
+| Druva | `druva` | Druva Cyber Resilience (Realize) events |
 | Ericsson Security Manager | `ericssonsecuritymanager` | Ericsson Security Manager logs |
 | F5 APMD | `f5apmd` | F5 APMD logs |
 | F5 ASM | `f5asm` | F5 Application Security Manager logs |
@@ -182,6 +196,7 @@ This catalog is generated from the registries of release 1.1.5 itself and lists 
 | Fail2Ban Actions | `fail2banactions` | Fail2Ban Actions logs |
 | Fail2Ban Filter | `fail2banfilter` | Fail2Ban Filter logs |
 | FortiGate | `fortigate` | FortiGate firewall logs |
+| FortiGate (CEF) | `fortigate_cef` | FortiGate logs sent in CEF format over syslog |
 | General | `general` | General log formats |
 | General Info | `general_info` | General informational logs |
 | Generic Log | `generic_log` | Generic Log logs |
@@ -217,17 +232,22 @@ This catalog is generated from the registries of release 1.1.5 itself and lists 
 | Microsoft Entra Sign-In | `microsoft_entra_signin` | Microsoft Entra ID Sign-In logs |
 | Microsoft Intune | `microsoft_intune` | Microsoft Intune managed-device & detected-app inventory (CSC8 2/4) |
 | Microsoft Secure Score | `microsoftsecurescore` | Microsoft Graph security secureScores posture snapshots |
+| MS Defender Linux Installer | `microsoft_defender_linux_installer` | Microsoft Defender for Endpoint on Linux package installer / uninstaller script logs |
 | MS Defender Office365 | `microsoft_defender_office365` | Microsoft Defender Office365 logs |
 | MS Defender Vuln Mgmt | `microsoft_defender_vuln` | Microsoft Defender Vulnerability Management per-device CVE assessment rows (CSC8 control 7) |
 | Multipart Message | `multipartmessage` | Multipart Message logs |
 | Multipathd | `multipathd` | Multipathd logs |
 | Netfilter | `netfilter` | Netfilter logs |
+| Netfilter LOG (iptables) | `netfilter_log` | Linux netfilter/iptables kernel LOG lines |
+| NetFlow / IPFIX (binary) | `netflow_binary` | Binary NetFlow v5/v7/v9 + IPFIX conversation summaries (wf_flow envelope from the UDP/2055 collector) |
 | Netscaler | `netscaler` | Netscaler logs |
 | NetworkManager | `networkmanager` | NetworkManager logs |
+| Nozomi Networks N2OS | `nozomi_n2os` | Nozomi Networks Guardian / CMC (N2OS) CEF over syslog: alert, audit and health events (OT/ICS network monitoring) |
 | NTPD | `ntpd` | Network Time Protocol Daemon logs |
 | Okta | `okta` | Okta System Log identity events and user-directory records (API pull / raw JSON) |
 | OpenSSH SFTP | `opensshsftp` | OpenSSH sftp-server subsystem file-transfer and session logs |
 | OpenVPN | `openvpn` | OpenVPN logs |
+| OpenWrt netifd | `netifd` | OpenWrt network interface daemon (netifd): device link up/down, interface state and DNS update lines |
 | OPNsense Firewall | `opnsense_firewall` | OPNsense Firewall logs |
 | OPNsense Firewall Status | `opnsense_firewall_status` | OPNsense Firewall Status logs |
 | OSSEC | `ossec` | OSSEC logs |
@@ -300,6 +320,8 @@ This catalog is generated from the registries of release 1.1.5 itself and lists 
 | VMware ESXi addvob | `vmwareaddvob` | VMware ESXi addvob (VMkernel Observation injector) host logs |
 | VMware ESXi Update | `vmware_esxupdate` | VMware ESXi Update logs |
 | VMware NSX Config Agent | `vmwarensxcfgagent` | VMware NSX config agent (cfgAgent) logs |
+| VMware NSX Context Multiplexer | `vmwarensxcontextmux` | VMware NSX Guest Introspection / Endpoint Security multiplexer (ContextMux, EPSEC) guest connection logs from ESXi hosts |
+| VMware NSX Datastore (CorfuDB) | `vmwarensxcorfu` | VMware NSX manager datastore (CorfuDB, corfu) service logs, including inbound connection and TLS handshake failures |
 | VMware NSX Exporter | `vmwarensxexporter` | VMware NSX host aggregation/fabric exporter (nsx-exporter) logs |
 | VMware NSX Firewall | `vmwarensxfirewall` | VMware NSX Firewall logs |
 | VMware NSX Manager | `vmwarensx` | VMware NSX manager/CCP (NSX app-name) logs |
@@ -311,16 +333,19 @@ This catalog is generated from the registries of release 1.1.5 itself and lists 
 | VMware NSX SFHC | `vmwarensxsfhc` | VMware NSX Service Fabric Host Component lifecycle logs |
 | VMware NSX SHA | `vmwarensxsha` | VMware NSX system health agent (nsx-sha) logs |
 | VMware NSX SHA Python | `vmwarensxshapython` | VMware NSX system health agent python plugins (nsx-sha-python) logs |
+| VMware NSX vDPI | `vmwarensxvdpi` | VMware NSX layer-7 deep packet inspection engine (nsx-vdpi) logs from ESXi transport nodes |
 | VMware NSX-T MP Service | `vmwarensxmpservice` | VMware NSX-T Manager RPC/aggregation service logs |
 | VMware Reverse HTTP Proxy | `rhttpproxy` | VMware Reverse HTTP Proxy (rhttpproxy) logs |
 | VMware Tools | `vmware_tools` | VMware Tools logs |
 | VMware vCenter Appliance Management | `vmwareapplmgmt` | VMware vCenter Server Appliance Management Service (applmgmt_vmonsvc) logs |
 | VMware vCenter Lookup Service | `vmwarevclookupsvc` | VMware vCenter Lookup Service (lookupsvc-lookupserver) logs |
 | VMware vCenter Server | `vmwarevcenter` | VMware vCenter Server daemon logs |
-| VMware vCenter SSO STS Service | `vmwareidentitysts` | VMware vCenter Single Sign-On Security Token Service (STS) service logs |
+| VMware vCenter SSO STS Service | `vmwareidentitysts` | VMware vCenter Single Sign-On Security Token Service (STS) service logs, and web SSO (sso-websso) login-flow logs and SSO audit events (login, failed login, logout) |
 | VMware VGAUTH | `vmware_vgauth` | VMware VGAUTH logs |
 | VMware Vpxa (ESXi Agent) | `vcenter` | VMware Vpxa ESXi host agent logs |
 | VMware VPXD | `vmwarevpxd` | VMware vCenter Server VPXD daemon logs |
+| VMware vSphere Client Data Service | `vmwareuidataservice` | VMware vCenter Server Appliance vSphere Client data service (ui-dataservice) logs |
+| VMware vSphere Lifecycle Manager | `vmwarevlcm` | VMware vCenter Server Appliance vSphere Lifecycle Manager (vlcm-vlcm) service logs |
 | VMware vSphere SSO | `vmware_vsphere_sso` | VMware vCenter Single Sign-On (STS) authentication |
 | VMware vSphere SSO Tomcat Access | `vmwaressotomcat` | VMware vCenter Single Sign-On Tomcat localhost access logs (STS / sso-adminserver HTTP requests) |
 | Vmwarensxavim | `vmwarensxavim` | Vmwarensxavim logs |
@@ -337,6 +362,7 @@ This catalog is generated from the registries of release 1.1.5 itself and lists 
 | Windows Security Audit XML | `windowssecurityauditxml` | Windows Security Audit XML logs |
 | Winlogbeat | `winlogbeat` | Winlogbeat logs |
 | Winlogbeat ECS | `winlogbeat_ecs` | Elastic winlogbeat ECS JSON (Windows Event Log) |
+| WitFoo Agent Helper | `witfoowfadhelper` | WitFoo agent helper (wfad-helper) Intel support-job poll warnings — diagnostic drain |
 | WitFoo Console | `witfooconsole` | WitFoo Console appliance internal service chatter (Echo access logs, housekeeping) — diagnostic drain |
 | WordPress | `wordpress` | WordPress logs |
 | Xinetd | `xinetd` | Xinetd logs |

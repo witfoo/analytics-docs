@@ -65,7 +65,8 @@ WitFoo Analytics ingests security artifacts from your infrastructure, correlates
 | [Getting Started](getting-started/index.md) | Installation, first login, and architecture overview |
 | [Admin Guide](admin-guide/index.md) | User management, roles, permissions, and system settings |
 | [API Reference](api/index.md) | REST API documentation for 150+ endpoints |
-| [AI & MCP](ai/index.md) | AI assistant configuration and MCP server integration |
+| [What's New in 1.2.0](reference/upgrade-1.2.0.md) | Upgrade steps and changes in release 1.2.0; full history in the [Changelog](reference/changelog.md) |
+| [AI & MCP](ai/index.md) | AI assistant configuration, and connecting AI clients over MCP with personal keys, app sign-in or the relay |
 | [Deployment](deployment/index.md) | Docker Compose, WFA, TLS, and monitoring setup |
 | [Conductor Integrations](conductor/integrations/index.md) | Setup guides for the supported pull connectors (every integration is listed in the [Integration Catalog](reference/integration-catalog.md)) |
 | [Reference](reference/index.md) | Permissions matrix, environment variables, and schema |

@@ -9,7 +9,8 @@ WitFoo Conductor collects security log data from cloud platforms, endpoints,
 identity providers, email security, network infrastructure, and more through
 **pull-based API integrations**. The Signal Client service polls each
 vendor's API on a configurable schedule and publishes artifacts to the
-processing pipeline.
+processing pipeline. The [Integration Catalog](../../reference/integration-catalog.md)
+lists every pull connector, parser and exporter in this release.
 
 !!! info "Looking for log shippers / agents?"
     For **push-based** collection from Elastic Beats agents
@@ -20,6 +21,10 @@ processing pipeline.
 
     Security platforms that push **syslog**, such as Nozomi Networks and
     Dragos, have their own [Syslog Sources](../syslog/index.md) guides.
+
+    Routers, switches and firewalls that export **NetFlow or IPFIX** send to
+    the NetFlow/IPFIX collector on UDP 2055; see
+    [Log Server Configuration](../ui/log-servers.md).
 
 ## Quick Start
 
@@ -56,6 +61,10 @@ processing pipeline.
 | Google Cloud SCC | Service Account JSON | [Enable →](gcp-scc.md) |
 | Wiz | OAuth2 Client Credentials | [Enable →](wiz.md) |
 | Oracle Cloud (OCI) | API Key (RSA Signing) | [Enable →](oci-cloud.md) |
+| AWS VPC Flow Logs | IAM Access Key | [Enable →](aws-vpc-flow-logs.md) |
+| Azure VNet Flow Logs | Microsoft Entra app or Storage SAS token | [Enable →](azure-vnet-flow-logs.md) |
+| GCP VPC Flow Logs | Service Account JSON | [Enable →](gcp-vpc-flow-logs.md) |
+| OCI VCN Flow Logs | API Key (RSA Signing) | [Enable →](oci-vcn-flow-logs.md) |
 
 ### Network Security
 
@@ -68,6 +77,7 @@ processing pipeline.
 | Fortinet FortiAnalyzer | Session Token | [Enable →](fortianalyzer.md) |
 | Zscaler ZIA | API Key + Session Cookie | [Enable →](zscaler-zia.md) |
 | Darktrace | HMAC Token | [Enable →](darktrace.md) |
+| Cloudflare | API Token (scoped) | [Enable →](cloudflare.md) |
 
 ### Identity & Access
 
@@ -105,6 +115,8 @@ processing pipeline.
 | Druva | Client ID + Secret | [Enable →](druva.md) |
 | LimaCharlie | API Key | [Enable →](limacharlie.md) |
 | Netskope | API Token (v1/v2) | [Enable →](netskope.md) |
+| SNMP Monitoring Poller | SNMP v2c community or v3 user | [Enable →](snmp-poll.md) |
+| HTTP/HTTPS Monitor | None | [Enable →](http-poll.md) |
 
 ### Vulnerability Management
 
@@ -119,11 +131,15 @@ All integrations share these common behaviors:
 
 - **Polling Interval** — Built into each connector and not configurable; each
   guide lists its connector's interval. Splunk is the exception: its form has a
-  **Poll Interval** field (seconds)
+  **Poll Interval** field (seconds). The SNMP Monitoring Poller and HTTP/HTTPS
+  Monitor set an interval for each target
 - **Checkpoint Tracking** — Signal Client resumes from the last successful
   position after restarts, avoiding duplicate collection
 - **Rate Limiting** — Built-in respect for vendor API quotas with exponential
   backoff on HTTP 429 responses
+- **Retries** — A transient failure is re-attempted after 5, 10, 20, 40, then
+  60 seconds; a failure that waiting cannot fix (a credential, a setting or an
+  endpoint) is retried after 15 minutes
 - **Enable/Disable** — Each integration can be toggled without removing its
   configuration
 

@@ -80,8 +80,8 @@ On first login to an Analytics node, a full-screen onboarding wizard guides you 
 !!! tip "Configure Integrations After Onboarding"
     Once onboarding is complete, connect your security tools using the
     [Integration Enablement Guides](../conductor/integrations/index.md).
-    39 vendor integrations are supported across endpoint, cloud, network,
-    identity, email, SIEM, infrastructure, and vulnerability categories.
+    The [Integration Catalog](../reference/integration-catalog.md) lists every
+    integration an operator can enable in this release.
 
 ---
 
@@ -256,14 +256,17 @@ Configure the AI assistant for natural language investigation queries and automa
 
 | Field | Description |
 |-------|-------------|
-| **AI Provider** | Select from Anthropic, OpenAI, or Google |
-| **API Key** | Your API key for the selected provider |
-| **Model** | Specific model to use (e.g., `claude-sonnet-4-20250514`, `gpt-4o`) |
-| **Temperature** | Response creativity (0.0 = deterministic, 1.0 = creative) |
-| **Max Tokens** | Maximum response length |
+| **AI Provider** | Disabled (no AI), Anthropic Claude, OpenAI, Google Gemini, IBM watsonx.ai, or Ollama (Local) |
+| **API Key** | Your API key for the selected provider (not asked for Ollama) |
+| **Model ID** | The model to use; the field suggests a default for each provider |
+| **Base URL** | Ollama only: the address of the Ollama server (default `http://localhost:11434`) |
+| **Max Tokens** | Maximum response length (default 4096) |
+| **Temperature** | Response creativity, from 0 to 2 (default 0.7) |
+
+Ollama runs on your own network, so the whole AI loop stays local; it suits air-gapped deployments.
 
 !!! tip "AI API Keys"
-    AI features require an API key from a supported provider. Your API key is encrypted at rest and never shared. You can change providers or disable AI at any time from **Admin > AI Settings**.
+    The cloud providers need an API key. Your API key is encrypted at rest and never shared. You can change providers or disable AI at any time from **Settings > General Settings > AI Setup**.
 
 ### Step 11: Summary
 

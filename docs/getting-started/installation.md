@@ -2,6 +2,9 @@
 
 This guide covers deploying a WitFoo Appliance (WFA) — the production deployment method for WitFoo Analytics. The WFA daemon manages containers, configuration, and lifecycle for all node roles.
 
+!!! tip "Upgrading an existing deployment?"
+    Read [Upgrading to 1.2.0](../reference/upgrade-1.2.0.md) before you upgrade. It gives the order for WFA appliances and the steps that need action.
+
 ## Prerequisites
 
 - Network access to the target host via SSH (port 22) and HTTPS (port 443)
@@ -10,18 +13,18 @@ This guide covers deploying a WitFoo Appliance (WFA) — the production deployme
 
 ### Hardware Requirements
 
-| Tier | CPU Cores | RAM | Disk |
-|------|-----------|-----|------|
-| **Minimum** | 8 | 12 GB | 220 GB |
-| **Recommended** | 16 | 32 GB | 1 TB |
-
-#### Per-Role Minimums
+Each role has its own minimum RAM and CPU (logical CPUs), which the configuration wizard checks:
 
 | Role | CPU (min) | RAM (min) | Disk (min) |
 |------|-----------|-----------|------------|
-| Conductor | 4 | 8 GB | 220 GB |
-| Console | 4 | 8 GB | 220 GB |
-| Analytics | 8 | 12 GB | 220 GB |
+| Analytics AIO + Conductor | 6 | 28 GB | 200 GB |
+| Analytics AIO | 4 | 20 GB | 200 GB |
+| Analytics Processing Node | 2 | 6 GB | 100 GB |
+| Analytics Data Node | 2 | 12 GB | 500 GB |
+| Conductor | 2 | 8 GB | — |
+| Console | 1 | 4 GB | — |
+
+For production, 16 CPU cores, 32 GB RAM and 1 TB of disk is recommended. See [WFA Deployment](../deployment/wfa.md) for details.
 
 ## Installation Overview
 
@@ -75,7 +78,7 @@ WitFoo Appliances are available on major cloud marketplaces:
 4. Connect via SSH using your cloud provider's key pair or the default credentials.
 
 !!! tip "Cloud Instance Sizing"
-    For an Analytics node, start with at least 8 vCPUs and 12 GB RAM. For production workloads, 16 vCPUs and 32 GB RAM with 1 TB disk is recommended.
+    An Analytics AIO + Conductor node needs at least 6 vCPUs and 28 GB RAM; an Analytics AIO node needs at least 4 vCPUs and 20 GB RAM. For production workloads, 16 vCPUs and 32 GB RAM with 1 TB disk is recommended.
 
 ### Option C: Bare Metal
 
@@ -117,7 +120,7 @@ Once the appliance is deployed, run the interactive configuration wizard to sele
 sudo wfa configure
 ```
 
-The wizard walks you through organization setup, role selection, licensing, networking, and optional features. It generates the configuration file at `/witfoo/configs/node.json`.
+The wizard walks you through licensing, product and role selection, networking, certificates, the administrator account, and optional features. Your organization is taken from the license. It generates the configuration file at `/witfoo/configs/node.json`.
 
 For a detailed walkthrough of every prompt and option, see [WFA Configure Wizard](wfa-configure.md).
 
@@ -131,16 +134,19 @@ After configuration completes, the WFA daemon starts all services for your selec
     https://<appliance-ip>
     ```
 
-2. Log in with the default web UI credentials:
+2. Log in with the web UI administrator account:
     - **Email:** `admin@witfoo.com`
-    - **Password:** `F00theN0ise!`
+    - **Password:** `F00theN0ise!`, the shipped default, unless WFA has already applied the password from the wizard's Admin Account step (below)
 
-3. Complete the 12-step onboarding wizard to configure your organization, users, and integrations.
+3. Complete the onboarding wizard to configure your organization, users, and integrations.
 
 See [First Login](first-login.md) for detailed instructions on the onboarding process.
 
 !!! danger "Change Default Passwords"
     Both the SSH and web UI default passwords must be changed immediately after first login. See [First Login](first-login.md) for instructions.
+
+!!! info "WFA 2.5.1 and later may set the administrator password"
+    On the first start of WFA 2.5.1 or later, if `admin@witfoo.com` still has the shipped default password and the password file from the wizard's **Admin Account** step is still on the node, WFA applies that password to the account. If you cannot sign in, run `sudo wfa user-reset` on the node. See [WFA Configure Wizard](wfa-configure.md).
 
 ## Verifying the Installation
 
@@ -150,7 +156,7 @@ After completing configuration, verify that services are running:
 sudo wfa analytics status
 ```
 
-This command lists all expected services and their current state. All services should report as running within a few minutes of configuration completing.
+This command lists the services the role runs. To see their state, run `sudo wfa status` and `sudo docker ps`. All services should be running within a few minutes of configuration completing.
 
 !!! tip "Cassandra Startup Time"
     The Cassandra database may take 2–5 minutes to fully initialize on first boot. Other services will wait for Cassandra before becoming available.
@@ -161,6 +167,7 @@ This command lists all expected services and their current state. All services s
 - [Walk through the configure wizard](wfa-configure.md) in detail
 - [Complete first login and onboarding](first-login.md)
 - [Understand the architecture](architecture.md)
+- [Upgrade an existing deployment to 1.2.0](../reference/upgrade-1.2.0.md)
 
 ---
 

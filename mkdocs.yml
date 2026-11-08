@@ -110,13 +110,13 @@ nav:
       - Deployment Roles: getting-started/deployment-roles.md
   - User Guide:
       - user-guide/index.md
-      - Monitor: user-guide/monitor.md
       - Signals:
           - user-guide/signals/index.md
           - Search: user-guide/signals/search.md
           - Lead Rules: user-guide/signals/lead-rules.md
           - Classification Rules: user-guide/signals/classification-rules.md
           - Enrichment Settings: user-guide/signals/enrichment-settings.md
+          - Vrax Threat Intelligence: user-guide/signals/vrax.md
       - Graph:
           - user-guide/graph/index.md
           - Nodes: user-guide/graph/nodes.md
@@ -206,9 +206,15 @@ nav:
       - MCP Server:
           - ai/mcp/index.md
           - Architecture: ai/mcp/architecture.md
-          - Configuration: ai/mcp/configuration.md
+          - Turning MCP On: ai/mcp/configuration.md
+          - Authentication & Permissions: ai/mcp/authentication.md
+          - Personal Keys: ai/mcp/personal-keys.md
+          - App Sign-in (OAuth 2.1): ai/mcp/oauth.md
+          - Licensing: ai/mcp/licensing.md
+          - Exposure Listener (Port 8444): ai/mcp/exposure-listener.md
+          - AI-Connector Relay: ai/mcp/relay.md
+          - Connecting AI Clients & Marketplaces: ai/mcp/connect-clients.md
           - Tools: ai/mcp/tools.md
-          - Authentication: ai/mcp/authentication.md
           - Errors: ai/mcp/errors.md
   - Deployment:
       - deployment/index.md
@@ -256,6 +262,10 @@ nav:
               - Google Cloud SCC: conductor/integrations/gcp-scc.md
               - Wiz: conductor/integrations/wiz.md
               - Oracle Cloud (OCI): conductor/integrations/oci-cloud.md
+              - AWS VPC Flow Logs: conductor/integrations/aws-vpc-flow-logs.md
+              - Azure VNet Flow Logs: conductor/integrations/azure-vnet-flow-logs.md
+              - GCP VPC Flow Logs: conductor/integrations/gcp-vpc-flow-logs.md
+              - OCI VCN Flow Logs: conductor/integrations/oci-vcn-flow-logs.md
           - Network Security:
               - Cisco Meraki: conductor/integrations/cisco-meraki.md
               - Cisco Umbrella: conductor/integrations/cisco-umbrella.md
@@ -264,6 +274,7 @@ nav:
               - Fortinet FortiAnalyzer: conductor/integrations/fortianalyzer.md
               - Zscaler ZIA: conductor/integrations/zscaler-zia.md
               - Darktrace: conductor/integrations/darktrace.md
+              - Cloudflare: conductor/integrations/cloudflare.md
           - Identity & Access:
               - Cisco Duo: conductor/integrations/cisco-duo.md
               - Okta: conductor/integrations/okta.md
@@ -285,6 +296,8 @@ nav:
               - Druva: conductor/integrations/druva.md
               - LimaCharlie: conductor/integrations/limacharlie.md
               - Netskope: conductor/integrations/netskope.md
+              - SNMP Monitoring Poller: conductor/integrations/snmp-poll.md
+              - HTTP/HTTPS Monitor: conductor/integrations/http-poll.md
           - Vulnerability Management:
               - Tenable: conductor/integrations/tenable.md
               - Qualys: conductor/integrations/qualys.md
@@ -335,4 +348,5 @@ nav:
       - Cassandra Schema: reference/cassandra-schema.md
       - Software License Agreement (U.S.A.): reference/eula-usa.md
       - Software License Agreement (New Zealand): reference/eula-nz.md
+      - Upgrading to 1.2.0: reference/upgrade-1.2.0.md
       - Changelog: reference/changelog.md

@@ -1,9 +1,11 @@
 # Authentication
 
-Configure authentication methods for WitFoo Analytics. Navigate to **Admin** > **Settings** > **Authentication** to manage these settings. Requires `settings:manage` permission.
+Configure authentication methods for WitFoo Analytics. Open **Settings** (the gear icon in the page header) > **General Settings** > **Authentication**. Requires the `settings:manage` permission.
+
+SAML and LDAP settings are saved and read only on this page. The general system settings API (`PUT /api/v1/settings`) neither saves nor returns them.
 
 !!! warning "Encryption Required"
-    LDAP and SAML credentials are encrypted at rest using AES-256-GCM. Set the `AUTH_CONFIG_ENCRYPTION_KEY` environment variable before configuring external authentication.
+    LDAP bind passwords and SAML private keys are encrypted at rest with XChaCha20-Poly1305, under a per-organization key derived from `AUTH_CONFIG_ENCRYPTION_KEY`. Values written by releases before the cipher change were sealed with AES-256-GCM and are still read. On a WFA-managed appliance WFA supplies the key; do not edit it. On Docker Compose or a standalone stack the key is required from 1.2.0: see [Upgrading to 1.2.0](../../reference/upgrade-1.2.0.md).
 
 ## Local Authentication
 
@@ -86,7 +88,7 @@ WitFoo can automatically generate a service provider key pair for SAML request s
 
 - **Algorithm**: RSA 2048-bit
 - **Output**: PEM-encoded private key and self-signed X.509 certificate
-- **Endpoint**: `POST /v1/admin/settings/auth/saml/generate-keypair`
+- **Endpoint**: `POST /api/v1/admin/settings/auth/saml/generate-keypair` (the request names the `entity_id`)
 - **Usage**: The generated key pair is used to sign SAML authentication requests sent to the IdP
 
 The generated certificate can be uploaded to your identity provider's service provider configuration.
@@ -95,9 +97,9 @@ The generated certificate can be uploaded to your identity provider's service pr
 
 If your identity provider publishes a metadata URL, WitFoo can automatically fetch and parse it:
 
-- **Endpoint**: `POST /v1/admin/settings/auth/saml/fetch-metadata`
+- **Endpoint**: `POST /api/v1/admin/settings/auth/saml/fetch-metadata`
 - **Input**: IdP metadata URL
-- **Output**: Extracted SSO URL, Entity ID, and X.509 certificate
+- **Output**: Extracted SSO URL, SLO URL, and X.509 certificate
 
 This eliminates manual copy-paste of IdP configuration values.
 
@@ -107,13 +109,13 @@ Before saving, validate your SAML configuration using the built-in test endpoint
 
 | Check | Description |
 | --- | --- |
-| **Certificate Validity** | Verifies the IdP certificate is valid, not expired, and properly formatted |
-| **SSO URL Reachability** | Confirms the SSO endpoint is reachable via HTTPS |
-| **SP Key Pair Consistency** | Validates that the SP private key matches the SP certificate |
-| **Attribute Mapping** | Confirms required attributes (email) are mapped |
+| `certificate_valid` | The IdP certificate is PEM, parses as X.509, and has not expired |
+| `key_pair_match` | The SP private key matches the SP certificate (or the IdP certificate when no SP certificate is given) |
+| `metadata_fetchable` | The IdP metadata URL answers `200`; skipped when no metadata URL is set |
+| `sp_build_successful` | A service provider can be built from the configuration |
 
-- **Endpoint**: `POST /v1/admin/settings/auth/saml/test`
-- **Response**: `SAMLTestResult` with pass/fail status for each check and descriptive messages
+- **Endpoint**: `POST /api/v1/admin/settings/auth/saml/test`
+- **Response**: an overall `status` (`success`, `partial` or `failed`) and a pass/fail result with a message for each check
 
 !!! example "Test Before Save"
     Always run the SAML configuration test before saving. A misconfigured SAML setup can lock all users out of the system if running in SAML-only mode.
@@ -163,6 +165,56 @@ If all users are locked out due to SAML misconfiguration:
 
 1. Access the login page with `?auth_fallback=true` parameter
 2. Log in with a local administrator account
-3. Navigate to **Admin** > **Settings** > **Authentication**
+3. Open **Settings** > **General Settings** > **Authentication**
 4. Switch to `mixed_saml` mode or fix the SAML configuration
 5. Run the configuration test to validate before saving
+
+## Platform administrators and single sign-on
+
+From 1.2.0, an organization's SAML identity provider and LDAP directory cannot sign in a platform administrator by default. A platform administrator is an account with the platform-administrator flag, or with a role that holds a `platform:` permission, such as the built-in Platform Admin role. A refused SAML sign-in returns to the login page with "Your account cannot sign in right now. Contact your administrator." Local password sign-in is not affected.
+
+The appliance operator can exempt **one** organization, normally their own, with a file on the node that runs `analytics-api-svc`:
+
+| Setting | Value |
+| --- | --- |
+| File | `/witfoo/configs/operator-identity-org` |
+| Owner and mode | `root:root`, `0644` |
+| Content | One organization ID and nothing else |
+| Read | Once, when `analytics-api-svc` starts |
+
+To set it, as root on that node:
+
+```bash
+printf '%s\n' <org-id> > /witfoo/configs/operator-identity-org
+chown root:root /witfoo/configs/operator-identity-org && chmod 0644 /witfoo/configs/operator-identity-org
+docker restart analytics-api-svc
+docker logs --since 5m analytics-api-svc 2>&1 | grep 'Operator identity organization'
+```
+
+When the file is valid, the api logs `Operator identity organization in force` with the organization's ID. A file it cannot use exempts nothing and logs `[ERROR] /configs/operator-identity-org cannot be used`. To remove the exemption, delete the file and restart `analytics-api-svc`.
+
+What the exemption allows:
+
+- **SAML:** the organization's identity provider can sign in its platform administrators, whatever the organization ID is.
+- **LDAP:** only when the organization ID equals the first label of the account's mail domain. For example, `holder@example.com` signs in to the organization `example`. For any other organization ID, use SAML for these accounts.
+- While the file names an organization, only a platform administrator can change that organization's SAML or LDAP settings. Anyone else is refused with `403` `platform_admin_required`.
+
+## When a person has no account
+
+The analytics server does not create accounts at the first SSO sign-in. A person who signs in through SAML and has no account here, or whose identity provider sends a different email address than the account holds, is told that an administrator must create the account first and that the address must match. Create the account under **Settings** > **User Management** with the same email address the identity provider sends.
+
+## Public self-registration
+
+Public self-registration is off by default. Two environment variables on the api control it:
+
+| Variable | Default | Description |
+| --- | --- | --- |
+| `AUTH_PUBLIC_REGISTRATION_ENABLED` | `false` | Turns on `POST /api/v1/auth/register`. It gives the same answer whether or not an account is created, and allows 10 requests an hour per client |
+| `AUTH_PUBLIC_REGISTRATION_DOMAINS` | (empty) | Comma-separated `<email-domain>=<org_id>` pairs, for example `example.com=acme,corp.example.org=globex` |
+
+How registration behaves in 1.2.0:
+
+- An account is created only when `AUTH_PUBLIC_REGISTRATION_DOMAINS` maps the address's domain to an organization. Domains are matched exactly, with no subdomain or wildcard match.
+- The organization a registration request names is ignored. The email domain chooses the organization.
+- **Fail-closed:** one malformed entry rejects the whole map. The api logs one `[ERROR]` naming the entry's position, and registration creates no account until the map is fixed.
+- The address is not verified, so every account created this way is **inactive**. An administrator must enable it (**Settings** > **User Management** > **Enable**) before the person can sign in.

@@ -4,19 +4,30 @@ WitFoo Analytics is a containerized security analytics platform deployed via Doc
 
 ## Supported Environments
 
-| OS | Version | Architecture | Status |
+| OS | Version | Architecture | WFA package |
 |---|---|---|---|
-| Ubuntu | 22.04 LTS | amd64 | Fully supported |
-| Ubuntu | 24.04 LTS | amd64 | Fully supported |
+| Ubuntu | 24.04 LTS | amd64 | `.deb` |
+| Red Hat Enterprise Linux | 9 | amd64 | `.rpm` |
+| Red Hat Enterprise Linux | 10 | amd64 | `.rpm` |
 
 !!! warning "Hardware Requirements"
-    Minimum hardware depends on the deployment role. See the [WFA Deployment](wfa.md) page for per-role specifications. All-in-One deployments require at least 8 CPU cores, 32 GB RAM, and 500 GB SSD storage.
+    Minimum hardware depends on the deployment role. See the [WFA Deployment](wfa.md) page for per-role specifications. An Analytics AIO + Conductor node needs at least 6 CPUs, 28 GB RAM and 200 GB of disk; an Analytics AIO node needs at least 4 CPUs, 20 GB RAM and 200 GB of disk.
+
+## Upgrading to 1.2.0
+
+Release 1.2.0 has steps to take before you upgrade:
+
+- **Docker Compose and standalone stacks** must set `AUTH_CONFIG_ENCRYPTION_KEY`, the key that seals stored secrets. No default ships, and every `docker compose` command refuses to run until it is set.
+- **WFA-managed appliances** update the Analytics images to 1.2.0 first, then install WFA 2.5.4 (or 2.5.3, which shipped with 1.2.0) soon after. On an appliance WFA owns the encryption key, so do not edit it by hand.
+- **Separate Conductor nodes** are upgraded with Analytics or before it.
+
+See [Upgrading to 1.2.0](../reference/upgrade-1.2.0.md) for every step and the known limitations.
 
 ## Deployment Methods
 
 ### Docker Compose
 
-The standard deployment method for development and production environments. Five compose files support different deployment topologies.
+The standard deployment method for development and production environments. Several compose files support different deployment topologies.
 
 ```bash
 # All-in-One (most common for single-node deployments)
@@ -30,10 +41,11 @@ See [Docker Compose Reference](docker-compose.md) for full details on all compos
 The WFA (WitFoo Appliance) CLI automates installation, configuration, and upgrades for appliance-based deployments.
 
 ```bash
-wfa analytics install --role analytics-aio
+sudo wfa configure
+sudo wfa analytics install
 ```
 
-See [WFA Deployment](wfa.md) for the interactive configuration wizard and all CLI commands.
+`wfa configure` asks for the role and writes the node's configuration; `wfa analytics install` checks the host against the role's minimum hardware. See [WFA Deployment](wfa.md) for the interactive configuration wizard and all CLI commands.
 
 ## Deployment Roles
 
@@ -42,7 +54,7 @@ WitFoo Analytics supports four deployment roles that scale from a single node to
 | Role | Description | Services | Use Case |
 |---|---|---|---|
 | **AIO** | All-in-One | 11 Analytics services | Single-node deployments |
-| **AIO + Conductor** | All-in-One with signal pipeline | 11 Analytics + 5 Conductor services | Single-node with log collection |
+| **AIO + Conductor** | All-in-One with signal pipeline | 11 Analytics services plus the Conductor services | Single-node with log collection |
 | **Data Node** | Cassandra storage node | Cassandra only | Distributed storage cluster |
 | **Processing Node** | Application services | 10 services (no local Cassandra) | Connects to external data nodes |
 
@@ -53,7 +65,7 @@ The AIO role runs all services on a single machine. This is the simplest deploym
 ```text
 Browser --> Reverse Proxy (443/8081) --> API (8080) --> Incident Engine (8082)
                                     --> UI (3000)
-                                    --> Dispatcher (8003)
+                                    --> Dispatcher (8003): /mcp, /ws/chat and the other WebSockets
 ```
 
 ### Distributed Architecture
@@ -71,6 +83,9 @@ Processing Node                    Data Node(s)
 +-------------------+
 ```
 
+!!! note "One Processing node per Data cluster"
+    One Analytics Processing node per organization and Data cluster is supported in 1.2.0.
+
 ## Service Overview
 
 WitFoo Analytics consists of the following core services:
@@ -80,8 +95,8 @@ WitFoo Analytics consists of the following core services:
 | **reverse-proxy** | 443, 8081 | HTTPS/HTTP entry point, routes to all backend services |
 | **api** | 8080 | REST API, authentication, user management |
 | **incident-engine** | 8082 | Incident analysis, work units, reporting |
-| **dispatcher** | 8003 | Background job orchestration |
-| **artifact-ingestion** | 8090 | Receives security artifacts via HTTP |
+| **dispatcher** | 8003 | WebSockets, the MCP endpoint and background job orchestration |
+| **artifact-ingestion** | 8090, 8443 | Receives security artifacts over HTTP (8090) and HTTPS (8443) |
 | **graph-processor** | -- | Background processor for graph node/edge creation |
 | **ui** | 3000 | Svelte 5 web application |
 | **cassandra** | 9042 | Primary data store (Cassandra 5.0) |
@@ -89,27 +104,37 @@ WitFoo Analytics consists of the following core services:
 | **prometheus** | 9090 | Metrics collection and storage |
 | **grafana** | 3001 | Metrics dashboards and visualization |
 
+On a WFA appliance running WFA 2.5.1 or later, the api (8080) and incident-engine (8082) ports are not published on the host, and NATS is published on `127.0.0.1` only. See [Architecture](../getting-started/architecture.md) for the published ports of each deployment.
+
 ## Quick Start
 
 1. Clone the repository and ensure Docker is installed.
 
-2. Start all services with the AIO compose file:
+2. Set `AUTH_CONFIG_ENCRYPTION_KEY` in the root `.env` file to a random 32-byte value, base64-encoded:
+
+    ```bash
+    openssl rand -base64 32
+    ```
+
+    The key is part of your data: back it up with the database and store the two apart. The provided launch scripts generate a key when none is set.
+
+3. Start all services with the AIO compose file:
 
     ```bash
     cd docker
     docker compose -f docker-compose.aio.yml up -d --build
     ```
 
-3. Wait for all health checks to pass (approximately 2-3 minutes):
+4. Wait for all health checks to pass (approximately 2-3 minutes):
 
     ```bash
     docker compose -f docker-compose.aio.yml ps
     ```
 
-4. Access the web UI at `https://localhost` or `http://localhost:8081`.
+5. Access the web UI at `https://localhost` or `http://localhost:8081`.
 
 !!! info "Default Credentials"
-    The default administrator account is `admin` / `F00theN0ise!`. Change this password immediately after first login.
+    The default administrator account is `admin@witfoo.com` / `F00theN0ise!`. Change this password immediately after first login.
 
 ## Production Readiness Checklist
 
@@ -123,8 +148,11 @@ Before deploying WitFoo Analytics to production, verify the following:
 
 ### Trusted Proxies
 
-- [ ] Set `WF_TRUSTED_PROXIES` environment variable with the comma-separated list of trusted proxy IPs for correct forwarded header processing
-- [ ] Verify `X-Forwarded-For`, `X-Forwarded-Proto`, and `X-Real-IP` headers are passed correctly
+- [ ] Declare each load balancer in front of the reverse proxy: `WF_TRUSTED_PROXIES` on Docker Compose (comma-separated addresses or CIDRs), or `trusted_proxies` in `node.json` on a WFA appliance (WFA 2.5.1 or later)
+- [ ] Make sure the load balancer sends `X-Forwarded-For` and `X-Forwarded-Proto`. The reverse proxy does not read `X-Real-IP`
+- [ ] On a WFA appliance, add `trusted_proxies` again after every `wfa configure` or `wfa fetch` re-run: a re-run writes `node.json` without it
+
+See [TLS Configuration](tls.md) for what the reverse proxy trusts when the list is unset.
 
 ### Security Headers
 
@@ -147,8 +175,8 @@ The reverse-proxy automatically applies 7 OWASP security headers to all response
 
 ### Network Hardening
 
-- [ ] Restrict internal service ports (8080, 8082, 8090, 4222, 9042) to the host or internal network only
-- [ ] Only expose the reverse-proxy port (443) externally
+- [ ] On Docker Compose, `INTERNAL_LISTEN_IP` (default `127.0.0.1`) publishes NATS, the api, incident-engine, the dispatcher, the UI, Prometheus and Grafana. `LISTEN_IP` still publishes Cassandra (9042, 9160), the artifact receiver (8090, 8443) and the edge (443, 8081), so restrict Cassandra's ports at the host firewall
+- [ ] Only expose the reverse-proxy port (443) to users, and the artifact receiver (8443) to your Conductors
 - [ ] Configure firewall rules to limit inter-node communication to required ports
 
 !!! warning "Environment Variables"
@@ -162,3 +190,4 @@ The reverse-proxy automatically applies 7 OWASP security headers to all response
 - [Monitoring](monitoring.md) -- Prometheus metrics, Grafana dashboards, and alerting
 - [TLS Configuration](tls.md) -- HTTPS setup and certificate management
 - [Conductor Pipeline](conductor.md) -- Log collection and signal processing
+- [Upgrading to 1.2.0](../reference/upgrade-1.2.0.md) -- Steps before and after the upgrade
