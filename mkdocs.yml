@@ -117,6 +117,7 @@ nav:
           - Lead Rules: user-guide/signals/lead-rules.md
           - Classification Rules: user-guide/signals/classification-rules.md
           - Enrichment Settings: user-guide/signals/enrichment-settings.md
+          - Vrax Threat Intelligence: user-guide/signals/vrax.md
       - Graph:
           - user-guide/graph/index.md
           - Nodes: user-guide/graph/nodes.md

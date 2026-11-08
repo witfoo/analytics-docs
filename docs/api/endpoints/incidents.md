@@ -1,14 +1,19 @@
 # Incidents
 
-Incidents represent correlated security events that require investigation. The incident engine aggregates related artifacts, nodes, and observations into actionable incidents with severity ratings and status tracking.
+Incidents represent correlated security events that require investigation. The UI shows them as work units. The incident engine aggregates related artifacts, nodes, and observations into actionable incidents with severity ratings and status tracking.
 
 ## Endpoints
 
 | Method | Path | Description | Permission |
-|--------|------|-------------|------------|
-| GET | `/v1/incidents` | List incidents with filters | `incidents:read` |
-| GET | `/v1/incidents/:id` | Get incident details | `incidents:read` |
-| PUT | `/v1/incidents/:id/status` | Update incident status | `incidents:write` |
+| --- | --- | --- | --- |
+| GET | `/v1/incidents` | List incidents with filters | `work_units:read` |
+| GET | `/v1/incidents/:id` | Get incident details | `work_units:read` |
+| GET | `/v1/incidents/:id/artifacts` | Get the incident's artifacts | Read access to the incident |
+| GET | `/v1/incidents/:id/graph/edges` | Get the incident's graph edges | Read access to the incident |
+| GET | `/v1/incidents/:id/notes` | List notes | `work_units:read` |
+| POST | `/v1/incidents/:id/notes` | Add a note | `work_units:write` |
+| GET | `/v1/incidents/:id/audit` | Get the audit log | `work_units:read` |
+| PUT | `/v1/incidents/:id/status-audit` | Update the status and record it in the audit log | `work_units:write` |
 
 ## Status Values
 
@@ -30,53 +35,35 @@ List incidents for the organization, with optional filtering and pagination.
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
-| `status` | integer | No | Filter by status ID (1-5) |
-| `severity` | string | No | Filter by severity (`low`, `medium`, `high`, `critical`) |
-| `start` | string | No | Start of time range (ISO 8601) |
-| `end` | string | No | End of time range (ISO 8601) |
-| `limit` | integer | No | Max results (default: 50, max: 1000) |
-| `offset` | integer | No | Pagination offset |
+| `status_id` | string | No | One status ID, or a comma-separated list of them (`status_id=4,5`). The parameter can also be repeated. |
+| `suspicion_level` | string | No | `low`, `medium` or `high`, or a comma-separated list of them (`suspicion_level=low,high`). The parameter can also be repeated. |
+| `severity_level` | integer | No | Severity level (1-10) |
+| `min_suspicion` | number | No | Minimum suspicion score |
+| `max_suspicion` | number | No | Maximum suspicion score |
+| `node_id` | string | No | Incidents that include a graph node |
+| `attack_technique_id` | string | No | Incidents that include a MITRE ATT&CK technique |
+| `client_ip` | string | No | Incidents that include a client IP address |
+| `limit` | integer | No | Max results (default 100, max 500) |
+| `offset` | integer | No | Pagination offset. `limit` plus `offset` may not exceed 10,000. |
+
+- A list of status IDs or suspicion levels returns incidents in **any** of them.
+- An empty entry (`4,,5`), a value that is not a positive integer, or a suspicion level other than the three is refused with a **400** that names the parameter.
+- A list of two or more statuses is read over the newest 10,000 incidents of the organization. When that read comes back full, the response sets `meta.capped: true`, a sign that older matches exist.
+- A `node_id`, `attack_technique_id` or `client_ip` filter reads only that item's newest incidents, up to `limit`, and `total` counts only those. Beside a status, severity or work definition filter, `meta.capped` is true when that read comes back full.
+- `time_start` and `time_end` are not filters of this route.
 
 ### Example Request
 
 ```bash
-curl -X GET "https://analytics.example.com/api/v1/incidents?status=1&limit=10" \
+curl -X GET "https://analytics.example.com/api/v1/incidents?status_id=1,2&suspicion_level=high&limit=10" \
   -H "Authorization: Bearer $TOKEN"
-```
-
-### Example Response
-
-```json
-{
-  "success": true,
-  "message": "OK",
-  "data": {
-    "incidents": [
-      {
-        "id": "d290f1ee-6c54-4b01-90e6-d701748f0851",
-        "org_id": "witfoo",
-        "title": "Suspicious Outbound Traffic Detected",
-        "severity": "high",
-        "status": 1,
-        "status_name": "New",
-        "artifact_count": 12,
-        "node_count": 3,
-        "created_at": "2026-02-14T08:15:00Z",
-        "updated_at": "2026-02-14T08:15:00Z"
-      }
-    ],
-    "total": 1,
-    "limit": 10,
-    "offset": 0
-  }
-}
 ```
 
 ---
 
 ## GET /v1/incidents/:id
 
-Retrieve full details for a single incident, including associated nodes and observations.
+Retrieve full details for a single incident.
 
 ### Path Parameters
 
@@ -91,73 +78,66 @@ curl -X GET "https://analytics.example.com/api/v1/incidents/d290f1ee-6c54-4b01-9
   -H "Authorization: Bearer $TOKEN"
 ```
 
-### Example Response
+---
 
-```json
-{
-  "success": true,
-  "message": "OK",
-  "data": {
-    "id": "d290f1ee-6c54-4b01-90e6-d701748f0851",
-    "org_id": "witfoo",
-    "title": "Suspicious Outbound Traffic Detected",
-    "severity": "high",
-    "status": 1,
-    "status_name": "New",
-    "artifact_count": 12,
-    "node_count": 3,
-    "nodes": [
-      {"id": "abc-123", "type": "IP", "value": "10.0.1.50"}
-    ],
-    "observations": [
-      {"id": "obs-456", "type": "network", "description": "C2 beacon pattern"}
-    ],
-    "created_at": "2026-02-14T08:15:00Z",
-    "updated_at": "2026-02-14T08:15:00Z"
-  }
-}
-```
+## GET /v1/incidents/:id/artifacts
+
+Return the incident's artifacts, oldest first. The work-unit detail page reads them once for its histogram, table and timeline.
+
+| Parameter | Type | Description |
+| --- | --- | --- |
+| `limit` | integer | Page size (default 500, max 1,000) |
+| `page` | integer | 1-based page number (default 1) |
+
+The incident is read first, so a caller can read only the artifacts of an incident it can already read. An unknown or another organization's ID answers **404**.
 
 ---
 
-## PUT /v1/incidents/:id/status
+## GET /v1/incidents/:id/graph/edges
 
-Update the status of an incident. Status transitions drive true positive and false positive classification.
-
-### Path Parameters
+Return the incident's graph edges with their time fields, ordered by when they started. Work-unit **Replay** uses this endpoint.
 
 | Parameter | Type | Description |
-|-----------|------|-------------|
-| `id` | UUID | Incident ID |
+| --- | --- | --- |
+| `limit` | integer | Page size (default 500, max 1,000) |
+| `page` | integer | 1-based page number (default 1) |
+
+The response carries `meta.truncated` when the edge set is incomplete: a very busy node, or an incident of more than 2,000 nodes, made the read stop short. The Replay view shows at most 600 nodes and says so when it leaves some out.
+
+---
+
+## PUT /v1/incidents/:id/status-audit
+
+Update the status of an incident and record the change in its audit log. Status transitions drive true positive and false positive classification.
 
 ### Request Body
 
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
-| `status` | integer | Yes | New status ID (1-5) |
+| `status_id` | integer | Yes | New status ID (1-5) |
 
 ### Example Request
 
 ```bash
-curl -X PUT "https://analytics.example.com/api/v1/incidents/d290f1ee-6c54-4b01-90e6-d701748f0851/status" \
+curl -X PUT "https://analytics.example.com/api/v1/incidents/d290f1ee-6c54-4b01-90e6-d701748f0851/status-audit" \
   -H "Authorization: Bearer $TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"status": 3}'
+  -d '{"status_id": 3}'
 ```
 
-### Example Response
+---
 
-```json
-{
-  "success": true,
-  "message": "Incident status updated to Resolved",
-  "data": {
-    "id": "d290f1ee-6c54-4b01-90e6-d701748f0851",
-    "status": 3,
-    "status_name": "Resolved"
-  }
-}
-```
+## Work Collections
+
+`POST` and `PUT` on `/v1/work-collections` change only what the request states.
+
+- Every member (`name`, `description`, `criteria` or `criteria_json`, `enabled`, `assigned_to`, `status_id`) is optional.
+- A member the body leaves out, or sets to null, keeps its stored value. A member it states, empty included, replaces it.
+- Members the server owns (counts, dates, creator, organization, ID) are ignored.
+- A collection created without `enabled` is stored disabled.
+- A request that states nothing, that states both `criteria` and `criteria_json`, or whose collection does not validate is a **400**.
+
+Reading collections needs `collections:read`; creating and changing them needs `collections:write`.
 
 ---
 
@@ -165,8 +145,8 @@ curl -X PUT "https://analytics.example.com/api/v1/incidents/d290f1ee-6c54-4b01-9
 
 | Status | Description |
 |--------|-------------|
-| 400 | Invalid status value or malformed UUID |
-| 401 | Missing or invalid JWT token |
+| 400 | A malformed parameter, ID or JSON body, or a negative `limit` or `offset`. The code is `invalid_parameter` and the response names the parameter. |
+| 401 | Missing or invalid token |
 | 403 | Insufficient permissions |
 | 404 | Incident not found |
 | 500 | Internal server error |

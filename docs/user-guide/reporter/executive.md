@@ -13,12 +13,21 @@ The Executive Summary provides high-level KPIs for security operations leadershi
 | **MTTD** | Mean time to detect | Avg time from first artifact to incident creation |
 | **MTTR** | Mean time to respond | Avg time from creation to resolution |
 
-## Dashboard Layout
+## Page Layout
 
-1. **KPI tiles** — Large-format cards with trend indicators
-2. **Incident timeline** — Bar chart of incident creation over time
-3. **Severity distribution** — Breakdown by Critical, High, Medium, Low, Info
-4. **Status distribution** — Current status of incidents in the period
+The Executive Summary page leads with key figures and has no gauges.
+
+1. **Key figures** — WitFoo Readiness, Return on Investment, FTE Headcount, FTE Ratio and Compliance, as large-format figures
+2. **Attainment vs Target** — Key figures against their targets
+3. **Executive Trends (Daily)** — Daily WitFoo Readiness, ROI and CSC compliance percentages across the selected window
+4. **Investigation Snapshot** — MTTD/MTTR metrics, closure rates, and analyst workload
+5. **Daily Incident Summary** — Incidents per day by status. Click a bar to drill into the underlying work units.
+6. **Analyst Workload** — Per-analyst incident assignments and resolution metrics
+7. **Vulnerability Summary** — Host vulnerability scan results from graph node analysis
+
+FTE Ratio is FTE Needed ÷ FTE Budgeted × 100. Lower is better: at or below 100% means budgeted staff can cover the workload.
+
+Percentages are rounded as your browser formats numbers, so -15.45 shows as -15.5%.
 
 ## True Positive Classification
 

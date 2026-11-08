@@ -14,7 +14,7 @@ Enrichment settings control how WitFoo Analytics augments artifacts and nodes wi
 
 ## Configuration
 
-Navigate to **Signals** > **Enrichment Settings** to manage enrichment configuration.
+Navigate to **Search** > **Node Enrichment** to manage enrichment configuration. The page is headed **Node Enrichment Settings** and needs the `signals:manage` permission.
 
 ### Enable or Disable Enrichments
 
@@ -39,9 +39,18 @@ Enrichment results appear on node detail pages in the **Enrichment** tab. Each e
 - Raw enrichment data
 - Confidence score (when available)
 
+## Vrax Threat Intelligence
+
+The Node Enrichment page also holds the **Vrax threat intelligence** and **Vrax feed (MISP)** cards. They import the reports your Vrax account holds and show them in a node's detail window. See [Vrax Threat Intelligence](vrax.md).
+
 ## Permissions
 
 | Action | Required Permission |
 | --- | --- |
 | View settings | `signals:read` |
 | Modify settings | `signals:manage` |
+
+!!! note "Upgrading to 1.2.0"
+    From 1.2.0 the enrichment settings API (`/api/v1/enrichment-settings`) checks `signals:read` to read and `signals:manage` to change, on every request. Admin and Platform Admin are unchanged, and Analyst and ReadOnly can still read. Give `signals:manage` to any custom role that should change enrichment settings.
+
+    A request that turns an enrichment setting on or off must state the value, for example `{"enabled": false}`. An empty body is refused with HTTP 400.
