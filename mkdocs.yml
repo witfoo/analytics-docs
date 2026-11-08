@@ -262,6 +262,10 @@ nav:
               - Google Cloud SCC: conductor/integrations/gcp-scc.md
               - Wiz: conductor/integrations/wiz.md
               - Oracle Cloud (OCI): conductor/integrations/oci-cloud.md
+              - AWS VPC Flow Logs: conductor/integrations/aws-vpc-flow-logs.md
+              - Azure VNet Flow Logs: conductor/integrations/azure-vnet-flow-logs.md
+              - GCP VPC Flow Logs: conductor/integrations/gcp-vpc-flow-logs.md
+              - OCI VCN Flow Logs: conductor/integrations/oci-vcn-flow-logs.md
           - Network Security:
               - Cisco Meraki: conductor/integrations/cisco-meraki.md
               - Cisco Umbrella: conductor/integrations/cisco-umbrella.md
@@ -270,6 +274,7 @@ nav:
               - Fortinet FortiAnalyzer: conductor/integrations/fortianalyzer.md
               - Zscaler ZIA: conductor/integrations/zscaler-zia.md
               - Darktrace: conductor/integrations/darktrace.md
+              - Cloudflare: conductor/integrations/cloudflare.md
           - Identity & Access:
               - Cisco Duo: conductor/integrations/cisco-duo.md
               - Okta: conductor/integrations/okta.md
@@ -291,6 +296,8 @@ nav:
               - Druva: conductor/integrations/druva.md
               - LimaCharlie: conductor/integrations/limacharlie.md
               - Netskope: conductor/integrations/netskope.md
+              - SNMP Monitoring Poller: conductor/integrations/snmp-poll.md
+              - HTTP/HTTPS Monitor: conductor/integrations/http-poll.md
           - Vulnerability Management:
               - Tenable: conductor/integrations/tenable.md
               - Qualys: conductor/integrations/qualys.md

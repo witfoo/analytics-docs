@@ -49,8 +49,8 @@ Conductor consists of 7 core services, each running as an independent Docker con
 
 | Service | Container Name | Purpose | Ports |
 |---------|---------------|---------|-------|
-| [Broker Edge](broker-edge.md) | `broker-edge-svc` | NATS JetStream message broker | 4223, 4443, 8223 |
-| [Signal Server](signal-server.md) | `signal-server-svc` | Push-based log ingestion | 514, 5044-5045, 6514, 7514 |
+| [Broker Edge](broker-edge.md) | `broker-edge-svc` | NATS JetStream message broker | 4223 (on `127.0.0.1` only under WFA 2.5.1 and later) |
+| [Signal Server](signal-server.md) | `signal-server-svc` | Push-based log and flow ingestion | 514/tcp, 514/udp, 5044-5045, 6514, 7514, 2055/udp |
 | [Signal Client](signal-client.md) | `signal-client-svc` | Pull-based API log collection | — |
 | [Signal Parser](signal-parser.md) | `signal-parser-svc` | Log parsing and normalization | — |
 | [Artifact Filter](artifact-filter.md) | `artifact-filter-svc` | Deduplication and enrichment | — |
@@ -60,8 +60,10 @@ Conductor consists of 7 core services, each running as an independent Docker con
 ## Key Features
 
 - **200+ Log Parsers** — Comprehensive coverage for firewalls, IDS/IPS, authentication systems, DNS, cloud platforms, endpoints, email security, and network infrastructure
-- **39 API Integrations** — Pull-based collection from Microsoft, Cisco, CrowdStrike, Palo Alto, Proofpoint, Okta, and [many more](integrations/index.md)
-- **8 Export Destinations** — Splunk HEC, OpenSearch, Microsoft Sentinel, AlienVault, SCP Transfer, UDP Syslog, Local FileSystem, and WitFoo Analytics Reporter
+- **API Integrations** — Pull-based collection from Microsoft, Cisco, CrowdStrike, Palo Alto, Proofpoint, Okta, Cloudflare, cloud flow logs and [many more](integrations/index.md); the [Integration Catalog](../reference/integration-catalog.md) counts them for this release
+- **Export Destinations** — WitFoo Analytics, Splunk, OpenSearch, Microsoft Sentinel, CrowdStrike Falcon Next-Gen SIEM, USM Anywhere, S3, Azure Blob and Google Cloud Storage, SCP Transfer, UDP Syslog and Local Filesystem; see [Exporter Configuration](ui/exporters.md)
+- **NetFlow and IPFIX** — A flow collector on UDP 2055 for NetFlow v5, v7, v9 and IPFIX, off until enabled under [Log Servers](ui/log-servers.md)
+- **OCSF Export** — The object-storage and OpenSearch exporters can write OCSF 1.8.0 class objects
 - **Real-Time Dashboard** — WebSocket-driven monitoring with pipeline throughput, service health, and container metrics
 - **ProtoGraph Deduplication** — 11-tuple artifact matching reduces noise while preserving security-relevant event variations
 - **STIX Enrichment** — Optional threat intelligence enrichment from STIX feeds
@@ -72,6 +74,6 @@ Conductor consists of 7 core services, each running as an independent Docker con
 Conductor is deployed as a **WitFoo Appliance** — a dedicated Linux server (physical or virtual) running the WFA daemon. WFA manages the complete container lifecycle: pulling images, creating containers, starting services in dependency order, and handling updates.
 
 !!! note "Minimum Hardware Requirements"
-    Conductor requires a minimum of **4 CPU cores** and **8 GB RAM**. The `wfa configure` wizard will warn if the system does not meet these requirements.
+    Conductor requires a minimum of **2 CPUs** and **8 GB RAM**. The `wfa configure` wizard will warn if the system does not meet these requirements.
 
 For deployment instructions, see the [Deployment Guide](deployment.md). For CLI management, see the [WFA CLI Reference](wfa-cli.md).
