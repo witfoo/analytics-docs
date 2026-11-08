@@ -206,9 +206,15 @@ nav:
       - MCP Server:
           - ai/mcp/index.md
           - Architecture: ai/mcp/architecture.md
-          - Configuration: ai/mcp/configuration.md
+          - Turning MCP On: ai/mcp/configuration.md
+          - Authentication & Permissions: ai/mcp/authentication.md
+          - Personal Keys: ai/mcp/personal-keys.md
+          - App Sign-in (OAuth 2.1): ai/mcp/oauth.md
+          - Licensing: ai/mcp/licensing.md
+          - Exposure Listener (Port 8444): ai/mcp/exposure-listener.md
+          - AI-Connector Relay: ai/mcp/relay.md
+          - Connecting AI Clients & Marketplaces: ai/mcp/connect-clients.md
           - Tools: ai/mcp/tools.md
-          - Authentication: ai/mcp/authentication.md
           - Errors: ai/mcp/errors.md
   - Deployment:
       - deployment/index.md
