@@ -1,0 +1,40 @@
+title: SMB Lateral Movement
+id: 162819cf-fcf8-5cb9-a342-4f1834a388e9
+custom_id: wf-net-012
+status: stable
+level: high
+description: |
+    Detects SMB (Server Message Block) connections between workstations that may
+    indicate lateral movement. Legitimate SMB traffic typically flows from
+    workstations to file servers, not between workstations.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.lateral_movement
+    - attack.t1021.002
+references:
+    - https://attack.mitre.org/techniques/T1021/002/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        serverPort:
+            - "445"
+            - "139"
+    selection_stream:
+        streamName|contains:
+            - "smb"
+            - "zeek_smb"
+    condition: selection or selection_stream
+fields:
+    - clientIP
+    - serverIP
+    - serverPort
+    - userName
+    - fileName
+    - streamName
+falsepositives:
+    - File server access from workstations (expected traffic)
+    - Network printing over SMB
+    - AD Group Policy processing

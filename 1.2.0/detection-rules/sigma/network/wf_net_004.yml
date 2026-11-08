@@ -1,0 +1,35 @@
+title: Large Data Transfer
+id: cc59abbb-24b0-5a9b-b95c-6b02a7e3f1c2
+custom_id: wf-net-004
+status: stable
+level: high
+description: |
+    Detects unusually large outbound data transfers that may indicate data
+    exfiltration. Triggers when total bytes transferred exceeds 100MB in a
+    single connection/session.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.exfiltration
+    - attack.t1048
+references:
+    - https://attack.mitre.org/techniques/T1048/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        totalBytes|gte: 104857600
+    condition: selection
+fields:
+    - clientIP
+    - serverIP
+    - totalBytes
+    - protocol
+    - application
+    - userName
+falsepositives:
+    - Backup operations to offsite storage
+    - Large file uploads to approved cloud services
+    - Database replication traffic
+    - Software deployment and distribution

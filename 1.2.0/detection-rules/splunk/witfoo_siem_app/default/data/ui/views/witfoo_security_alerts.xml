@@ -1,0 +1,144 @@
+<dashboard version="1.1" theme="dark">
+  <label>WitFoo Security Alerts</label>
+  <description>Security alert monitoring from WitFoo artifact exports. Displays alert timeline, severity distribution, ATT&amp;CK technique breakdown, and lead rule activity.</description>
+
+  <row>
+    <panel>
+      <title>Alert Timeline (24h)</title>
+      <chart>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| where severityCode>=3
+| timechart span=1h count by severityLabel</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">column</option>
+        <option name="charting.chart.stackMode">stacked</option>
+      </chart>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>Severity Distribution</title>
+      <chart>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| stats count by severityLabel
+| sort -count</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">pie</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Top ATT&amp;CK Techniques</title>
+      <table>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| where isnotnull(attackTechniqueIds)
+| mvexpand attackTechniqueIds
+| stats count by attackTechniqueIds
+| sort -count
+| head 20
+| rename attackTechniqueIds as "Technique ID" count as "Count"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+      </table>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>Lead Rule Triggers</title>
+      <table>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| where isnotnull(matchedLeadRules)
+| mvexpand matchedLeadRules
+| stats count by matchedLeadRules
+| sort -count
+| head 20
+| rename matchedLeadRules as "Lead Rule ID" count as "Triggers"</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+      </table>
+    </panel>
+    <panel>
+      <title>Alert Categories</title>
+      <chart>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| where isnotnull(messageType)
+| stats count by messageType
+| sort -count
+| head 15</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">bar</option>
+      </chart>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>Recent High-Severity Alerts</title>
+      <table>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| where severityCode>=4
+| table _time clientIP serverIP messageType severityLabel ruleName attackTechniqueIds userName
+| sort -_time
+| head 50</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="count">20</option>
+      </table>
+    </panel>
+  </row>
+
+  <row>
+    <panel>
+      <title>Severity Trend (7d)</title>
+      <chart>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| where severityCode>=3
+| timechart span=1d count by severityLabel</query>
+          <earliest>-7d@d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">line</option>
+      </chart>
+    </panel>
+    <panel>
+      <title>Mean Time to Alert (by hour)</title>
+      <chart>
+        <search>
+          <query>index=witfoo sourcetype="witfoo:artifact"
+| spath
+| where severityCode>=3
+| timechart span=1h count as alerts
+| streamstats window=24 avg(alerts) as "24h Avg"</query>
+          <earliest>-7d@d</earliest>
+          <latest>now</latest>
+        </search>
+        <option name="charting.chart">line</option>
+      </chart>
+    </panel>
+  </row>
+
+</dashboard>

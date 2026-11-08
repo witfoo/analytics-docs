@@ -1,0 +1,41 @@
+title: Non-Standard HTTP/HTTPS Port Usage
+id: ce3d5805-5e01-5c1d-8cae-3b475200ed9a
+custom_id: wf-net-007
+status: stable
+level: medium
+description: |
+    Detects HTTP or HTTPS traffic on non-standard ports, which may indicate
+    evasion of network security controls, malware C2 communication, or
+    unauthorized web services.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.command_and_control
+    - attack.t1571
+references:
+    - https://attack.mitre.org/techniques/T1571/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection_http:
+        application|contains:
+            - "HTTP"
+            - "http"
+    filter_standard_ports:
+        serverPort:
+            - "80"
+            - "443"
+            - "8080"
+            - "8443"
+    condition: selection_http and not filter_standard_ports
+fields:
+    - clientIP
+    - serverIP
+    - serverPort
+    - application
+    - uri
+falsepositives:
+    - Development web servers on custom ports
+    - Internal web applications on non-standard ports
+    - Proxy servers on alternate ports

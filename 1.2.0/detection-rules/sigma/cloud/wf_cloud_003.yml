@@ -1,0 +1,40 @@
+title: Cloud API Abuse
+id: ff214e11-8ed2-52fa-b12f-14b5ef347644
+custom_id: wf-cloud-003
+status: stable
+level: high
+description: |
+    Detects anomalous cloud API call patterns that may indicate compromised
+    credentials, unauthorized automation, or adversary reconnaissance of
+    cloud infrastructure.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.execution
+    - attack.t1106
+references:
+    - https://attack.mitre.org/techniques/T1106/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        streamName|contains:
+            - "aws_cloudtrail"
+            - "azure_activity"
+            - "gcp_audit"
+        severityLabel:
+            - "high"
+            - "critical"
+    condition: selection
+fields:
+    - clientIP
+    - userName
+    - application
+    - action
+    - uri
+    - severityLabel
+falsepositives:
+    - Automated infrastructure management tools
+    - CI/CD pipelines performing deployments
+    - Cloud cost optimization tools

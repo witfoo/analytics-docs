@@ -1,0 +1,34 @@
+title: Service Disruption
+id: c3875f59-ef02-50ad-aaa6-cc39dd56d049
+custom_id: wf-infra-001
+status: stable
+level: high
+description: |
+    Detects service disruption events including denial of service indicators,
+    service outages, and availability degradation. May indicate active DDoS
+    attacks, resource exhaustion, or infrastructure failures.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.impact
+    - attack.t1499
+references:
+    - https://attack.mitre.org/techniques/T1499/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "service_disruption"
+    condition: selection
+fields:
+    - clientIP
+    - serverIP
+    - application
+    - action
+    - severityLabel
+    - matchedLeadRules
+falsepositives:
+    - Planned maintenance causing service interruptions
+    - Auto-scaling events during traffic spikes
+    - Network failover events

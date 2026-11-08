@@ -1,0 +1,33 @@
+title: Phishing Link Click
+id: f95d4319-a649-5635-be85-f488d8b357c9
+custom_id: wf-cloud-005
+status: stable
+level: critical
+description: |
+    Detects when a user clicks on a phishing link, indicating potential
+    credential compromise or malware delivery. This is a high-priority event
+    requiring immediate user notification and credential reset evaluation.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.initial_access
+    - attack.t1204.001
+references:
+    - https://attack.mitre.org/techniques/T1204/001/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "phishing_click"
+    condition: selection
+fields:
+    - userName
+    - clientIP
+    - uri
+    - emailFrom
+    - emailSubject
+    - matchedLeadRules
+falsepositives:
+    - Phishing awareness training exercise clicks
+    - Safe link analysis tools expanding URLs

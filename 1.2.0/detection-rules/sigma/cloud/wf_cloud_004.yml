@@ -1,0 +1,35 @@
+title: Phishing Email Detection
+id: 7a933235-06ec-555f-96ba-3371a531c0e3
+custom_id: wf-cloud-004
+status: stable
+level: high
+description: |
+    Detects phishing emails identified by email security gateways or
+    WitFoo's threat intelligence enrichment. Phishing is one of the most
+    common initial access vectors for cyber attacks.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.initial_access
+    - attack.t1566
+references:
+    - https://attack.mitre.org/techniques/T1566/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "phishing_email"
+    condition: selection
+fields:
+    - emailFrom
+    - emailTo
+    - emailSubject
+    - clientIP
+    - emailSendingServer
+    - matchedLeadRules
+    - severityLabel
+falsepositives:
+    - Phishing awareness training campaigns
+    - Marketing emails flagged by spam filters
+    - Legitimate emails from newly registered domains

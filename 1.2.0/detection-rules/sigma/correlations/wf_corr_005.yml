@@ -1,0 +1,25 @@
+title: Ransomware Kill Chain
+id: 5b53a206-7cc7-52d9-8e30-dd22b9319670
+custom_id: wf-corr-005
+status: stable
+type: temporal_ordered
+rules:
+    - wf-mal-003
+    - wf-mal-004
+group-by:
+    - clientIP
+timespan: 60m
+description: |
+    Detects the complete ransomware kill chain: payload download followed by
+    active encryption from the same source within 60 minutes. This is a
+    critical alert indicating a ransomware attack has progressed from
+    delivery to impact phase.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.impact
+    - attack.t1486
+level: critical
+falsepositives:
+    - Ransomware simulation exercises (e.g., RanSim)
+    - Authorized red team operations

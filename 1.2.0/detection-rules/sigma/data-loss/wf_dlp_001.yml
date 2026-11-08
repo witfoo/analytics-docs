@@ -1,0 +1,35 @@
+title: Data Staging Activity
+id: 5d7a00bb-45a8-5123-918e-fbce8d521dcc
+custom_id: wf-dlp-001
+status: stable
+level: high
+description: |
+    Detects data staging activity where an adversary collects and stages data
+    in preparation for exfiltration. This may include copying files to a
+    central location, archiving data, or staging data on network shares.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.collection
+    - attack.t1074
+references:
+    - https://attack.mitre.org/techniques/T1074/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "data_staging"
+    condition: selection
+fields:
+    - clientIP
+    - serverIP
+    - userName
+    - fileName
+    - filePath
+    - totalBytes
+    - matchedLeadRules
+falsepositives:
+    - Legitimate data migration projects
+    - Backup staging operations
+    - Data warehouse ETL processes

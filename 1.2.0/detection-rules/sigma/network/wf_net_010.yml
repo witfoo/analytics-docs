@@ -1,0 +1,46 @@
+title: Executable File Transfer Over Network
+id: fccc3daa-2075-5253-9cb7-6237a14a4f1f
+custom_id: wf-net-010
+status: stable
+level: high
+description: |
+    Detects transfer of executable files over the network, which may indicate
+    malware delivery, lateral movement tool staging, or unauthorized software
+    distribution. Matches common executable extensions and binary content types.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.command_and_control
+    - attack.t1105
+    - attack.lateral_movement
+references:
+    - https://attack.mitre.org/techniques/T1105/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection_filename:
+        fileName|endswith:
+            - ".exe"
+            - ".dll"
+            - ".scr"
+            - ".bat"
+            - ".ps1"
+            - ".vbs"
+            - ".msi"
+            - ".elf"
+            - ".sh"
+            - ".py"
+    condition: selection_filename
+fields:
+    - clientIP
+    - serverIP
+    - fileName
+    - fileHash
+    - filePath
+    - totalBytes
+    - uri
+falsepositives:
+    - Software deployment and patch management systems
+    - Developer file sharing and build artifact transfers
+    - Approved software download from vendor sites

@@ -1,0 +1,37 @@
+title: Indicator of Compromise Match
+id: cbff388c-58e8-5ada-9528-20bf07c52d9d
+custom_id: wf-comp-004
+status: stable
+level: critical
+description: |
+    Detects matches against known indicators of compromise (IOCs) from threat
+    intelligence feeds. This includes IP addresses, domain names, file hashes,
+    and URLs associated with known threat actors or malware campaigns.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.command_and_control
+    - attack.t1071
+references:
+    - https://attack.mitre.org/techniques/T1071/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "ioc_match"
+    selection_stix:
+        stixIndicatorIds|re: ".+"
+    condition: selection or selection_stix
+fields:
+    - clientIP
+    - serverIP
+    - fqdn
+    - fileHash
+    - stixIndicatorIds
+    - matchedLeadRules
+    - severityLabel
+falsepositives:
+    - Stale threat intelligence indicators
+    - Shared hosting IPs flagged by threat feeds
+    - CDN and cloud provider IP ranges

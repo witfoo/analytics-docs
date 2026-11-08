@@ -1,0 +1,31 @@
+title: Service Account Auth False Positive Filter
+id: de13f49e-716a-5982-ae3e-0f99ec71cf95
+custom_id: wf-filter-003
+status: stable
+logsource:
+    product: witfoo
+    service: artifact-exporter
+description: |
+    Filters out authentication failure events from known service accounts.
+    Service accounts may generate periodic auth failures during credential
+    rotation or configuration changes. Customize the service account list
+    to match your environment.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.credential_access
+    - attack.t1110
+detection:
+    selection:
+        messageType: "auth_failure"
+    filter_svc:
+        userName|contains:
+            - "svc_"
+            - "service_"
+            - "$"
+            - "SYSTEM"
+            - "LOCAL SERVICE"
+            - "NETWORK SERVICE"
+    condition: selection and filter_svc
+falsepositives:
+    - None expected when service account patterns are correctly configured

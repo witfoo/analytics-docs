@@ -1,0 +1,35 @@
+title: Financial System Anomaly
+id: aa7de010-3e25-50e4-b43e-978e93da0c4e
+custom_id: wf-infra-004
+status: stable
+level: high
+description: |
+    Detects anomalous activity in financial systems including unauthorized
+    transaction patterns, accounting system modifications, and payment
+    processing irregularities that may indicate fraud or data manipulation.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.impact
+    - attack.t1565
+references:
+    - https://attack.mitre.org/techniques/T1565/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "financial_anomaly"
+    condition: selection
+fields:
+    - clientIP
+    - serverIP
+    - userName
+    - application
+    - action
+    - matchedLeadRules
+    - severityLabel
+falsepositives:
+    - End-of-quarter bulk transaction processing
+    - Authorized system migrations affecting financial data
+    - Legitimate large-value transactions

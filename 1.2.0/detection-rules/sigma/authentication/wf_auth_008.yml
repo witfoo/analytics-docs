@@ -1,0 +1,34 @@
+title: Service Discovery Activity
+id: 8c303506-bd68-5cd6-a98f-944d27bf0e6c
+custom_id: wf-auth-008
+status: stable
+level: medium
+description: |
+    Detects service discovery and network enumeration activity that may indicate
+    reconnaissance by an attacker who has gained initial access. Includes port
+    scanning, service fingerprinting, and network mapping.
+author: WitFoo
+date: 2026-02-21
+tags:
+    - attack.discovery
+    - attack.t1046
+references:
+    - https://attack.mitre.org/techniques/T1046/
+logsource:
+    product: witfoo
+    service: artifact-exporter
+detection:
+    selection:
+        messageType: "service_discovery"
+    condition: selection
+fields:
+    - clientIP
+    - serverIP
+    - serverPort
+    - protocol
+    - userName
+    - matchedLeadRules
+falsepositives:
+    - Authorized network scanning and inventory tools
+    - IT asset discovery systems
+    - Network monitoring and management platforms
