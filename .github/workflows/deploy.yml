@@ -47,9 +47,16 @@ jobs:
       - name: Deploy with mike
         env:
           VERSION: ${{ github.event.inputs.version || 'dev' }}
+        # A push to main publishes the "dev" version only. "latest" (the site's default page) moves
+        # only when a release version is deployed by hand (workflow_dispatch with version=X.Y.Z), so a
+        # docs merge between releases never replaces the released docs that docs.witfoo.com opens on.
         run: |
-          mike deploy --push --update-aliases "$VERSION" latest
-          mike set-default --push latest
+          if [ "$VERSION" = "dev" ]; then
+            mike deploy --push dev
+          else
+            mike deploy --push --update-aliases "$VERSION" latest
+            mike set-default --push latest
+          fi
 
       - name: Summary
         env:
