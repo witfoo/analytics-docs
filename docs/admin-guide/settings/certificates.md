@@ -6,7 +6,7 @@ Manage TLS certificates for HTTPS access and internal service communication.
 
 ### Upload Certificate
 
-1. Navigate to **Admin** > **Settings** > **Certificates**
+1. Open **Settings** (the gear icon in the page header) > **General Settings** > **Certificates**
 2. Click **Upload Certificate**
 3. Provide the certificate file (PEM format) and private key
 4. Click **Save**
@@ -30,5 +30,5 @@ For development and testing, WitFoo Analytics generates a self-signed certificat
 ## Certificate Storage
 
 - Certificates are stored in Cassandra
-- Private keys are encrypted at rest using AES-256-GCM
+- Private keys are encrypted at rest with XChaCha20-Poly1305, under a per-organization key derived from `AUTH_CONFIG_ENCRYPTION_KEY` (values written before the cipher change were sealed with AES-256-GCM and are still read)
 - File permissions: private keys 0600, certificates 0644

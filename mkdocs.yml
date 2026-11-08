@@ -335,4 +335,5 @@ nav:
       - Cassandra Schema: reference/cassandra-schema.md
       - Software License Agreement (U.S.A.): reference/eula-usa.md
       - Software License Agreement (New Zealand): reference/eula-nz.md
+      - Upgrading to 1.2.0: reference/upgrade-1.2.0.md
       - Changelog: reference/changelog.md

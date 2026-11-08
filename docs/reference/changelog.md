@@ -2,6 +2,107 @@
 
 Version history for WitFoo products.
 
+## v1.2.0 (2026-11-08)
+
+Minor release that completes the **MCP connector** and the controls around it. AI clients such as Claude Desktop, Cursor and Claude Code connect with a personal key each user creates, or by signing in through the appliance's own OAuth 2.1 authorization server; every connection acts as a real user with that user's permissions. Also new: an optional **AI-connector relay**, **user disable and enable** with session controls, tighter published ports, Signal Search filters that apply to the whole time range, a **Vrax** threat-intelligence import, and seven new Conductor pull connectors with a NetFlow and IPFIX collector. **Action required** before upgrading a Docker Compose stack: set `AUTH_CONFIG_ENCRYPTION_KEY`. Upgrade from 1.1.5; ships alongside **WFA 2.5.3**, **Conductor 1.10.0** and **Console 1.10.0** (Conductor nodes run the 1.2.0 images). [Full release notes.](https://github.com/witfoo/release-notes/blob/main/releases/1.2.0.md)
+
+### MCP connector
+
+- **Personal MCP keys** — each user who holds the new **Connect MCP** (`mcp:connect`) permission creates keys under **Profile → Security → MCP connections**. Keys last 1–365 days (default 90), can be rotated and revoked, and a user holds at most 5 active keys. A connected client reaches only the tools its user's permissions allow
+- **App sign-in with OAuth 2.1** — apps sign in through the appliance's own authorization server, with a consent page, read access by default and write as a separate option. Users see and revoke their apps under **Profile → Security → Connected apps**; administrators register clients and set the policy for other apps
+- **Off by default** — the organization's mode under **AI Setup → MCP Authentication** and the appliance's HTTP transport (`mcp_http_enabled`) are both closed until you open them
+- **Licensed** — MCP is included with Analytics Pro, Analytics Max and Reporter Pro
+- **Exposure listener** — an optional listener on port 8444 serves `/mcp`, the sign-in discovery documents and `/oauth/token` and nothing else, for marketplace clients
+- **44 tools** — each marked read-only (28) or state-changing (16), with its title in both places a client reads it. Seven tools that always failed are removed. ChatGPT can now connect; verified against a test rig, not yet against a live 1.2.0 appliance
+- **Org-wide keys retired** — `wfmcp_` keys no longer authenticate; administrators can list them and revoke them all at once
+
+### AI-connector relay
+
+- **Reach the appliance without an inbound port** — an optional relay gives an AI marketplace or MCP client an address that reaches the appliance's MCP endpoint through WitFoo. Off by default for every organization and appliance; an operator turns it on with `wfa mcp-relay enable` (WFA 2.5.1 or later), reads the notice, types ENABLE and runs `wfa restart`
+- **Status on AI Setup** — a read-only relay card shows the address and state while the relay is enabled; `wfa mcp-relay status`, `ack` and `off` manage it on the appliance
+
+### Users and sessions
+
+- **Disable and enable** — in User Management, Delete is now Disable, and a disabled user can be enabled again. There is no permanent delete. An administrator cannot disable their own account
+- **Sessions end when they should** — disabling a user, suspending or deleting a tenant, or resetting a password ends the user's sessions within seconds and open live connections within a minute
+- **Everyone signs in again once** — upgrading changes the session key
+- **Plain account addresses** — an address typed for an account must be one plain address
+
+### Roles
+
+- **In-app assistant permissions** — Read AI (`ai:read`) and Write AI (`ai:write`) gate the AI assistant; every built-in role has both, and existing custom roles receive both once at upgrade
+- **Dashboards write permission** — creating, updating, deleting and cloning dashboards need `dashboards:write`; each dashboard widget is also checked against its own data
+- **Stricter checks** — the setup wizard's AI, DNS, frameworks and CyberGrid steps, classification rules, enrichment settings, compliance frameworks and the CyberGrid API now check permissions
+- **Admin-only user and role pages** — User Management and Role Management open only for the Administrator permission
+
+### Signal Search
+
+- **Filters apply to the whole time range** — contains, not-equal, numeric comparisons, Client IP and Server IP (IPv4 or IPv6), Location and free-word filters narrow the result list, timeline and facet counts across the range, not only the newest events
+- **Says when it read part of the range** — a warning above the results, a line under the timeline and a plus sign on facet counts; API callers get `meta.scan`
+- **Clear refusals** — a filter the search cannot apply is refused with "The search was not accepted as typed"
+- **Timeline grouping by IP** groups by the real addresses, and clicking anywhere in a row opens it
+
+### Work Units
+
+- **Triage summary** — the detail page opens on a summary header with the response actions in a bar visible on every tab
+- **Replay** — a full-screen view rebuilds a work unit in the order it was observed
+- **Growing relationship graph** — **Show 5 more** adds relationships on request, up to 200 nodes
+- **Redesigned edge and signal windows**, and the Work Units page fills its node data columns and applies the filters you set
+
+### Vrax
+
+- **Vrax threat-intelligence import** — connect a Vrax login on **Signals, Node Enrichment**; the appliance pulls the reports Vrax holds for its industry and region on a schedule and shows the ones that mention a node in its detail window. Nothing from your data is sent to Vrax
+
+### Conductor
+
+- **Seven new pull connectors** — Cloudflare, VPC flow logs from AWS, Azure, GCP and OCI, SNMP (v2c and v3) and an HTTP poll
+- **NetFlow and IPFIX collector** — NetFlow v5, v7 and v9 and IPFIX on UDP 2055 and HTTP 8008, off until enabled under **Log Servers**
+- **OCSF 1.8.0** encoding in the artifact exporter
+- **Faster connector retries** — a transient failure is retried after 5, 10, 20, 40, then 60 seconds instead of 15 minutes
+
+### Receiver capacity
+
+- **Body profiles** — a default and a small profile, chosen from the container's memory budget or `WF_INGEST_PROFILE`
+- **Connection limits** — per-listener caps and a per-source share, set with `WF_CONN_MAX`, `WF_CONN_MAX_TLS`, `WF_CONN_MAX_PER_SOURCE` and `WF_CONN_TRUSTED`
+- **Message limit** — the largest artifact is 9.5 MiB; batches over 1,000 artifacts are refused
+
+### Security
+
+- **Required encryption key** — Docker Compose stacks must set `AUTH_CONFIG_ENCRYPTION_KEY`; the old shipped default is refused
+- **Tighter edge and ports** — internal services publish on `INTERNAL_LISTEN_IP`, a TLS edge trusts no forwarder unless `WF_TRUSTED_PROXIES` names it, and the reverse proxy no longer serves `/ingestion/`
+- **Platform administrators and SSO** — an organization's SAML or LDAP no longer signs in platform administrators unless the operator names that organization
+- **Session keys** — Conductor UI and Console UI refuse a `SECRET_KEY` that shipped with an earlier release or an example file
+- **Signed images** — keyless signatures you can check with `cosign verify`
+
+### Upgrade Notes
+
+- **Read the upgrade guide first** — the order for WFA appliances (images to 1.2.0, then WFA 2.5.3, then `wfa restart`), the encryption-key steps for Docker Compose, single sign-on changes, custom-role changes and the known limitations are in [Upgrading to 1.2.0](upgrade-1.2.0.md)
+
+## v1.1.5 (2026-09-19)
+
+Maintenance release for the 1.1.x line. Most of it closes defects where the product reported something other than what it was doing. [Full release notes.](https://github.com/witfoo/release-notes/blob/main/releases/1.1.5.md)
+
+### AI assistant
+
+- **OpenAI and Google Gemini now work** — both providers had been placeholders that answered every question with fixed text. They are fully implemented, including tool use. If you used either before 1.1.5, re-review work units the AI agent auto-resolved, and expect real provider charges
+- **Tools on a local model** — with Ollama, the assistant now runs the full loop of question, data lookup and answer on the appliance
+- **Safer auto-resolve** — a work unit auto-resolves only on an AI analysis that is verifiably complete
+- **Manage AI required** — AI provider configuration endpoints now require the Manage AI permission
+
+### MCP
+
+- **Streamable HTTP transport** — Claude Desktop, Cursor and Claude Code can connect over the transport they speak natively. Off by default
+
+### Also fixed
+
+- **Search returned fewer results than it found** for sparse filters
+- **Arista Wi-Fi events** were discarded; **LimaCharlie** authentication failures were silent; a **Zscaler** connector queried an endpoint that no longer exists
+- **Deduplication memory** grew without bound on long-running appliances
+
+## v1.1.4 (2026-09-17)
+
+Maintenance release on the 1.1.x line with customer-visible fixes. [Full release notes.](https://github.com/witfoo/release-notes/blob/main/releases/1.1.4.md)
+
 ## v1.1.2 (2026-08-13)
 
 Maintenance release focused on **event-time search correctness** and a broad data-onboarding expansion. Drop-in upgrade from any 1.1.x; no configuration or schema changes. [Full release notes.](https://github.com/witfoo/release-notes/blob/main/releases/1.1.2.md)
