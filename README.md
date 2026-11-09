@@ -38,6 +38,19 @@ Documentation is deployed via [mike](https://github.com/jimporter/mike) with ver
 3. Submit a PR — CI validates with `mkdocs build --strict`, markdownlint, and lychee link checking
 4. Merge to main triggers automatic deployment
 
+## Content-Security-Policy
+
+The site is served with the CSP in [`content-security-policy.txt`](content-security-policy.txt)
+(set at the CDN; that file is the copy to paste there). Its `script-src` has no `'unsafe-inline'`,
+so a page must not carry inline script: `hooks/csp.py` moves the theme's inline scripts into files
+at build time, and the strict build fails on an `onclick=`-style attribute or a `javascript:` URL.
+Put behaviour in a `.js` file under `docs/assets/` and list it in `extra_javascript`.
+
+After a Material upgrade, the strict build may report that a content script's hash changed. Add
+the new `'sha256-...'` to `script-src` in `content-security-policy.txt` and to the CDN rule before
+merging, and remove the old one once the release is live. `hooks/csp.py` explains why those two
+scripts stay inline.
+
 ## Structure
 
 ```text

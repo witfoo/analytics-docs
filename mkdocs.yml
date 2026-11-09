@@ -81,7 +81,11 @@ markdown_extensions:
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - attr_list
   - md_in_html
-  - tables
+  # Column alignment as align="..." (which the theme's CSS honours) instead of a
+  # style="text-align: ..." attribute: the built HTML then carries no inline style, so
+  # only Mermaid's run-time styles still need 'unsafe-inline' in style-src.
+  - tables:
+      use_align_attribute: true
   - toc:
       permalink: true
   - def_list
@@ -95,6 +99,12 @@ extra:
     - icon: fontawesome/brands/github
       link: https://github.com/witfoo
       name: WitFoo on GitHub
+
+# Makes the pages work without 'unsafe-inline' in the CSP's script-src: moves the theme's
+# inline <script> and <style> elements into files under assets/, except the scripts
+# content-security-policy.txt allows by hash. See hooks/csp.py.
+hooks:
+  - hooks/csp.py
 
 extra_css:
   - assets/stylesheets/extra.css
