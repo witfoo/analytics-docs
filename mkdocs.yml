@@ -217,6 +217,7 @@ nav:
           - Exposure Listener (Port 8444): ai/mcp/exposure-listener.md
           - AI-Connector Relay: ai/mcp/relay.md
           - Connecting AI Clients & Marketplaces: ai/mcp/connect-clients.md
+          - Connect ChatGPT and Claude: ai/mcp/connect-chatgpt-claude.md
           - Tools: ai/mcp/tools.md
           - Errors: ai/mcp/errors.md
   - Deployment:
