@@ -203,6 +203,9 @@ nav:
       - ai/index.md
       - Configuration: ai/configuration.md
       - Chat Interface: ai/chat.md
+      - Desktop AI Kit:
+          - ai-kit/index.md
+          - Connect Your Assistant: ai-kit/connect.md
       - MCP Server:
           - ai/mcp/index.md
           - Architecture: ai/mcp/architecture.md
