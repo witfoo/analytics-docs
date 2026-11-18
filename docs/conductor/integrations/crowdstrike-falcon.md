@@ -6,15 +6,15 @@ tags:
 
 # CrowdStrike Falcon
 
-Collects endpoint detection and device inventory data from CrowdStrike Falcon,
-providing visibility into endpoint threats, detections, and managed host assets.
+Collects endpoint alerts and device inventory data from CrowdStrike Falcon,
+providing visibility into endpoint threats, alerts, and managed host assets.
 
 | | |
 |---|---|
 | **Category** | Endpoint Security |
 | **Connector Name** | `signal-client.crowdstrike-falcon` |
 | **Auth Method** | OAuth2 Client Credentials |
-| **Polling Interval** | 10 min (detections), 1 hr (devices); built in, not configurable |
+| **Polling Interval** | 10 min (alerts), 1 hr (devices); built in, not configurable |
 | **Multi-Instance** | Yes |
 | **Vendor Docs** | [CrowdStrike API Reference](https://developer.crowdstrike.com/docs/openapi/) |
 
@@ -48,10 +48,14 @@ providing visibility into endpoint threats, detections, and managed host assets.
     - **Client Name**: `WitFoo Conductor`
     - **Description**: `Read-only access for security log collection`
     - **Scopes**:
-        - `Detections` → **Read**
+        - `Alerts` → **Read**
         - `Hosts` → **Read**
 5. Click **Create**
 6. Copy the **Client ID** and **Client Secret** — the secret is only shown once
+
+!!! note "Alerts, not Detections"
+    The connector reads the Alerts API v2. CrowdStrike decommissioned the Detects
+    API on 30 September 2025, so the `Detections` scope is not used.
 
 !!! warning "Store Credentials Securely"
     The Client Secret is displayed only at creation time. Store it securely and
@@ -106,12 +110,11 @@ different schedules:
 
 | Endpoint | Interval | Description |
 |----------|----------|-------------|
-| Detection IDs + Details | 10 min | Active detections (alerts). Batches at 1,000-item boundary. |
-| Device Details (v2) | 1 hr | Managed host inventory via `getDeviceDetailsV2`. String offset pagination. |
-| Combined Device/Host | 1 hr | Supplemental host data from combined endpoint. |
+| Alert IDs + Details (Alerts API v2) | 10 min | Alerts the tenant holds. Detail requests are batched at 1,000 alerts. |
+| Device IDs + Details (v2) | 1 hr | Managed host inventory via `getDeviceDetailsV2`. Detail requests are batched at 5,000 devices. |
 
 !!! info "Alert Batching"
-    The connector fetches detection IDs first, then batches detail requests
+    The connector fetches alert IDs first, then batches detail requests
     in groups of 1,000. Large environments may see multiple batch cycles per
     polling interval.
 
@@ -138,7 +141,7 @@ FedRAMP-compliant authentication.
 ### Forbidden (403)
 
 - The API client may lack the required scopes
-- Required scopes: `Detections: Read`, `Hosts: Read`
+- Required scopes: `Alerts: Read`, `Hosts: Read`
 - Edit the API client in the Falcon Console to add missing scopes
 
 ### Rate Limited (429)
@@ -153,7 +156,7 @@ FedRAMP-compliant authentication.
 - Confirm the integration shows **Enabled** in the Conductor UI
 - Check Signal Client logs for errors: `docker logs signal-client-svc --tail=100`
 - Verify network connectivity: `curl -I https://api.crowdstrike.com`
-- Confirm detections or device data exists in the Falcon Console for the polling time window
+- Confirm alerts or device data exists in the Falcon Console for the polling time window
 
 ---
 
