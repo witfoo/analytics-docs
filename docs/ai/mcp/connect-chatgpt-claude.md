@@ -212,12 +212,22 @@ See also [App Sign-in (OAuth 2.1)](oauth.md).
 Each user does this once in each app. You need the **appliance code** from your administrator.
 
 !!! info "WitFoo in the app directories"
-    WitFoo is not yet listed in the Claude or ChatGPT app directories. Add WitFoo as a custom connector,
-    as below.
+    WitFoo is listed in Claude's connector directory:
+    [claude.ai/directory/witfoo](https://claude.ai/directory/witfoo). The listing uses the single connector
+    address, so it needs **analytics 1.2.1** or later and **WFA 2.5.5** or later on the appliance, with the
+    relay and app sign-in set up as above. On analytics 1.2.0, add WitFoo in Claude as a custom connector at
+    your appliance's own address instead (see
+    [Connect at your appliance's own address](#connect-at-your-appliances-own-address)).
+
+    WitFoo is not listed in the ChatGPT app directory. In ChatGPT, add WitFoo as a custom connector, as
+    below.
 
 The apps change their menu names from time to time. The steps below are as of November 2026.
 
 === "Claude"
+
+    To add WitFoo from Claude's directory instead of as a custom connector, open the
+    [WitFoo listing](https://claude.ai/directory/witfoo), connect it, and continue at step 3.
 
     1. In Claude, open **Customize → Connectors** and choose **Add custom connector**.
     2. Name it `WitFoo`, enter `https://mcp-relay.witfoo.com/mcp`, and choose **Connect**.

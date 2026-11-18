@@ -54,6 +54,7 @@ The Model Context Protocol is an open standard for connecting AI clients to exte
 - [MCP Licensing](licensing.md): which licences include MCP and what a refusal looks like.
 - [Exposure Listener (Port 8444)](exposure-listener.md): a separate listener for marketplace clients.
 - [AI-Connector Relay](relay.md): reaching the appliance through WitFoo without an inbound port.
-- [Connecting AI Clients & Marketplaces](connect-clients.md): configuration for Claude, Cursor, ChatGPT and other clients.
+- [Connecting AI Clients & Marketplaces](connect-clients.md): configuration for Claude, Cursor, ChatGPT and other clients, and WitFoo's listing in Claude's directory.
+- [Connect WitFoo to ChatGPT and Claude](connect-chatgpt-claude.md): step-by-step setup for both apps, through the single connector address or your appliance's own address.
 - [Tools](tools.md): the 44 tools and the permission each one needs.
 - [Errors](errors.md): the responses MCP clients can receive and what they mean.

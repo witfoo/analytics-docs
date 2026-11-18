@@ -17,7 +17,7 @@ Jobs 2 to 5 come as Claude skills and as instructions for a ChatGPT project, wit
 - WitFoo Analytics 1.2.0 or later with Analytics Pro, Analytics Max or Reporter Pro. The incident-response job's playbooks need Analytics Pro or Max.
 - MCP turned on by your appliance operator and your WitFoo administrator. See [Turn it on](connect.md#turn-it-on).
 - A WitFoo account that holds **Connect MCP** (`mcp:connect`). The built-in Admin and Platform Admin roles have it; anyone else needs a custom role that includes it. Connect MCP grants no tool by itself, so that role also needs each job's permissions. See [Before you start](connect.md#before-you-start).
-- A Claude or ChatGPT plan that allows custom connectors. On a Claude Team plan, an owner adds the connector in the organization's settings, and each member then connects it.
+- A Claude or ChatGPT plan that allows custom connectors. On a Claude Team plan, an owner adds the connector in the organization's settings, and each member then connects it. On analytics 1.2.1 or later with WFA 2.5.5 or later, and the relay and app sign-in turned on, you can also add WitFoo from [Claude's directory](https://claude.ai/directory/witfoo); this kit describes the custom connector at your appliance's own address, which is how you connect on 1.2.0.
 
 ## The four jobs
 
