@@ -49,6 +49,8 @@ Under **MCP Authentication** you see every personal key in the organization and,
 
 ## Connect Claude
 
+On analytics 1.2.1 or later, with WFA 2.5.5 or later and the relay turned on, you can add WitFoo from [Claude's directory](https://claude.ai/directory/witfoo) instead. See [WitFoo in Claude's directory](../ai/mcp/connect-clients.md#witfoo-in-claudes-directory). This page describes the custom connector at your appliance's own address, which is how you connect on 1.2.0.
+
 Claude changes its menu names from time to time. These are as of November 2026.
 
 ### On a Team or Enterprise plan

@@ -15,7 +15,21 @@ Connect an AI client to your appliance with a personal key, or let an app sign i
 | On your network, such as a desktop client or Claude Code on a laptop | The main listener | `https://<appliance>/mcp` |
 | On a vendor's servers, such as claude.ai or ChatGPT, with an inbound port you can open | The [exposure listener](exposure-listener.md) on port 8444 | `https://<published name>/mcp`, through the proxy or load balancer in front of port 8444 |
 | On a vendor's servers, with no inbound port | The [AI-connector relay](relay.md) | `https://mcp-relay.witfoo.com/h/<handle>/mcp` |
+| On claude.ai, from [WitFoo's listing in Claude's directory](#witfoo-in-claudes-directory) (analytics 1.2.1 or later) | The relay, through WitFoo's single connector address | `https://mcp-relay.witfoo.com/mcp` |
 | An air-gapped appliance | The main listener, from clients on your own network only | `https://<appliance>/mcp` |
+
+## WitFoo in Claude's directory
+
+WitFoo is listed in Claude's connector directory at [claude.ai/directory/witfoo](https://claude.ai/directory/witfoo). The listing connects through WitFoo's single connector address, `https://mcp-relay.witfoo.com/mcp`, with app sign-in. You pick your appliance by typing its appliance code at connect.witfoo.com, then sign in and approve the app on your own appliance.
+
+The listing needs:
+
+- **analytics 1.2.1** or later and **WFA 2.5.5** or later on the appliance;
+- the relay turned on by an operator with `wfa mcp-relay enable`, with `mcp_public_url` left empty before you run it (or switched afterwards with `wfa mcp-relay sign-in universal`). See [AI-Connector Relay](relay.md);
+- the organization in **Browser chat sessions, personal keys and app sign-in** mode, with **Claude** on the client allow list. See [App Sign-in (OAuth 2.1)](oauth.md);
+- a licence that includes the MCP connector: Analytics Pro, Analytics Max or Reporter Pro. See [MCP Licensing](licensing.md).
+
+On analytics 1.2.0, add WitFoo in Claude as a custom connector at your appliance's own address. Every step, for both setups, is in [Connect WitFoo to ChatGPT and Claude](connect-chatgpt-claude.md). WitFoo is not listed in the ChatGPT app directory.
 
 ## Connect with a personal key
 
@@ -133,3 +147,5 @@ The reverse proxy in front of HTTP `/mcp` closes a request at 120 seconds. `gene
 | A certificate error from a hosted client | The appliance presents its self-signed certificate | Terminate TLS in front of the listener with a certificate for the published name. See [Exposure Listener (Port 8444)](exposure-listener.md). |
 
 See [Errors](errors.md) for every response an MCP client can receive.
+
+*Claude is a trademark of Anthropic, PBC. ChatGPT is a trademark of OpenAI. Other product names are trademarks of their owners, used here only to identify the products.*
