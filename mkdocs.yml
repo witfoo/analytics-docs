@@ -213,6 +213,9 @@ nav:
       - ai/index.md
       - Configuration: ai/configuration.md
       - Chat Interface: ai/chat.md
+      - Desktop AI Kit:
+          - ai-kit/index.md
+          - Connect Your Assistant: ai-kit/connect.md
       - MCP Server:
           - ai/mcp/index.md
           - Architecture: ai/mcp/architecture.md
@@ -224,6 +227,7 @@ nav:
           - Exposure Listener (Port 8444): ai/mcp/exposure-listener.md
           - AI-Connector Relay: ai/mcp/relay.md
           - Connecting AI Clients & Marketplaces: ai/mcp/connect-clients.md
+          - Connect ChatGPT and Claude: ai/mcp/connect-chatgpt-claude.md
           - Tools: ai/mcp/tools.md
           - Errors: ai/mcp/errors.md
   - Deployment:
@@ -359,4 +363,5 @@ nav:
       - Software License Agreement (U.S.A.): reference/eula-usa.md
       - Software License Agreement (New Zealand): reference/eula-nz.md
       - Upgrading to 1.2.0: reference/upgrade-1.2.0.md
+      - Privacy Policy: privacy.md
       - Changelog: reference/changelog.md
