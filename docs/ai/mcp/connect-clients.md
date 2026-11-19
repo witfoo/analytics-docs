@@ -148,4 +148,4 @@ The reverse proxy in front of HTTP `/mcp` closes a request at 120 seconds. `gene
 
 See [Errors](errors.md) for every response an MCP client can receive.
 
-*Claude is a trademark of Anthropic, PBC. ChatGPT is a trademark of OpenAI. Other product names are trademarks of their owners, used here only to identify the products.*
+*Claude is a trademark of Anthropic, PBC. ChatGPT is a trademark of OpenAI. Other product names are trademarks of their owners, used here only to identify the products. No endorsement or partnership is implied.*
