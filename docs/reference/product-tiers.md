@@ -23,7 +23,9 @@ Annual list price per appliance. NZD is the portfolio-wide ×1.3 conversion.
 ## Feature matrix
 
 ● = included · · = not included. These are the feature flags the appliance enforces; a surface
-absent from a SKU's column is not merely unadvertised, it is gated off.
+absent from a SKU's column is not merely unadvertised, it is gated off. Two rows are the
+exception: no part of the appliance checks `core_integrations` or `full_integrations` today, so
+those two rows describe the tier rather than a gate.
 
 | Feature flag | conductor:lite | conductor:pro | conductor:max | analytics:lite | analytics:pro | analytics:max | reporter:lite | reporter:pro | console:lite |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
