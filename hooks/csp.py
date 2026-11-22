@@ -36,9 +36,18 @@ Warnings fail `mkdocs build --strict` (the PR check). The hook warns when:
   script-src blocks. Put behaviour in a .js file under docs/assets/ and list it in
   extra_javascript instead.
 
-style-src keeps 'unsafe-inline': the Mermaid diagrams draw with <style> elements and
-style="" attributes created at run time, which no build step can move. style="" in the
-Markdown is therefore not reported.
+style-src has no 'unsafe-inline' either. The theme's <style> is moved (above), the
+tables extension writes align= instead of style="text-align: ...", and the Mermaid
+diagrams are pre-rendered without inline style by hooks/mermaid_static.py, which runs
+before this hook. The strict build also fails when a page has:
+
+* a style="" attribute (in the Markdown, or from an extension or template). Use a class
+  and a rule in docs/assets/stylesheets/extra.css instead;
+* a <style> element outside <head>, for example one written in the Markdown or inside an
+  inline SVG. Move the rules to extra.css.
+
+CSSOM writes from JavaScript (element.style.x = ...), which the theme uses for its own
+layout, are not governed by CSP and are not affected.
 """
 
 from __future__ import annotations
@@ -67,6 +76,7 @@ _ATTR = re.compile(r"""([^\s=/>]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+)))?"
 _NOOP_JS_HREF = re.compile(r"""(<a\b(?=[^>]*\bdata-md-component=["']?search-share\b)[^>]*?\bhref\s*=\s*)(["']?)javascript:\s*void\(0\);?\2(?=[\s>])""", re.I)
 _PRE = re.compile(r"<(pre|code|textarea)\b.*?</\1\s*>", re.S | re.I)
 _TAG = re.compile(r"<[a-zA-Z][^\s/>]*(?P<attrs>(?:\s[^>]*)?)>")
+_STYLE_OPEN = re.compile(r"<style[\s>]", re.I)
 _URL_ATTRS = {"href", "src", "action", "formaction", "xlink:href"}
 # The part of the page instant navigation swaps, and the first element after it.
 _SWAP_START = re.compile(r"""data-md-component=["']?container\b""")
@@ -191,15 +201,19 @@ def _rewrite(output, site_dir, base_url, label):
                     "('%s' is not in script-src in %s); see hooks/csp.py", label, digest,
                     POLICY_FILE)
 
-    # Report what script-src blocks and cannot be moved. Code samples are escaped text,
+    # Report what the CSP blocks and this hook cannot move. Code samples are escaped text,
     # not markup, but skip them anyway so a sample that shows a tag is never counted.
     markup = _PRE.sub("", output)
-    found = {"on* event-handler attribute": 0, "javascript: URL": 0}
+    found = {"on* event-handler attribute": 0, "javascript: URL": 0, "style attribute": 0,
+             "<style> element outside <head>": 0}
     for tag in _TAG.finditer(markup):
         attrs = _attrs(tag.group("attrs"))
         found["on* event-handler attribute"] += any(k.startswith("on") for k in attrs)
         found["javascript: URL"] += any(
             k in _URL_ATTRS and v.strip().lower().startswith("javascript:") for k, v in attrs.items())
+        found["style attribute"] += "style" in attrs
+    # The theme's <head> styles were moved above, so any <style> left is in the body.
+    found["<style> element outside <head>"] = len(_STYLE_OPEN.findall(markup))
     for what, n in found.items():
         if n:
             log.warning("%s: %d element(s) with an inline %s, which the site's CSP blocks; "
