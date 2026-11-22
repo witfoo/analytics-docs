@@ -1,0 +1,8 @@
+{
+  "name": "analytics-docs-diagram-renderer",
+  "private": true,
+  "description": "Pre-renders the Mermaid diagrams for hooks/mermaid_static.py. Run scripts/render-diagrams.sh.",
+  "devDependencies": {
+    "playwright": "1.59.1"
+  }
+}

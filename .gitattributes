@@ -1,0 +1,2 @@
+# Pre-rendered Mermaid diagrams, written by scripts/render-diagrams.sh.
+diagrams/svg/*.html linguist-generated=true

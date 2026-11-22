@@ -104,10 +104,18 @@ extra:
 # inline <script> and <style> elements into files under assets/, except the scripts
 # content-security-policy.txt allows by hash. See hooks/csp.py.
 hooks:
+  # Serves the Mermaid diagrams pre-rendered from diagrams/svg/, without inline style.
+  # It runs before csp.py, so csp.py's checks see the final page. See the hook.
+  - hooks/mermaid_static.py
   - hooks/csp.py
 
 extra_css:
   - assets/stylesheets/extra.css
+
+# Mounts the pre-rendered diagrams (hooks/mermaid_static.py). On every page, because
+# instant navigation can reach a page with a diagram from any page.
+extra_javascript:
+  - assets/javascripts/mermaid-static.js
 
 nav:
   - Home: index.md
