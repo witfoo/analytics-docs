@@ -82,8 +82,7 @@ markdown_extensions:
   - attr_list
   - md_in_html
   # Column alignment as align="..." (which the theme's CSS honours) instead of a
-  # style="text-align: ..." attribute: the built HTML then carries no inline style, so
-  # only Mermaid's run-time styles still need 'unsafe-inline' in style-src.
+  # style="text-align: ..." attribute: the site's CSP has no 'unsafe-inline' in style-src.
   - tables:
       use_align_attribute: true
   - toc:
@@ -100,9 +99,9 @@ extra:
       link: https://github.com/witfoo
       name: WitFoo on GitHub
 
-# Makes the pages work without 'unsafe-inline' in the CSP's script-src: moves the theme's
-# inline <script> and <style> elements into files under assets/, except the scripts
-# content-security-policy.txt allows by hash. See hooks/csp.py.
+# Makes the pages work without 'unsafe-inline' in the CSP's script-src and style-src:
+# csp.py moves the theme's inline <script> and <style> elements into files under assets/,
+# except the scripts content-security-policy.txt allows by hash. See the hooks.
 hooks:
   # Serves the Mermaid diagrams pre-rendered from diagrams/svg/, without inline style.
   # It runs before csp.py, so csp.py's checks see the final page. See the hook.
